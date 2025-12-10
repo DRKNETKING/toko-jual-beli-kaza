@@ -57,15 +57,16 @@
     <script>
         // --- DATA DAN STATE APLIKASI ---
         let activeSection = 'home';
-        let productImages = {};
-        let loadingProductId = null;
+        let productImages = {}; // Menyimpan URL Base64 yang berhasil di-generate
+        let loadingProductId = null; // ID produk yang sedang loading
         let notification = '';
-        let error = null;
+        let error = null; // Menyimpan pesan error API global
 
         const waNumber = '085216991236';
         const waLink = `https://wa.me/62${waNumber.substring(1)}`;
 
         // Konfigurasi API Imagen 4.0 untuk Image Generation
+        // Catatan: apiKey dibiarkan kosong karena akan disediakan oleh lingkungan eksekusi.
         const apiKey = ""; 
         const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${apiKey}`;
         
@@ -110,10 +111,11 @@
         function showNotification(message) {
             notification = message;
             renderNotification();
+            // Menghilangkan notifikasi setelah 3 detik
             setTimeout(() => {
                 notification = '';
                 renderNotification();
-            }, 3000); // Hilang setelah 3 detik
+            }, 3000); 
         }
         
         // Fungsi Renderer Notifikasi Pop-up
@@ -125,7 +127,7 @@
             popup.innerHTML = notification;
         }
 
-        // --- LOGIKA API DAN BACKOFF (Penting untuk keandalan) ---
+        // --- LOGIKA API DAN BACKOFF ---
 
         /**
          * Panggil API Imagen 4.0 dengan Exponential Backoff untuk retry yang aman.
@@ -155,15 +157,19 @@
                     });
 
                     if (!response.ok) {
-                        // Jika error, lempar dan coba lagi (kecuali attempt terakhir)
-                        throw new Error(`HTTP error! status: ${response.status}`);
+                        // Coba parse error body jika ada untuk informasi lebih lanjut
+                        const errorData = await response.json().catch(() => ({}));
+                        console.error(`Attempt ${attempt + 1}: HTTP error! Status ${response.status}. Details:`, errorData);
+                        throw new Error(`Gagal API: Status ${response.status}`);
                     }
 
                     const result = await response.json();
                     
+                    // Ekstraksi data Base64
                     const base64Data = result?.predictions?.[0]?.bytesBase64Encoded;
 
                     if (!base64Data) {
+                        console.error(`Attempt ${attempt + 1}: Gagal mendapatkan data gambar (Base64 kosong). Respons API:`, result);
                         throw new Error("Gagal mendapatkan data gambar dari API (Data kosong).");
                     }
 
@@ -172,16 +178,19 @@
                         ...productImages,
                         [productId]: base64ToUrl(base64Data)
                     };
+                    
+                    // SUKSES
                     loadingProductId = null;
                     renderMainContent(); // Render ulang setelah sukses
                     showNotification("Visual AI berhasil dibuat!");
                     return; // Berhasil, keluar dari loop
                     
                 } catch (err) {
+                    console.error(`Percobaan ke-${attempt + 1} Gagal:`, err.message);
+                    
                     if (attempt === maxRetries - 1) {
                         // Gagal setelah semua percobaan
-                        console.error("Gagal generate gambar setelah beberapa kali coba:", err);
-                        error = "Gagal menghasilkan gambar AI. Silakan periksa koneksi atau coba lagi nanti.";
+                        error = "Gagal menghasilkan gambar AI. (Error: " + err.message + "). Silakan periksa koneksi atau coba lagi nanti.";
                         loadingProductId = null;
                         renderMainContent(); // Render ulang dengan pesan error
                     } else {
@@ -193,7 +202,7 @@
             }
         }
 
-        // --- FUNGSI RENDER KOMPONEN HTML (Menggantikan JSX) ---
+        // --- FUNGSI RENDER KOMPONEN HTML ---
 
         // Render Kartu Produk
         function renderProductCard(product) {
@@ -210,20 +219,21 @@
                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                         </svg>
-                        <p class="text-gray-700 font-semibold text-sm">Menciptakan Visual KAZA...</p>
+                        <p class="text-gray-700 font-semibold text-sm text-center px-4">Menciptakan Visual KAZA...</p>
                     </div>
                 `;
             } else if (imageUrl) {
                 // Gambar yang dihasilkan AI
                 imageContent = `<img src="${imageUrl}" alt="${product.name}" 
                     class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    onerror="this.onerror=null;this.src='https://placehold.co/1000x1000/2C3E50/ECF0F1?text=Gagal+Memuat';"
+                    <!-- Fallback image jika Base64 tidak dapat dirender oleh browser -->
+                    onerror="this.onerror=null;this.src='https://placehold.co/1000x1000/B00020/FFFFFF?text=Gagal+Memuat+Gambar';"
                 />`;
             } else {
                 // Placeholder awal sebelum generate
                 imageContent = `
                     <div class="w-full h-full flex flex-col items-center justify-center text-gray-500 bg-gray-900 p-4">
-                         <!-- SVG Minimalis untuk Fashion Placeholder -->
+                        <!-- SVG Minimalis untuk Fashion Placeholder -->
                         <svg class="w-16 h-16 mb-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944c6.83-2.924 10.835 1.57 9.387 4.09l-2.028 3.468M10 20.098a10.026 10.026 0 01-4.022-.656m0 0a1 1 0 01-.637-1.11L5.942 16m0 0a1 1 0 011.11-.637l2.81 1.096m0 0a1 1 0 011.11-.637l2.81 1.096m0 0a1 1 0 011.11-.637l2.81 1.096m0 0a1 1 0 011.11-.637l2.81 1.096m0 0a1 1 0 011.11-.637l2.81 1.096"></path></svg>
                         <span class="text-xl font-bold mb-2 text-white">${product.defaultText}</span>
                         <p class="text-sm text-gray-400 text-center">Tekan 'Generate AI' untuk melihat visual premium produk ini.</p>
@@ -271,7 +281,7 @@
             if (error) {
                 errorHtml = `
                     <div class="p-4 mb-8 text-center text-red-700 bg-red-100 border border-red-300 rounded-lg shadow-inner">
-                        **INFORMASI PENTING:** ${error}
+                        <span class="font-bold">Error API:</span> ${error}
                     </div>
                 `;
             }
@@ -327,15 +337,15 @@
                         </h3>
                         
                         <p class="text-lg text-gray-700 mb-6 max-w-3xl mx-auto">
-                            Selamat datang di KAZA. Kami bukan hanya merek pakaian; kami adalah kurator gaya hidup. Kami berdiri di atas keyakinan bahwa kualitas sejati terletak pada detail, dan fashion harus menjadi perpanjangan otentik dari diri Anda. Didirikan pada tahun 2024, KAZA bertekad untuk mendefinisikan ulang pakaian sehari-hari menjadi **karya seni yang *wearable***.
+                            Selamat datang di KAZA. Kami bukan hanya merek pakaian; kami adalah kurator gaya hidup. Kami berdiri di atas keyakinan bahwa kualitas sejati terletak pada detail, dan fashion harus menjadi perpanjangan otentik dari diri Anda. Didirikan pada tahun 2024, KAZA bertekad untuk mendefinisikan ulang pakaian sehari-hari menjadi <span class="font-bold italic">karya seni yang wearable</span>.
                         </p>
 
                         <p class="text-lg text-gray-700 mb-6 max-w-3xl mx-auto">
-                            Setiap koleksi, dari Kemeja Linen yang elegan hingga T-Shirt maskot kami yang penuh ekspresi, dibuat dengan **komitmen tanpa kompromi terhadap material dan pengerjaan**. Kami memilih kain terbaik untuk memastikan kenyamanan maksimal dan daya tahan yang melampaui tren sesaat.
+                            Setiap koleksi, dari Kemeja Linen yang elegan hingga T-Shirt maskot kami yang penuh ekspresi, dibuat dengan <span class="font-bold">komitmen tanpa kompromi terhadap material dan pengerjaan</span>. Kami memilih kain terbaik untuk memastikan kenyamanan maksimal dan daya tahan yang melampaui tren sesaat.
                         </p>
 
                         <p class="text-lg text-gray-700 mb-10 max-w-3xl mx-auto font-bold">
-                            Filosofi Kami: Kami merayakan keberanian untuk menjadi sederhana namun mencolok. KAZA mengajak Anda berinvestasi pada **kualitas, bukan kuantitas**. Temukan pakaian yang akan bertahan, baik dalam lemari maupun dalam memori Anda. Bergabunglah dengan kami dalam perjalanan gaya yang berkelas dan etis.
+                            Filosofi Kami: Kami merayakan keberanian untuk menjadi sederhana namun mencolok. KAZA mengajak Anda berinvestasi pada <span class="text-red-700">kualitas, bukan kuantitas</span>. Temukan pakaian yang akan bertahan, baik dalam lemari maupun dalam memori Anda. Bergabunglah dengan kami dalam perjalanan gaya yang berkelas dan etis.
                         </p>
                         
                         <a href="${waLink}" target="_blank" rel="noopener noreferrer">
@@ -421,6 +431,7 @@
                     const generateBtn = document.getElementById(`generate-btn-${product.id}`);
                     if (generateBtn) {
                         generateBtn.addEventListener('click', () => {
+                            // Cek lagi apakah tombol tidak disabled (untuk double-check)
                             if (!generateBtn.disabled) {
                                 generateProductImage(product.id, product.prompt);
                             }
