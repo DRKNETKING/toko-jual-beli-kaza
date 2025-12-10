@@ -1,0 +1,326 @@
+import React, { useState, useEffect, useCallback } from 'react';
+
+// --- Komponen Utama Aplikasi ---
+const App = () => {
+    // State untuk mengontrol tampilan section (Home/About Us)
+    const [activeSection, setActiveSection] = useState('home');
+    // State untuk menyimpan gambar yang sudah di-generate per produk
+    const [productImages, setProductImages] = useState({});
+    // State untuk mengelola UI loading
+    const [loadingProductId, setLoadingProductId] = useState(null);
+    // State untuk menangani pesan error
+    const [error, setError] = useState(null);
+    // State untuk notifikasi pop-up
+    const [notification, setNotification] = useState('');
+
+    // Nomor Kontak WA (085216991236, diformat untuk link internasional)
+    const waNumber = '085216991236';
+    const waLink = `https://wa.me/62${waNumber.substring(1)}`;
+
+    // Konfigurasi API - Kosongkan jika menggunakan Canvas
+    const apiKey = ""; 
+    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${apiKey}`;
+
+    // Detail Produk KAZA (Termasuk prompt spesifik untuk Image Generation)
+    const products = [
+        { 
+            id: 1, 
+            name: "Kemeja KAZA Klasik Premium", 
+            price: "Rp 349.000", 
+            prompt: "A photorealistic, highly detailed image of a crisp white linen long-sleeve shirt, folded neatly, against a minimalist cream background. Elegant, high-fashion studio quality. Focus on texture and simple design.",
+            defaultText: "Kemeja Elegan",
+        },
+        { 
+            id: 2, 
+            name: "T-Shirt KAZA Beruang", 
+            price: "Rp 199.000", 
+            prompt: "A high-quality 3D render of a black oversized T-shirt with a minimalist, stylized Kaza Bear mascot logo printed on the chest. The bear mascot is cute but cool. Modern studio lighting, isolated on a light gray background.",
+            defaultText: "T-Shirt Beruang",
+        },
+        { 
+            id: 3, 
+            name: "Dress Simple Mid-Length", 
+            price: "Rp 480.000", 
+            prompt: "A cinematic, soft-focus photo of a simple, flowing midi dress in muted terracotta color, hanging gracefully in a sunlit fashion studio. Emphasize the textile's light texture and relaxed silhouette. High-end fashion editorial style.",
+            defaultText: "Dress Minimalis",
+        },
+        { 
+            id: 4, 
+            name: "Topi Snapback KAZA Premium", 
+            price: "Rp 120.000", 
+            prompt: "An extreme close-up, sharp photo of a black leather snapback cap. The KAZA logo is subtly embroidered in deep crimson thread. Studio product photography, dark moody background, high contrast.",
+            defaultText: "Snapback KAZA",
+        },
+    ];
+
+    // Fungsi utilitas untuk konversi Base64 ke URL (sangat penting untuk Imagen)
+    const base64ToUrl = (base64) => `data:image/png;base64,${base64}`;
+
+    // Fungsi untuk menampilkan notifikasi pop-up (menggantikan alert)
+    const showNotification = useCallback((message) => {
+        setNotification(message);
+        setTimeout(() => setNotification(''), 3000);
+    }, []);
+
+    // Fungsi API Call dengan Exponential Backoff
+    const generateProductImage = useCallback(async (productId, prompt, maxRetries = 5) => {
+        setLoadingProductId(productId);
+        setError(null);
+        
+        const payload = { 
+            instances: [{ prompt: prompt }], 
+            parameters: { "sampleCount": 1 } 
+        };
+
+        for (let attempt = 0; attempt < maxRetries; attempt++) {
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const result = await response.json();
+                
+                const base64Data = result?.predictions?.[0]?.bytesBase64Encoded;
+
+                if (!base64Data) {
+                    throw new Error("Gagal mendapatkan data gambar dari API.");
+                }
+
+                setProductImages(prev => ({
+                    ...prev,
+                    [productId]: base64ToUrl(base64Data)
+                }));
+                setLoadingProductId(null);
+                return; // Berhasil, keluar dari loop
+                
+            } catch (err) {
+                if (attempt === maxRetries - 1) {
+                    // Gagal setelah semua percobaan
+                    console.error("Gagal generate gambar setelah beberapa kali coba:", err);
+                    setError("Gagal menghasilkan gambar. Coba lagi.");
+                    setLoadingProductId(null);
+                } else {
+                    // Terapkan exponential backoff
+                    const delay = Math.pow(2, attempt) * 1000 + Math.random() * 1000;
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                }
+            }
+        }
+    }, [apiUrl]);
+
+    // Komponen Kartu Produk
+    const ProductCard = ({ product }) => {
+        const isLoading = loadingProductId === product.id;
+        const imageUrl = productImages[product.id];
+
+        return (
+            <div className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group">
+                <div className="h-96 overflow-hidden bg-gray-100 flex items-center justify-center">
+                    {isLoading ? (
+                        <div className="w-full h-full flex items-center justify-center animate-pulse bg-gray-200">
+                            <svg className="animate-spin h-8 w-8 text-gray-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            <p className="ml-3 text-gray-700">Menciptakan Gambar...</p>
+                        </div>
+                    ) : imageUrl ? (
+                        <img 
+                            src={imageUrl} 
+                            alt={product.name} 
+                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        />
+                    ) : (
+                        // Placeholder Awal
+                        <div className="w-full h-full flex flex-col items-center justify-center text-gray-500 bg-gray-200">
+                            <span className="text-xl font-semibold mb-2">{product.defaultText}</span>
+                            <p className="text-sm">Klik 'Generate' untuk visual.</p>
+                        </div>
+                    )}
+                </div>
+
+                <div className="p-6 text-center">
+                    <h4 className="font-['Playfair_Display'] text-2xl font-semibold mb-2 text-gray-900">{product.name}</h4>
+                    <p className="text-xl font-bold text-red-700 mb-4">{product.price}</p>
+                    
+                    <div className="flex flex-col space-y-3">
+                        <button 
+                            className="bg-gray-800 text-white py-2 px-6 rounded-lg font-semibold hover:bg-black transition-colors duration-300"
+                            onClick={() => showNotification(`${product.name} berhasil ditambahkan ke keranjang!`)}
+                        >
+                            Tambah ke Keranjang
+                        </button>
+                        <button 
+                            className={`py-2 px-6 rounded-lg font-semibold text-sm transition-colors duration-300 ${
+                                isLoading ? 'bg-gray-400 text-gray-700 cursor-not-allowed' : 'bg-red-100 text-red-700 hover:bg-red-200'
+                            }`}
+                            onClick={() => !isLoading && generateProductImage(product.id, product.prompt)}
+                            disabled={isLoading}
+                        >
+                            {isLoading ? 'Sedang Diproses...' : 'Generate Gambar Produk (AI)'}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        );
+    };
+
+    // Komponen Notifikasi Pop-up
+    const NotificationPopup = () => (
+        <div
+            className={`fixed top-5 right-5 z-50 p-4 bg-red-700 text-white rounded-lg shadow-xl transition-opacity duration-500 ${
+                notification ? 'opacity-100' : 'opacity-0 pointer-events-none'
+            }`}
+        >
+            {notification}
+        </div>
+    );
+
+    // Komponen Utama Layout
+    return (
+        // INJEKSI CSS UNTUK ANIMASI BACKGROUND
+        <>
+            <style jsx="true">{`
+                @keyframes gradient-shift {
+                    0% { background-position: 0% 50%; }
+                    50% { background-position: 100% 50%; }
+                    100% { background-position: 0% 50%; }
+                }
+                .animated-background {
+                    /* Gradien lembut dari abu-abu terang ke krem */
+                    background: linear-gradient(-45deg, #f5f5f5, #ebebeb, #f5f5f5, #e0e0e0);
+                    background-size: 400% 400%;
+                    animation: gradient-shift 20s ease infinite;
+                }
+            `}</style>
+            
+            <div className="min-h-screen animated-background">
+                {/* Header */}
+                <header className="sticky top-0 z-10 bg-white shadow-md">
+                    <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center py-4">
+                        <h1 className="font-['Playfair_Display'] text-3xl font-bold text-gray-900 tracking-wide">KAZA</h1>
+                        <nav className="flex space-x-6 mt-3 md:mt-0">
+                            <a 
+                                href="#" 
+                                className={`text-lg font-medium transition-colors hover:text-red-700 ${activeSection === 'home' ? 'text-red-700 border-b-2 border-red-700' : 'text-gray-700'}`}
+                                onClick={() => setActiveSection('home')}
+                            >
+                                Beranda/Produk
+                            </a>
+                            <a 
+                                href="#" 
+                                className={`text-lg font-medium transition-colors hover:text-red-700 ${activeSection === 'about' ? 'text-red-700 border-b-2 border-red-700' : 'text-gray-700'}`}
+                                onClick={() => setActiveSection('about')}
+                            >
+                                Tentang Kami
+                            </a>
+                            {/* Kontak tidak perlu page sendiri, cukup tautan WA */}
+                            <a href={waLink} target="_blank" rel="noopener noreferrer" className="text-lg font-medium text-gray-700 hover:text-green-600 transition-colors">
+                                📞 WA Kami
+                            </a>
+                            <a href="#" className="text-xl text-gray-700 hover:text-red-700 transition-colors">🛒</a>
+                        </nav>
+                    </div>
+                </header>
+
+                {/* Notifikasi */}
+                <NotificationPopup />
+
+                <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-10">
+                    {/* --- HOME SECTION --- */}
+                    {activeSection === 'home' && (
+                        <section id="home-section">
+                            
+                            {/* Hero Section */}
+                            <div className="bg-white p-12 md:p-20 rounded-2xl shadow-xl flex flex-col md:flex-row items-center justify-between my-8">
+                                <div className="md:w-1/2 mb-10 md:mb-0 md:pr-10">
+                                    <h2 className="font-['Playfair_Display'] text-5xl font-bold text-gray-900 mb-4 leading-tight">
+                                        KOLEKSI MINIMALIS. EKSKLUSIVITAS KAZA.
+                                    </h2>
+                                    <p className="text-xl text-gray-600 mb-8">
+                                        Jadilah yang berbeda. Temukan busana premium yang memadukan keanggunan minimalis dengan karakter KAZA yang berani.
+                                    </p>
+                                    <a href={waLink} target="_blank" rel="noopener noreferrer">
+                                        <button className="bg-red-700 text-white text-lg py-3 px-8 rounded-full font-semibold shadow-lg hover:bg-red-800 transition-all duration-300 transform hover:scale-105">
+                                            HUBUNGI KAMI VIA WA
+                                        </button>
+                                    </a>
+                                </div>
+                                <div className="md:w-5/12 w-full h-80 md:h-96 rounded-lg overflow-hidden shadow-2xl">
+                                    {/* Placeholder Gambar Hero */}
+                                    <img 
+                                        src="https://placehold.co/1000x1000/1A1A1A/FFFFFF?text=KAZA+Premium+Style" 
+                                        alt="Koleksi Pakaian Premium KAZA" 
+                                        className="w-full h-full object-cover"
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Judul Produk */}
+                            <h3 className="text-center font-['Playfair_Display'] text-4xl font-bold text-gray-900 mt-16 mb-12">
+                                PILAHAN EKSLUSIF KAZA
+                            </h3>
+
+                            {/* Grid Produk */}
+                            {error && (
+                                <div className="p-4 mb-4 text-center text-red-700 bg-red-100 border border-red-300 rounded-lg">
+                                    **Error:** {error}
+                                </div>
+                            )}
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+                                {products.map(product => (
+                                    <ProductCard key={product.id} product={product} />
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {/* --- ABOUT US SECTION --- */}
+                    {activeSection === 'about' && (
+                        <section id="about-us-section" className="py-20">
+                            <div className="bg-white p-10 md:p-16 rounded-2xl shadow-2xl text-center">
+                                <h3 className="font-['Playfair_Display'] text-5xl font-bold text-red-700 mb-8">
+                                    MEMBANGUN GAYA, MENCIPTAKAN KARAKTER
+                                </h3>
+                                
+                                <p className="text-lg text-gray-700 mb-6 max-w-3xl mx-auto">
+                                    Selamat datang di KAZA. Kami bukan hanya merek pakaian; kami adalah kurator gaya hidup. Kami berdiri di atas keyakinan bahwa kualitas sejati terletak pada detail, dan fashion harus menjadi perpanjangan otentik dari diri Anda. Didirikan pada tahun 2024, KAZA bertekad untuk mendefinisikan ulang pakaian sehari-hari menjadi **karya seni yang wearable**.
+                                </p>
+
+                                <p className="text-lg text-gray-700 mb-6 max-w-3xl mx-auto">
+                                    Setiap koleksi, dari Kemeja Linen yang elegan hingga T-Shirt maskot kami yang penuh ekspresi, dibuat dengan **komitmen tanpa kompromi terhadap material dan pengerjaan**. Kami memilih kain terbaik untuk memastikan kenyamanan maksimal dan daya tahan yang melampaui tren sesaat.
+                                </p>
+
+                                <p className="text-lg text-gray-700 mb-10 max-w-3xl mx-auto font-bold">
+                                    Filosofi Kami: Kami merayakan keberanian untuk menjadi sederhana namun mencolok. KAZA mengajak Anda berinvestasi pada **kualitas, bukan kuantitas**. Temukan pakaian yang akan bertahan, baik dalam lemari maupun dalam memori Anda. Bergabunglah dengan kami dalam perjalanan gaya yang berkelas dan etis.
+                                </p>
+                                
+                                <a href={waLink} target="_blank" rel="noopener noreferrer">
+                                    <button className="bg-red-700 text-white text-lg py-3 px-8 rounded-full font-semibold shadow-lg hover:bg-red-800 transition-all duration-300 transform hover:scale-105">
+                                        HUBUNGI KAMI (WA: {waNumber})
+                                    </button>
+                                </a>
+                            </div>
+                        </section>
+                    )}
+                </main>
+
+                {/* Footer */}
+                <footer className="bg-gray-800 text-white py-8 mt-10">
+                    <div className="container mx-auto px-4 text-center">
+                        <p className="text-sm mb-2">📞 Hubungi Kami via WhatsApp: <a href={waLink} target="_blank" rel="noopener noreferrer" className="text-red-400 hover:text-red-300 font-bold">{waNumber}</a></p>
+                        <p className="text-sm">KAZA | Fashion Minimalis Berkelas. &copy; 2025 All rights reserved. | Dirancang untuk Eksklusivitas.</p>
+                    </div>
+                </footer>
+            </div>
+        </>
+    );
+};
+
+export default App;
