@@ -1,475 +1,379 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>KAZA - Koleksi Pakaian Minimalis Premium dengan AI Visual</title>
-    <!-- Memuat Tailwind CSS CDN untuk styling yang profesional dan responsif -->
+
+    <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Memuat Font Inter dan Playfair Display -->
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Playfair+Display:wght@700&display=swap');
 
-        /* CSS Kustom untuk Animasi Latar Belakang yang lembut */
         @keyframes gradient-shift {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
         .animated-background {
-            /* Gradien lembut dari abu-abu terang ke krem */
             background: linear-gradient(-45deg, #f0f0f0, #e8e8e8, #f0f0f0, #dcdcdc);
             background-size: 400% 400%;
-            animation: gradient-shift 25s ease infinite; /* Kecepatan sedikit diperlambat */
+            animation: gradient-shift 25s ease infinite;
         }
-        /* Custom scrollbar for aesthetics */
-        body::-webkit-scrollbar {
-            width: 8px;
-        }
-        body::-webkit-scrollbar-thumb {
-            background-color: #ef4444; /* red-500 */
-            border-radius: 4px;
-        }
-        body::-webkit-scrollbar-track {
-            background-color: #f3f4f6; /* gray-100 */
-        }
+
+        body::-webkit-scrollbar { width: 8px; }
+        body::-webkit-scrollbar-thumb { background-color: #ef4444; border-radius: 4px; }
+        body::-webkit-scrollbar-track { background-color: #f3f4f6; }
+
+        /* simple small helper styles */
+        .truncate-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
     </style>
 </head>
 <body class="font-inter">
 
-    <!-- Container Utama Aplikasi -->
     <div id="app" class="min-h-screen animated-background">
-        <!-- Header akan dirender di sini -->
         <header id="header-container" class="sticky top-0 z-10 bg-white shadow-lg"></header>
 
-        <!-- Notifikasi Pop-up (menggantikan alert) -->
         <div id="notification-popup" class="fixed top-5 right-5 z-50 transition-opacity duration-500 opacity-0 pointer-events-none"></div>
 
-        <!-- Konten Utama (Home/About) akan dirender di sini -->
         <main id="main-content" class="container mx-auto px-4 sm:px-6 lg:px-8 py-10"></main>
-        
-        <!-- Footer akan dirender di sini -->
+
         <footer id="footer-container" class="bg-gray-900 text-white py-10 mt-10 shadow-inner"></footer>
     </div>
 
-    <!-- Logika JavaScript -->
     <script>
-        // --- DATA DAN STATE APLIKASI ---
-        let activeSection = 'home';
-        let productImages = {}; // Menyimpan URL Base64 yang berhasil di-generate
-        let loadingProductId = null; // ID produk yang sedang loading
-        let notification = '';
-        let error = null; // Menyimpan pesan error API global
+    // =========================
+    // CONFIG (Edit di sini)
+    // =========================
+    // Jika ingin mencoba Google Imagen langsung dari browser, letakkan API key di bawah.
+    // PERINGATAN: Menaruh API key di file client (HTML/JS) berisiko (siapa pun bisa melihatnya).
+    // Rekomendasi: Untuk produksi, simpan API key di server dan panggil endpoint server.
+    const apiKey = ""; // <-- masukkan API key di sini jika mau (opsional)
+    // Google imagen endpoint (menggunakan key query param seperti contoh awal).
+    const googleImagenUrl = apiKey ? `https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${apiKey}` : null;
 
-        const waNumber = '085216991236';
-        const waLink = `https://wa.me/62${waNumber.substring(1)}`;
+    // Jika googleImagenUrl null (apiKey kosong), app akan menggunakan fallback images (Unsplash) sehingga UI tetap berfungsi.
+    // =========================
 
-        // Konfigurasi API Imagen 4.0 untuk Image Generation
-        // Catatan: apiKey dibiarkan kosong karena akan disediakan oleh lingkungan eksekusi.
-        const apiKey = ""; 
-        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${apiKey}`;
-        
-        // Detail Produk KAZA dan Prompt AI spesifik untuk visual premium
-        const products = [
-            { 
-                id: 1, 
-                name: "Kemeja KAZA Klasik Premium", 
-                price: "Rp 349.000", 
-                prompt: "A photorealistic, highly detailed image of a crisp white linen long-sleeve shirt, folded neatly, against a minimalist cream background. Elegant, high-fashion studio quality. Focus on texture and simple design.",
-                defaultText: "Kemeja Elegan",
-            },
-            { 
-                id: 2, 
-                name: "T-Shirt KAZA Beruang", 
-                price: "Rp 199.000", 
-                prompt: "A high-quality 3D render of a black oversized T-shirt with a minimalist, stylized Kaza Bear mascot logo printed on the chest. The bear mascot is cute but cool. Modern studio lighting, isolated on a light gray background.",
-                defaultText: "T-Shirt Beruang",
-            },
-            { 
-                id: 3, 
-                name: "Dress Simple Mid-Length", 
-                price: "Rp 480.000", 
-                prompt: "A cinematic, soft-focus photo of a simple, flowing midi dress in muted terracotta color, hanging gracefully in a sunlit fashion studio. Emphasize the textile's light texture and relaxed silhouette. High-end fashion editorial style.",
-                defaultText: "Dress Minimalis",
-            },
-            { 
-                id: 4, 
-                name: "Topi Snapback KAZA Premium", 
-                price: "Rp 120.000", 
-                prompt: "An extreme close-up, sharp photo of a black leather snapback cap. The KAZA logo is subtly embroidered in deep crimson thread. Studio product photography, dark moody background, high contrast.",
-                defaultText: "Snapback KAZA",
-            },
-        ];
+    // STATE
+    let activeSection = 'home';
+    let productImages = {};
+    let loadingProductId = null;
+    let notification = '';
+    let error = null;
 
-        // --- FUNGSI UTILITAS ---
-        
-        // Konversi Base64 yang diterima dari API ke format URL gambar
-        const base64ToUrl = (base64) => `data:image/png;base64,${base64}`;
+    const waNumber = '085216991236';
+    const waLink = `https://wa.me/62${waNumber.substring(1)}`;
 
-        // Tampilkan Notifikasi (menggantikan alert)
-        function showNotification(message) {
-            notification = message;
+    const products = [
+        { id: 1, name: "Kemeja KAZA Klasik Premium", price: "Rp 349.000", prompt: "white linen long-sleeve shirt minimalist cream background texture high-fashion", defaultText: "Kemeja Elegan" },
+        { id: 2, name: "T-Shirt KAZA Beruang", price: "Rp 199.000", prompt: "black oversized t-shirt Kaza Bear mascot logo modern studio lighting", defaultText: "T-Shirt Beruang" },
+        { id: 3, name: "Dress Simple Mid-Length", price: "Rp 480.000", prompt: "flowing midi dress terracotta sunlit fashion studio soft-focus", defaultText: "Dress Minimalis" },
+        { id: 4, name: "Topi Snapback KAZA Premium", price: "Rp 120.000", prompt: "black leather snapback cap KAZA embroidered crimson thread close-up studio", defaultText: "Snapback KAZA" },
+    ];
+
+    // helper: convert base64 to data URL
+    function base64ToUrl(base64) {
+        return `data:image/png;base64,${base64}`;
+    }
+
+    // Notification
+    function showNotification(msg) {
+        notification = msg;
+        renderNotification();
+        setTimeout(() => {
+            notification = '';
             renderNotification();
-            // Menghilangkan notifikasi setelah 3 detik
-            setTimeout(() => {
-                notification = '';
-                renderNotification();
-            }, 3000); 
-        }
-        
-        // Fungsi Renderer Notifikasi Pop-up
-        function renderNotification() {
-            const popup = document.getElementById('notification-popup');
-            const visibilityClass = notification ? 'opacity-100' : 'opacity-0 pointer-events-none';
-            
-            popup.className = `fixed top-5 right-5 z-50 p-4 bg-red-700 text-white rounded-xl shadow-xl transition-opacity duration-500 ${visibilityClass}`;
-            popup.innerHTML = notification;
-        }
+        }, 3000);
+    }
 
-        // --- LOGIKA API DAN BACKOFF ---
+    function renderNotification() {
+        const popup = document.getElementById('notification-popup');
+        const visible = notification ? 'opacity-100' : 'opacity-0 pointer-events-none';
+        popup.className = `fixed top-5 right-5 z-50 p-4 bg-red-700 text-white rounded-xl shadow-xl transition-opacity duration-500 ${visible}`;
+        popup.innerText = notification || '';
+    }
 
-        /**
-         * Panggil API Imagen 4.0 dengan Exponential Backoff untuk retry yang aman.
-         */
-        async function generateProductImage(productId, prompt, maxRetries = 5) {
-            // Cek apakah produk lain sedang loading
-            if (loadingProductId && loadingProductId !== productId) {
-                showNotification("Satu gambar sedang diproses. Tunggu sebentar.");
-                return;
-            }
+    // Utility fallback image: Unsplash Source by query (no API key required).
+    // Note: Unsplash Source returns different images over time; good for demo/fallback.
+    function fallbackImageForPrompt(prompt, size = 1000) {
+        // choose keywords from prompt (simple): take first 3 words
+        const keywords = prompt.split(/\s+/).slice(0, 4).join(',');
+        return `https://source.unsplash.com/${size}x${size}/?${encodeURIComponent(keywords)}`;
+    }
 
-            loadingProductId = productId;
-            error = null;
-            renderMainContent(); // Update UI dengan status loading
-
-            const payload = { 
-                instances: [{ prompt: prompt }], 
-                parameters: { "sampleCount": 1 } 
-            };
-
-            for (let attempt = 0; attempt < maxRetries; attempt++) {
-                try {
-                    const response = await fetch(apiUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-
-                    if (!response.ok) {
-                        // Coba parse error body jika ada untuk informasi lebih lanjut
-                        const errorData = await response.json().catch(() => ({}));
-                        console.error(`Attempt ${attempt + 1}: HTTP error! Status ${response.status}. Details:`, errorData);
-                        throw new Error(`Gagal API: Status ${response.status}`);
-                    }
-
-                    const result = await response.json();
-                    
-                    // Ekstraksi data Base64
-                    const base64Data = result?.predictions?.[0]?.bytesBase64Encoded;
-
-                    if (!base64Data) {
-                        console.error(`Attempt ${attempt + 1}: Gagal mendapatkan data gambar (Base64 kosong). Respons API:`, result);
-                        throw new Error("Gagal mendapatkan data gambar dari API (Data kosong).");
-                    }
-
-                    // Update state gambar produk
-                    productImages = {
-                        ...productImages,
-                        [productId]: base64ToUrl(base64Data)
-                    };
-                    
-                    // SUKSES
-                    loadingProductId = null;
-                    renderMainContent(); // Render ulang setelah sukses
-                    showNotification("Visual AI berhasil dibuat!");
-                    return; // Berhasil, keluar dari loop
-                    
-                } catch (err) {
-                    console.error(`Percobaan ke-${attempt + 1} Gagal:`, err.message);
-                    
-                    if (attempt === maxRetries - 1) {
-                        // Gagal setelah semua percobaan
-                        error = "Gagal menghasilkan gambar AI. (Error: " + err.message + "). Silakan periksa koneksi atau coba lagi nanti.";
-                        loadingProductId = null;
-                        renderMainContent(); // Render ulang dengan pesan error
-                    } else {
-                        // Terapkan exponential backoff: 1s, 2s, 4s, 8s, ... + jitter
-                        const delay = Math.pow(2, attempt) * 1000 + Math.random() * 500;
-                        await new Promise(resolve => setTimeout(resolve, delay));
-                    }
-                }
-            }
+    // generate via Google Imagen if apiKey provided; else use fallback
+    async function generateProductImage(productId, prompt, maxRetries = 4) {
+        // prevent multiple simultaneous generates for different products
+        if (loadingProductId && loadingProductId !== productId) {
+            showNotification("Satu gambar sedang diproses. Tunggu sebentar.");
+            return;
         }
 
-        // --- FUNGSI RENDER KOMPONEN HTML ---
+        loadingProductId = productId;
+        error = null;
+        renderMainContent();
 
-        // Render Kartu Produk
-        function renderProductCard(product) {
-            const isLoading = loadingProductId === product.id;
-            const imageUrl = productImages[product.id];
-            
-            // Konten Gambar/Placeholder
-            let imageContent;
-            if (isLoading) {
-                // Indikator Loading
-                imageContent = `
-                    <div class="w-full h-full flex flex-col items-center justify-center animate-pulse bg-gray-200">
-                        <svg class="animate-spin h-8 w-8 text-red-700 mb-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
-                        <p class="text-gray-700 font-semibold text-sm text-center px-4">Menciptakan Visual KAZA...</p>
-                    </div>
-                `;
-            } else if (imageUrl) {
-                // Gambar yang dihasilkan AI
-                imageContent = `<img src="${imageUrl}" alt="${product.name}" 
-                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    <!-- Fallback image jika Base64 tidak dapat dirender oleh browser -->
-                    onerror="this.onerror=null;this.src='https://placehold.co/1000x1000/B00020/FFFFFF?text=Gagal+Memuat+Gambar';"
-                />`;
-            } else {
-                // Placeholder awal sebelum generate
-                imageContent = `
-                    <div class="w-full h-full flex flex-col items-center justify-center text-gray-500 bg-gray-900 p-4">
-                        <!-- SVG Minimalis untuk Fashion Placeholder -->
-                        <svg class="w-16 h-16 mb-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944c6.83-2.924 10.835 1.57 9.387 4.09l-2.028 3.468M10 20.098a10.026 10.026 0 01-4.022-.656m0 0a1 1 0 01-.637-1.11L5.942 16m0 0a1 1 0 011.11-.637l2.81 1.096m0 0a1 1 0 011.11-.637l2.81 1.096m0 0a1 1 0 011.11-.637l2.81 1.096m0 0a1 1 0 011.11-.637l2.81 1.096m0 0a1 1 0 011.11-.637l2.81 1.096"></path></svg>
-                        <span class="text-xl font-bold mb-2 text-white">${product.defaultText}</span>
-                        <p class="text-sm text-gray-400 text-center">Tekan 'Generate AI' untuk melihat visual premium produk ini.</p>
-                    </div>
-                `;
-            }
-
-            return `
-                <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group transform hover:-translate-y-1">
-                    <div class="h-96 overflow-hidden bg-gray-100 flex items-center justify-center">
-                        ${imageContent}
-                    </div>
-
-                    <div class="p-6 text-center">
-                        <h4 class="font-['Playfair_Display'] text-2xl font-semibold mb-2 text-gray-900 truncate">${product.name}</h4>
-                        <p class="text-xl font-extrabold text-red-700 mb-4">${product.price}</p>
-                        
-                        <div class="flex flex-col space-y-3">
-                            <button 
-                                id="cart-btn-${product.id}"
-                                class="bg-gray-800 text-white py-2 px-6 rounded-lg font-semibold shadow-md hover:bg-black transition-all duration-300 transform hover:shadow-lg"
-                                data-product-id="${product.id}"
-                            >
-                                Tambah ke Keranjang
-                            </button>
-                            <button 
-                                id="generate-btn-${product.id}"
-                                class="py-2 px-6 rounded-lg font-bold text-sm transition-colors duration-300 ${
-                                    isLoading ? 'bg-gray-400 text-gray-700 cursor-not-allowed' : 'bg-red-100 text-red-700 hover:bg-red-200'
-                                }"
-                                data-product-id="${product.id}"
-                                ${isLoading ? 'disabled' : ''}
-                            >
-                                ${isLoading ? 'Sedang Diproses...' : 'Generate Gambar Produk (AI)'}
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        // Render Konten Beranda/Produk
-        function renderHomeSection() {
-            let errorHtml = '';
-            if (error) {
-                errorHtml = `
-                    <div class="p-4 mb-8 text-center text-red-700 bg-red-100 border border-red-300 rounded-lg shadow-inner">
-                        <span class="font-bold">Error API:</span> ${error}
-                    </div>
-                `;
-            }
-
-            const heroSection = `
-                <div class="bg-white p-12 md:p-20 rounded-2xl shadow-xl flex flex-col md:flex-row items-center justify-between my-8">
-                    <div class="md:w-1/2 mb-10 md:mb-0 md:pr-10">
-                        <h2 class="font-['Playfair_Display'] text-5xl font-bold text-gray-900 mb-4 leading-tight">
-                            KOLEKSI MINIMALIS. EKSKLUSIVITAS KAZA.
-                        </h2>
-                        <p class="text-xl text-gray-600 mb-8">
-                            Jadilah yang berbeda. Temukan busana premium yang memadukan keanggunan minimalis dengan karakter KAZA yang berani.
-                        </p>
-                        <a href="${waLink}" target="_blank" rel="noopener noreferrer">
-                            <button class="bg-red-700 text-white text-lg py-3 px-8 rounded-full font-semibold shadow-red-600/50 shadow-lg hover:bg-red-800 transition-all duration-300 transform hover:scale-105">
-                                HUBUNGI KAMI VIA WA SEKARANG
-                            </button>
-                        </a>
-                    </div>
-                    <div class="md:w-5/12 w-full h-80 md:h-96 rounded-lg overflow-hidden shadow-2xl">
-                        <img 
-                            src="https://placehold.co/1000x1000/2C3E50/ECF0F1?text=KAZA+Premium+Style" 
-                            alt="Koleksi Pakaian Premium KAZA" 
-                            class="w-full h-full object-cover"
-                        />
-                    </div>
-                </div>
-            `;
-            
-            const productCards = products.map(renderProductCard).join('');
-
-            return `
-                <section id="home-section">
-                    ${heroSection}
-                    <h3 class="text-center font-['Playfair_Display'] text-4xl font-bold text-gray-900 mt-16 mb-12">
-                        PILAHAN EKSLUSIF KAZA
-                    </h3>
-                    ${errorHtml}
-                    <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
-                        ${productCards}
-                    </div>
-                </section>
-            `;
-        }
-        
-        // Render Konten Tentang Kami
-        function renderAboutSection() {
-            return `
-                <section id="about-us-section" class="py-20">
-                    <div class="bg-white p-10 md:p-16 rounded-2xl shadow-2xl text-center">
-                        <h3 class="font-['Playfair_Display'] text-5xl font-bold text-red-700 mb-8">
-                            MEMBANGUN GAYA, MENCIPTAKAN KARAKTER
-                        </h3>
-                        
-                        <p class="text-lg text-gray-700 mb-6 max-w-3xl mx-auto">
-                            Selamat datang di KAZA. Kami bukan hanya merek pakaian; kami adalah kurator gaya hidup. Kami berdiri di atas keyakinan bahwa kualitas sejati terletak pada detail, dan fashion harus menjadi perpanjangan otentik dari diri Anda. Didirikan pada tahun 2024, KAZA bertekad untuk mendefinisikan ulang pakaian sehari-hari menjadi <span class="font-bold italic">karya seni yang wearable</span>.
-                        </p>
-
-                        <p class="text-lg text-gray-700 mb-6 max-w-3xl mx-auto">
-                            Setiap koleksi, dari Kemeja Linen yang elegan hingga T-Shirt maskot kami yang penuh ekspresi, dibuat dengan <span class="font-bold">komitmen tanpa kompromi terhadap material dan pengerjaan</span>. Kami memilih kain terbaik untuk memastikan kenyamanan maksimal dan daya tahan yang melampaui tren sesaat.
-                        </p>
-
-                        <p class="text-lg text-gray-700 mb-10 max-w-3xl mx-auto font-bold">
-                            Filosofi Kami: Kami merayakan keberanian untuk menjadi sederhana namun mencolok. KAZA mengajak Anda berinvestasi pada <span class="text-red-700">kualitas, bukan kuantitas</span>. Temukan pakaian yang akan bertahan, baik dalam lemari maupun dalam memori Anda. Bergabunglah dengan kami dalam perjalanan gaya yang berkelas dan etis.
-                        </p>
-                        
-                        <a href="${waLink}" target="_blank" rel="noopener noreferrer">
-                            <button class="bg-red-700 text-white text-lg py-3 px-8 rounded-full font-semibold shadow-red-600/50 shadow-lg hover:bg-red-800 transition-all duration-300 transform hover:scale-105">
-                                HUBUNGI KAMI (WA: ${waNumber})
-                            </button>
-                        </a>
-                    </div>
-                </section>
-            `;
-        }
-
-        // Render Header dan Pasang Event Listener Navigasi
-        function renderHeader() {
-            const headerHtml = `
-                <div class="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center py-4">
-                    <h1 class="font-['Playfair_Display'] text-3xl font-bold text-gray-900 tracking-wider">KAZA</h1>
-                    <nav class="flex space-x-6 mt-3 md:mt-0 items-center">
-                        <a href="#" id="nav-home" 
-                            class="text-lg font-medium transition-colors pb-1 hover:text-red-700 ${activeSection === 'home' ? 'text-red-700 border-b-2 border-red-700' : 'text-gray-700'}">
-                            Beranda/Produk
-                        </a>
-                        <a href="#" id="nav-about" 
-                            class="text-lg font-medium transition-colors pb-1 hover:text-red-700 ${activeSection === 'about' ? 'text-red-700 border-b-2 border-red-700' : 'text-gray-700'}">
-                            Tentang Kami
-                        </a>
-                        <!-- Kontak WA dengan logo yang jelas -->
-                        <a href="${waLink}" target="_blank" rel="noopener noreferrer" 
-                            class="text-lg font-medium py-1 px-3 rounded-full bg-green-500 text-white hover:bg-green-600 transition-colors flex items-center shadow-md">
-                            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12.002 0C6.182 0 1.5 4.682 1.5 10.5c0 1.954.542 3.844 1.57 5.513l-.99 3.61c-.13.47.013.98.375 1.344.364.364.87.506 1.342.373l3.61-.99c1.67.928 3.56 1.37 5.515 1.37C17.817 21 22.5 16.318 22.5 10.5S17.818 0 12.002 0zm0 18.818c-1.87 0-3.693-.5-5.26-1.442l-.37-.22-.38.1.37 1.35.12.44-.75.36c-1.25-.56-2.31-1.39-3.2-2.39l.23-.23.1-.38 1.35.37-.22-.37c-.94-1.565-1.44-3.388-1.44-5.26 0-5.11 4.15-9.26 9.26-9.26s9.26 4.15 9.26 9.26-4.15 9.26-9.26 9.26zm2.86-5.83c-.15-.07-.9-.45-.96-.48s-.1-.08-.14.07-.48.58-.58.69-.2.12-.37.06c-.17-.06-.72-.26-1.37-.84-.5-.45-.84-1.01-.94-1.18-.1-.17 0-.15.07-.22s.15-.17.22-.26.09-.16.07-.26-.06-.17-.26-.41c-.2-.24-.5-.6-.69-.87-.19-.26-.16-.22-.26-.23s-.2-.01-.3-.01c-.17 0-.46.06-.69.3s-.84.82-.84 2.02 1.05 2.34 1.2 2.5.38.25.61.26c.24.02.78.03 1.15-.3.37-.3.57-.7.82-1.06.25-.37.47-.63.64-.78.17-.15.35-.11.48-.04.14.07.95.48 1.08.54.14.05.24.08.26.12.02.04.02.26-.1.52-.12.26-.78.78-.9.9-.12.12-.22.18-.4.27z"/></svg>
-                            WA ${waNumber}
-                        </a>
-                        <a href="#" id="cart-icon" class="text-xl text-gray-700 hover:text-red-700 transition-colors">🛒</a>
-                    </nav>
-                </div>
-            `;
-            document.getElementById('header-container').innerHTML = headerHtml;
-
-            // Attach event listeners for navigation
-            document.getElementById('nav-home').addEventListener('click', (e) => {
-                e.preventDefault();
-                activeSection = 'home';
-                renderApp();
-            });
-            document.getElementById('nav-about').addEventListener('click', (e) => {
-                e.preventDefault();
-                activeSection = 'about';
-                renderApp();
-            });
-            document.getElementById('cart-icon').addEventListener('click', (e) => {
-                e.preventDefault();
-                showNotification('Keranjang masih kosong, silakan tambah produk.');
-            });
-        }
-        
-        // Render Footer
-        function renderFooter() {
-            const footerHtml = `
-                <div class="container mx-auto px-4 text-center">
-                    <h4 class="font-['Playfair_Display'] text-2xl font-bold mb-4">KAZA - Eksklusivitas dalam Kesederhanaan</h4>
-                    <p class="text-md mb-4">Siap untuk koleksi terbaik Anda? Hubungi kami sekarang!</p>
-                    <p class="text-xl mb-6">📞 WhatsApp: 
-                        <a href="${waLink}" target="_blank" rel="noopener noreferrer" class="text-green-400 hover:text-green-300 font-extrabold ml-2 transition-colors underline">
-                            ${waNumber}
-                        </a>
-                    </p>
-                    <p class="text-xs text-gray-400">KAZA | Fashion Minimalis Berkelas. &copy; 2025 All rights reserved. | Dirancang untuk Profesionalisme.</p>
-                </div>
-            `;
-            document.getElementById('footer-container').innerHTML = footerHtml;
-        }
-
-        // Render Konten Utama dan Pasang Event Listener untuk Produk
-        function renderMainContent() {
-            const mainContent = document.getElementById('main-content');
-            
-            if (activeSection === 'home') {
-                mainContent.innerHTML = renderHomeSection();
-                
-                // Pasang Event Listener untuk setiap tombol Generate dan Cart setelah konten dirender
-                products.forEach(product => {
-                    // Tombol Generate AI
-                    const generateBtn = document.getElementById(`generate-btn-${product.id}`);
-                    if (generateBtn) {
-                        generateBtn.addEventListener('click', () => {
-                            // Cek lagi apakah tombol tidak disabled (untuk double-check)
-                            if (!generateBtn.disabled) {
-                                generateProductImage(product.id, product.prompt);
-                            }
-                        });
-                    }
-                    
-                    // Tombol Tambah ke Keranjang
-                    const cartBtn = document.getElementById(`cart-btn-${product.id}`);
-                    if (cartBtn) {
-                        cartBtn.addEventListener('click', () => {
-                            showNotification(`${product.name} berhasil ditambahkan ke keranjang!`);
-                        });
-                    }
-                });
-            } else if (activeSection === 'about') {
-                mainContent.innerHTML = renderAboutSection();
-            }
-        }
-        
-        // Fungsi Utama untuk merender seluruh Aplikasi
-        function renderApp() {
-            renderHeader();
+        // If no apiKey, use fallback (Unsplash) for demo — fast & works on GitHub Pages
+        if (!googleImagenUrl) {
+            // small delay to simulate processing
+            await new Promise(r => setTimeout(r, 700));
+            const url = fallbackImageForPrompt(prompt, 1200);
+            productImages = { ...productImages, [productId]: url };
+            loadingProductId = null;
+            showNotification("Fallback: gambar demo berhasil di-load (Unsplash).");
             renderMainContent();
-            renderFooter();
-            renderNotification(); // Inisialisasi pop-up
+            return;
         }
 
-        // Jalankan aplikasi setelah DOM dimuat
-        window.onload = () => {
-            renderApp();
-            // Otomatis generate gambar produk pertama untuk demonstrasi
-            const firstProduct = products.find(p => p.id === 1);
-            if (firstProduct && !productImages[firstProduct.id]) {
-                generateProductImage(firstProduct.id, firstProduct.prompt);
-                console.log("Memicu generate gambar AI untuk produk pertama secara otomatis.");
-            }
+        // If we have an API key, try to call Google Imagen endpoint with exponential backoff.
+        const payload = {
+            instances: [{ prompt }],
+            parameters: { sampleCount: 1 }
         };
 
+        for (let attempt = 0; attempt < maxRetries; attempt++) {
+            try {
+                const resp = await fetch(googleImagenUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                // If CORS error occurs, the browser will throw before here — catch in catch{}.
+                if (!resp.ok) {
+                    // try to get body for debugging
+                    let body = null;
+                    try { body = await resp.json(); } catch(e){ body = await resp.text().catch(()=>null); }
+                    console.error('API HTTP error', resp.status, body);
+                    throw new Error(`HTTP ${resp.status} - ${JSON.stringify(body)}`);
+                }
+
+                const result = await resp.json();
+
+                // expected place: result.predictions[0].bytesBase64Encoded
+                const base64 = result?.predictions?.[0]?.bytesBase64Encoded;
+                if (!base64) {
+                    console.error('No base64 in response', result);
+                    throw new Error('Respons API tidak berisi data gambar.');
+                }
+
+                // success
+                productImages = { ...productImages, [productId]: base64ToUrl(base64) };
+                loadingProductId = null;
+                renderMainContent();
+                showNotification("Visual AI berhasil dibuat!");
+                return;
+            } catch (err) {
+                console.warn(`Generate attempt ${attempt+1} failed:`, err.message || err);
+                // last attempt -> set error
+                if (attempt === maxRetries - 1) {
+                    error = `Gagal menghasilkan gambar AI. (${err.message || err}).`;
+                    // fallback: set a fallback Unsplash so UI still shows something
+                    productImages = { ...productImages, [productId]: fallbackImageForPrompt(prompt, 1200) };
+                    loadingProductId = null;
+                    renderMainContent();
+                    showNotification("Gagal ke API — menggunakan fallback demo.");
+                    return;
+                }
+                // wait with exponential backoff + jitter
+                const wait = Math.pow(2, attempt) * 700 + Math.random() * 500;
+                await new Promise(r => setTimeout(r, wait));
+            }
+        }
+    }
+
+    // ========== RENDER FUNCTIONS ==========
+    function renderHeader() {
+        const headerHtml = `
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center py-4">
+                <h1 class="font-['Playfair_Display'] text-3xl font-bold text-gray-900 tracking-wider">KAZA</h1>
+                <nav class="flex space-x-6 mt-3 md:mt-0 items-center">
+                    <a href="#" id="nav-home" class="text-lg font-medium transition-colors pb-1 hover:text-red-700 ${activeSection==='home' ? 'text-red-700 border-b-2 border-red-700' : 'text-gray-700'}">Beranda/Produk</a>
+                    <a href="#" id="nav-about" class="text-lg font-medium transition-colors pb-1 hover:text-red-700 ${activeSection==='about' ? 'text-red-700 border-b-2 border-red-700' : 'text-gray-700'}">Tentang Kami</a>
+                    <a href="${waLink}" target="_blank" rel="noopener noreferrer" class="text-lg font-medium py-1 px-3 rounded-full bg-green-500 text-white hover:bg-green-600 transition-colors flex items-center shadow-md">
+                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12.002 0C6.182 0 1.5 4.682 1.5 10.5c0 1.954.542 3.844 1.57 5.513l-.99 3.61c-.13.47.013.98.375 1.344.364.364.87.506 1.342.373l3.61-.99c1.67.928 3.56 1.37 5.515 1.37C17.817 21 22.5 16.318 22.5 10.5S17.818 0 12.002 0zm0 18.818c-1.87 0-3.693-.5-5.26-1.442l-.37-.22-.38.1.37 1.35.12.44-.75.36c-1.25-.56-2.31-1.39-3.2-2.39l.23-.23.1-.38 1.35.37-.22-.37c-.94-1.565-1.44-3.388-1.44-5.26 0-5.11 4.15-9.26 9.26-9.26s9.26 4.15 9.26 9.26-4.15 9.26-9.26 9.26zm2.86-5.83c-.15-.07-.9-.45-.96-.48s-.1-.08-.14.07-.48.58-.58.69-.2.12-.37.06c-.17-.06-.72-.26-1.37-.84-.5-.45-.84-1.01-.94-1.18-.1-.17 0-.15.07-.22s.15-.17.22-.26.09-.16.07-.26-.06-.17-.26-.41c-.2-.24-.5-.6-.69-.87-.19-.26-.16-.22-.26-.23s-.2-.01-.3-.01c-.17 0-.46.06-.69.3s-.84.82-.84 2.02 1.05 2.34 1.2 2.5.38.25.61.26c.24.02.78.03 1.15-.3.37-.3.57-.7.82-1.06.25-.37.47-.63.64-.78.17-.15.35-.11.48-.04.14.07.95.48 1.08.54.14.05.24.08.26.12.02.04.02.26-.1.52-.12.26-.78.78-.9.9-.12.12-.22.18-.4.27z"/></svg>
+                        WA ${waNumber}
+                    </a>
+                    <a href="#" id="cart-icon" class="text-xl text-gray-700 hover:text-red-700 transition-colors">🛒</a>
+                </nav>
+            </div>
+        `;
+        document.getElementById('header-container').innerHTML = headerHtml;
+
+        document.getElementById('nav-home').addEventListener('click', e => { e.preventDefault(); activeSection='home'; renderApp(); });
+        document.getElementById('nav-about').addEventListener('click', e => { e.preventDefault(); activeSection='about'; renderApp(); });
+        document.getElementById('cart-icon').addEventListener('click', e => { e.preventDefault(); showNotification('Keranjang masih kosong, silakan tambah produk.'); });
+    }
+
+    function renderProductCard(product) {
+        const isLoading = loadingProductId === product.id;
+        const imageUrl = productImages[product.id];
+
+        let imageHtml = '';
+        if (isLoading) {
+            imageHtml = `
+            <div class="w-full h-full flex flex-col items-center justify-center animate-pulse bg-gray-200">
+                <svg class="animate-spin h-8 w-8 text-red-700 mb-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <p class="text-gray-700 font-semibold text-sm text-center px-4">Menciptakan Visual KAZA...</p>
+            </div>
+            `;
+        } else if (imageUrl) {
+            // onerror fallback (works correctly)
+            imageHtml = `<img src="${imageUrl}" alt="${escapeHtml(product.name)}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" onerror="this.onerror=null;this.src='https://placehold.co/1000x1000/B00020/FFFFFF?text=Gagal+Memuat+Gambar';" />`;
+        } else {
+            imageHtml = `
+            <div class="w-full h-full flex flex-col items-center justify-center text-gray-500 bg-gray-900 p-4">
+                <svg class="w-16 h-16 mb-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944c6.83-2.924 10.835 1.57 9.387 4.09l-2.028 3.468M10 20.098a10.026 10.026 0 01-4.022-.656m0 0a1 1 0 01-.637-1.11L5.942 16m0 0a1 1 0 011.11-.637l2.81 1.096"></path></svg>
+                <span class="text-xl font-bold mb-2 text-white">${escapeHtml(product.defaultText)}</span>
+                <p class="text-sm text-gray-400 text-center">Tekan 'Generate AI' untuk melihat visual premium produk ini.</p>
+            </div>
+            `;
+        }
+
+        // disabled attribute if loading
+        const generateDisabled = isLoading ? 'disabled' : '';
+
+        return `
+        <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group transform hover:-translate-y-1">
+            <div class="h-96 overflow-hidden bg-gray-100 flex items-center justify-center">
+                ${imageHtml}
+            </div>
+            <div class="p-6 text-center">
+                <h4 class="font-['Playfair_Display'] text-2xl font-semibold mb-2 text-gray-900 truncate-2">${escapeHtml(product.name)}</h4>
+                <p class="text-xl font-extrabold text-red-700 mb-4">${escapeHtml(product.price)}</p>
+                <div class="flex flex-col space-y-3">
+                    <button id="cart-btn-${product.id}" class="bg-gray-800 text-white py-2 px-6 rounded-lg font-semibold shadow-md hover:bg-black transition-all duration-300 transform hover:shadow-lg" data-product-id="${product.id}">
+                        Tambah ke Keranjang
+                    </button>
+                    <button id="generate-btn-${product.id}" class="py-2 px-6 rounded-lg font-bold text-sm transition-colors duration-300 ${isLoading ? 'bg-gray-400 text-gray-700 cursor-not-allowed' : 'bg-red-100 text-red-700 hover:bg-red-200'}" data-product-id="${product.id}" ${generateDisabled}>
+                        ${isLoading ? 'Sedang Diproses...' : 'Generate Gambar Produk (AI)'}
+                    </button>
+                </div>
+            </div>
+        </div>
+        `;
+    }
+
+    function renderHomeSection() {
+        let errorHtml = '';
+        if (error) {
+            errorHtml = `<div class="p-4 mb-8 text-center text-red-700 bg-red-100 border border-red-300 rounded-lg shadow-inner"><span class="font-bold">Error API:</span> ${escapeHtml(error)}</div>`;
+        }
+
+        const hero = `
+        <div class="bg-white p-12 md:p-20 rounded-2xl shadow-xl flex flex-col md:flex-row items-center justify-between my-8">
+            <div class="md:w-1/2 mb-10 md:mb-0 md:pr-10">
+                <h2 class="font-['Playfair_Display'] text-5xl font-bold text-gray-900 mb-4 leading-tight">KOLEKSI MINIMALIS. EKSKLUSIVITAS KAZA.</h2>
+                <p class="text-xl text-gray-600 mb-8">Jadilah yang berbeda. Temukan busana premium yang memadukan keanggunan minimalis dengan karakter KAZA yang berani.</p>
+                <a href="${waLink}" target="_blank" rel="noopener noreferrer">
+                    <button class="bg-red-700 text-white text-lg py-3 px-8 rounded-full font-semibold shadow-red-600/50 shadow-lg hover:bg-red-800 transition-all duration-300 transform hover:scale-105">HUBUNGI KAMI VIA WA SEKARANG</button>
+                </a>
+            </div>
+            <div class="md:w-5/12 w-full h-80 md:h-96 rounded-lg overflow-hidden shadow-2xl">
+                <img src="https://placehold.co/1000x1000/2C3E50/ECF0F1?text=KAZA+Premium+Style" alt="Koleksi Pakaian Premium KAZA" class="w-full h-full object-cover" />
+            </div>
+        </div>
+        `;
+
+        const productGrid = products.map(p => renderProductCard(p)).join('');
+        return `
+            <section id="home-section">
+                ${hero}
+                <h3 class="text-center font-['Playfair_Display'] text-4xl font-bold text-gray-900 mt-16 mb-12">PILAHAN EKSLUSIF KAZA</h3>
+                ${errorHtml}
+                <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+                    ${productGrid}
+                </div>
+            </section>
+        `;
+    }
+
+    function renderAboutSection() {
+        return `
+            <section id="about-us-section" class="py-20">
+                <div class="bg-white p-10 md:p-16 rounded-2xl shadow-2xl text-center">
+                    <h3 class="font-['Playfair_Display'] text-5xl font-bold text-red-700 mb-8">MEMBANGUN GAYA, MENCIPTAKAN KARAKTER</h3>
+                    <p class="text-lg text-gray-700 mb-6 max-w-3xl mx-auto">Selamat datang di KAZA. Kami bukan hanya merek pakaian; kami adalah kurator gaya hidup. ...</p>
+                    <a href="${waLink}" target="_blank" rel="noopener noreferrer">
+                        <button class="bg-red-700 text-white text-lg py-3 px-8 rounded-full font-semibold shadow-red-600/50 shadow-lg hover:bg-red-800 transition-all duration-300 transform hover:scale-105">HUBUNGI KAMI (WA: ${waNumber})</button>
+                    </a>
+                </div>
+            </section>
+        `;
+    }
+
+    function renderFooter() {
+        const footerHtml = `
+            <div class="container mx-auto px-4 text-center">
+                <h4 class="font-['Playfair_Display'] text-2xl font-bold mb-4">KAZA - Eksklusivitas dalam Kesederhanaan</h4>
+                <p class="text-md mb-4">Siap untuk koleksi terbaik Anda? Hubungi kami sekarang!</p>
+                <p class="text-xl mb-6">📞 WhatsApp: <a href="${waLink}" target="_blank" rel="noopener noreferrer" class="text-green-400 hover:text-green-300 font-extrabold ml-2 transition-colors underline">${waNumber}</a></p>
+                <p class="text-xs text-gray-400">KAZA | Fashion Minimalis Berkelas. &copy; 2025 All rights reserved.</p>
+            </div>
+        `;
+        document.getElementById('footer-container').innerHTML = footerHtml;
+    }
+
+    function renderMainContent() {
+        const main = document.getElementById('main-content');
+        if (activeSection === 'home') {
+            main.innerHTML = renderHomeSection();
+            // attach listeners
+            products.forEach(product => {
+                const gen = document.getElementById(`generate-btn-${product.id}`);
+                if (gen) {
+                    gen.addEventListener('click', () => {
+                        if (!gen.disabled) generateProductImage(product.id, product.prompt);
+                    });
+                }
+                const cart = document.getElementById(`cart-btn-${product.id}`);
+                if (cart) {
+                    cart.addEventListener('click', () => {
+                        showNotification(`${product.name} berhasil ditambahkan ke keranjang!`);
+                    });
+                }
+            });
+        } else {
+            main.innerHTML = renderAboutSection();
+        }
+    }
+
+    function renderApp() {
+        renderHeader();
+        renderMainContent();
+        renderFooter();
+        renderNotification();
+    }
+
+    // simple escape to avoid accidental HTML injection from product data
+    function escapeHtml(unsafe) {
+        return String(unsafe)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+    }
+
+    // run
+    window.addEventListener('load', () => {
+        renderApp();
+        // option: auto generate first product (comment out if tidak mau)
+        const first = products[0];
+        if (first && !productImages[first.id]) {
+            // small delay to let UI settle
+            setTimeout(() => {
+                generateProductImage(first.id, first.prompt);
+                console.log('Auto generate demo for first product (or using fallback if no apiKey).');
+            }, 800);
+        }
+    });
     </script>
 </body>
 </html>
+
