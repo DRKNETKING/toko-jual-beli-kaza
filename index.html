@@ -1,379 +1,674 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>KAZA - Koleksi Pakaian Minimalis Premium dengan AI Visual</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>KAZA Shop — Koleksi Pakaian Minimalis Premium</title>
 
-    <!-- Tailwind CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Playfair+Display:wght@700&display=swap');
-
-        @keyframes gradient-shift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        .animated-background {
-            background: linear-gradient(-45deg, #f0f0f0, #e8e8e8, #f0f0f0, #dcdcdc);
-            background-size: 400% 400%;
-            animation: gradient-shift 25s ease infinite;
-        }
-
-        body::-webkit-scrollbar { width: 8px; }
-        body::-webkit-scrollbar-thumb { background-color: #ef4444; border-radius: 4px; }
-        body::-webkit-scrollbar-track { background-color: #f3f4f6; }
-
-        /* simple small helper styles */
-        .truncate-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-    </style>
+  <style>
+    /* Use Inter font */
+    body { font-family: 'Inter', sans-serif; }
+    /* small custom styles to polish visuals */
+    .glass { background: rgba(255,255,255,0.8); backdrop-filter: blur(8px); }
+    .card-shadow { box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+    /* product image container keep aspect ratio */
+    .ratio-1-1{ position: relative; padding-bottom:100%; }
+    .ratio-1-1 > img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; border-radius: 0.5rem; }
+    .product-card:hover .product-image { transform: scale(1.05); transition: transform 0.3s ease-in-out; }
+    .product-image { transition: transform 0.3s ease-in-out; }
+  </style>
 </head>
-<body class="font-inter">
+<body class="bg-rose-50 text-slate-800 font-sans">
 
-    <div id="app" class="min-h-screen animated-background">
-        <header id="header-container" class="sticky top-0 z-10 bg-white shadow-lg"></header>
+  <!-- Header -->
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur glass border-b border-rose-100">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <!-- Mengganti image logo dengan placeholder yang valid -->
+        <img src="https://placehold.co/112x32/f43f5e/ffffff?text=KAZA" alt="KAZA Logo" class="w-28 h-auto object-contain rounded-md"/>
+        <div>
+          <h1 class="text-xl font-bold tracking-tight text-rose-600">KAZA Shop</h1>
+          <p class="text-xs text-slate-500">Minimalis • Premium • Ramah Kantong</p>
+        </div>
+      </div>
 
-        <div id="notification-popup" class="fixed top-5 right-5 z-50 transition-opacity duration-500 opacity-0 pointer-events-none"></div>
+      <div class="flex-1 max-w-xl hidden md:block">
+        <input id="search" type="search" placeholder="Cari produk, mis: kaos, teddy..." class="w-full rounded-full px-4 py-2 border border-slate-200 focus:border-rose-300 focus:ring-2 focus:ring-rose-300 outline-none transition"/>
+      </div>
 
-        <main id="main-content" class="container mx-auto px-4 sm:px-6 lg:px-8 py-10"></main>
+      <div class="flex items-center gap-2 sm:gap-3">
+        <button id="wishlistBtn" class="hidden md:inline-flex items-center gap-2 p-2 rounded-full hover:bg-rose-50 text-slate-600 transition duration-200">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
+          <span class="hidden lg:inline text-sm">Wishlist</span>
+        </button>
+        <button id="cartBtn" class="relative inline-flex items-center gap-2 px-3 py-2 rounded-full bg-rose-600 text-white hover:bg-rose-700 transition">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 9m13-9l2 9m-6-9v9"/></svg>
+          <span id="cartCount" class="absolute -top-1 -right-1 text-xs bg-white text-rose-600 rounded-full w-4 h-4 flex items-center justify-center font-bold ring-2 ring-rose-600">0</span>
+          <span class="hidden sm:inline font-semibold text-sm">Keranjang</span>
+        </button>
+      </div>
+    </div>
+  </header>
 
-        <footer id="footer-container" class="bg-gray-900 text-white py-10 mt-10 shadow-inner"></footer>
-    </div>
+  <!-- Main -->
+  <main class="max-w-7xl mx-auto px-4 py-8">
+    <section class="grid grid-cols-1 md:grid-cols-4 gap-6">
 
-    <script>
-    // =========================
-    // CONFIG (Edit di sini)
-    // =========================
-    // Jika ingin mencoba Google Imagen langsung dari browser, letakkan API key di bawah.
-    // PERINGATAN: Menaruh API key di file client (HTML/JS) berisiko (siapa pun bisa melihatnya).
-    // Rekomendasi: Untuk produksi, simpan API key di server dan panggil endpoint server.
-    const apiKey = ""; // <-- masukkan API key di sini jika mau (opsional)
-    // Google imagen endpoint (menggunakan key query param seperti contoh awal).
-    const googleImagenUrl = apiKey ? `https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${apiKey}` : null;
+      <!-- Left Filters -->
+      <aside class="md:col-span-1 hidden md:block">
+        <div class="p-6 glass card-shadow rounded-xl border border-rose-100">
+          <h3 class="font-bold text-lg mb-4 text-rose-600">Saring Produk</h3>
+          <div class="space-y-4 text-sm text-slate-700">
+            <div>
+              <label class="block text-xs text-slate-500 mb-1">Kategori</label>
+              <select id="filterCategory" class="w-full rounded-lg border border-slate-300 px-3 py-2 bg-white focus:ring-rose-400 focus:border-rose-400">
+                <option value="all">Semua Kategori</option>
+                <option value="teddy">Teddy Bear</option>
+                <option value="kaos">Kaos & Atasan</option>
+                <option value="jaket">Jaket & Hoodie</option>
+                <option value="aksesoris">Aksesoris</option>
+              </select>
+            </div>
 
-    // Jika googleImagenUrl null (apiKey kosong), app akan menggunakan fallback images (Unsplash) sehingga UI tetap berfungsi.
-    // =========================
+            <div>
+              <label class="block text-xs text-slate-500 mb-1">Urutkan Berdasarkan</label>
+              <select id="sortBy" class="w-full rounded-lg border border-slate-300 px-3 py-2 bg-white focus:ring-rose-400 focus:border-rose-400">
+                <option value="newest">Terbaru (Default)</option>
+                <option value="price_asc">Harga: Rendah ke Tinggi</option>
+                <option value="price_desc">Harga: Tinggi ke Rendah</option>
+              </select>
+            </div>
 
-    // STATE
-    let activeSection = 'home';
-    let productImages = {};
-    let loadingProductId = null;
-    let notification = '';
-    let error = null;
+            <div>
+              <label class="block text-xs text-slate-500 mb-2">Maksimal Harga</label>
+              <input id="maxPrice" type="range" min="50000" max="500000" step="10000" value="500000" class="w-full h-2 bg-rose-200 rounded-lg appearance-none cursor-pointer range-lg accent-rose-600" />
+              <div class="text-sm text-slate-600 mt-2">Maks: <span id="maxPriceVal" class="font-semibold text-rose-600">Rp500.000</span></div>
+            </div>
 
-    const waNumber = '085216991236';
-    const waLink = `https://wa.me/62${waNumber.substring(1)}`;
+            <button id="clearFilters" class="w-full mt-3 text-sm py-2 rounded-lg bg-rose-50 text-rose-600 border border-rose-200 hover:bg-rose-100 transition font-medium">Reset Filter</button>
+          </div>
+        </div>
+      </aside>
 
-    const products = [
-        { id: 1, name: "Kemeja KAZA Klasik Premium", price: "Rp 349.000", prompt: "white linen long-sleeve shirt minimalist cream background texture high-fashion", defaultText: "Kemeja Elegan" },
-        { id: 2, name: "T-Shirt KAZA Beruang", price: "Rp 199.000", prompt: "black oversized t-shirt Kaza Bear mascot logo modern studio lighting", defaultText: "T-Shirt Beruang" },
-        { id: 3, name: "Dress Simple Mid-Length", price: "Rp 480.000", prompt: "flowing midi dress terracotta sunlit fashion studio soft-focus", defaultText: "Dress Minimalis" },
-        { id: 4, name: "Topi Snapback KAZA Premium", price: "Rp 120.000", prompt: "black leather snapback cap KAZA embroidered crimson thread close-up studio", defaultText: "Snapback KAZA" },
-    ];
+      <!-- Product Grid -->
+      <div class="md:col-span-3">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-3xl font-extrabold text-slate-800">Koleksi Produk Terbaru</h2>
+          <div class="text-sm text-slate-500">Menampilkan <span id="resultsCount" class="font-semibold">0</span> produk</div>
+        </div>
 
-    // helper: convert base64 to data URL
-    function base64ToUrl(base64) {
-        return `data:image/png;base64,${base64}`;
-    }
+        <div id="productGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+          <!-- Products inserted here by JS -->
+        </div>
+      </div>
+    </section>
+    
+    <!-- About KAZA Section - Enhanced -->
+    <section id="about" class="max-w-7xl mx-auto py-16 mt-12">
+      <div class="bg-white rounded-2xl card-shadow p-8 glass border border-rose-100 flex flex-col md:flex-row items-center gap-8">
+        <!-- Mengganti image profil dengan placeholder yang valid -->
+        <img src="https://placehold.co/160x160/f87171/ffffff?text=KAZA+Profile" alt="Profil KAZA" class="w-40 h-40 object-cover rounded-full border-4 border-rose-200 shadow-xl"/>
+        <div class="flex-1">
+          <h2 class="text-3xl font-bold mb-3 text-rose-600">Filosofi KAZA</h2>
+          <p class="text-slate-700 leading-relaxed text-lg">
+            KAZA adalah brand fashion yang percaya pada kekuatan <span class="font-semibold text-slate-800">minimalisme elegan</span>. Kami berfokus pada kualitas material, potongan yang sempurna, dan desain *timeless* yang ramah di kantong. Kami memastikan setiap pakaian tidak hanya terlihat bagus, tetapi juga nyaman dan tahan lama.
+          </p>
+        </div>
+      </div>
+    </section>
 
-    // Notification
-    function showNotification(msg) {
-        notification = msg;
-        renderNotification();
-        setTimeout(() => {
-            notification = '';
-            renderNotification();
-        }, 3000);
-    }
+    <!-- Contact Section - Simple Footer Link -->
+    <section class="max-w-7xl mx-auto py-12 px-4 text-center">
+      <h3 class="text-2xl font-bold text-slate-700 mb-4">Punya Pertanyaan?</h3>
+      <a href="mailto:support@kaza.co" class="text-lg font-semibold text-rose-600 hover:text-rose-800 transition">Hubungi Kami: support@kaza.co</a>
+    </section>
+  </main>
 
-    function renderNotification() {
-        const popup = document.getElementById('notification-popup');
-        const visible = notification ? 'opacity-100' : 'opacity-0 pointer-events-none';
-        popup.className = `fixed top-5 right-5 z-50 p-4 bg-red-700 text-white rounded-xl shadow-xl transition-opacity duration-500 ${visible}`;
-        popup.innerText = notification || '';
-    }
+  <!-- Footer -->
+  <footer class="mt-12 border-t border-rose-100 py-6 bg-white/80 glass">
+    <div class="max-w-7xl mx-auto px-4 text-sm text-slate-600 flex justify-between items-center">
+      <div>&copy; <span id="year"></span> KAZA Shop — Semua hak dilindungi</div>
+      <div>Dibuat dengan Gaya Minimalis</div>
+    </div>
+  </footer>
 
-    // Utility fallback image: Unsplash Source by query (no API key required).
-    // Note: Unsplash Source returns different images over time; good for demo/fallback.
-    function fallbackImageForPrompt(prompt, size = 1000) {
-        // choose keywords from prompt (simple): take first 3 words
-        const keywords = prompt.split(/\s+/).slice(0, 4).join(',');
-        return `https://source.unsplash.com/${size}x${size}/?${encodeURIComponent(keywords)}`;
-    }
+  <!-- Product Detail / Cart Modals -->
+  <div id="modals" class="fixed inset-0 z-50 pointer-events-none">
+    <!-- product detail modal backdrop -->
+    <div id="modalBackdrop" class="absolute inset-0 bg-black/30 backdrop-blur-sm hidden"></div>
+    
+    <!-- product detail modal -->
+    <div id="productModal" class="fixed inset-0 flex items-center justify-center p-4 hidden pointer-events-auto">
+      <div class="bg-white rounded-2xl shadow-2xl w-full max-w-3xl overflow-hidden transform scale-95 opacity-0 transition-all duration-300">
+        <div class="flex flex-col sm:flex-row gap-4 p-6">
+          <div class="w-full sm:w-48 flex-shrink-0 ratio-1-1 bg-rose-50 rounded-xl overflow-hidden p-3 border border-rose-100">
+            <img id="modalImg" src="" alt="product" class="object-contain" onerror="this.src='https://placehold.co/192x192/f43f5e/ffffff?text=KAZA+Produk'"/>
+          </div>
+          <div class="flex-1">
+            <h3 id="modalTitle" class="text-2xl font-bold text-slate-900"></h3>
+            <div id="modalPrice" class="text-rose-600 font-extrabold mt-2 text-xl"></div>
+            <p id="modalDesc" class="mt-3 text-slate-600 text-sm leading-relaxed"></p>
 
-    // generate via Google Imagen if apiKey provided; else use fallback
-    async function generateProductImage(productId, prompt, maxRetries = 4) {
-        // prevent multiple simultaneous generates for different products
-        if (loadingProductId && loadingProductId !== productId) {
-            showNotification("Satu gambar sedang diproses. Tunggu sebentar.");
-            return;
-        }
+            <div class="mt-6 pt-4 border-t border-slate-100 flex items-center gap-4">
+              <label for="modalQty" class="text-sm font-medium">Jumlah</label>
+              <input id="modalQty" type="number" min="1" value="1" class="w-20 px-3 py-2 border border-slate-300 rounded-lg text-center focus:ring-rose-400 focus:border-rose-400" />
+              <button id="addToCartBtn" class="ml-auto bg-rose-600 text-white px-6 py-2 rounded-full font-semibold hover:bg-rose-700 transition">Tambah ke Keranjang</button>
+            </div>
+          </div>
+        </div>
+        <div class="p-3 text-right border-t border-rose-100 bg-rose-50/50">
+          <button id="closeProductModal" class="px-4 py-2 rounded-full text-slate-600 hover:bg-slate-100 transition">Tutup Detail</button>
+        </div>
+      </div>
+    </div>
 
-        loadingProductId = productId;
-        error = null;
-        renderMainContent();
+    <!-- cart modal -->
+    <div id="cartModal" class="fixed inset-0 flex items-center justify-center p-4 hidden pointer-events-auto">
+      <div class="bg-white rounded-2xl shadow-2xl w-full max-w-3xl overflow-hidden transform scale-95 opacity-0 transition-all duration-300">
+        <div class="p-6">
+          <h3 class="text-2xl font-bold text-rose-600 mb-4">Keranjang Belanja Anda</h3>
+          <div id="cartItems" class="mt-4 space-y-4 max-h-96 overflow-y-auto pr-2"></div>
+          <div class="mt-6 flex items-center justify-between border-t border-slate-200 pt-4">
+            <div class="text-lg font-medium text-slate-700">Total Pembayaran</div>
+            <div id="cartTotal" class="text-2xl font-extrabold text-rose-700">Rp0</div>
+          </div>
+          <div class="mt-6 flex flex-col sm:flex-row gap-3">
+            <button id="closeCart" class="px-6 py-3 rounded-full border border-slate-300 text-slate-600 hover:bg-slate-50 transition font-semibold">Lanjut Belanja</button>
+            <button id="checkoutBtn" class="sm:ml-auto px-6 py-3 rounded-full bg-rose-600 text-white font-semibold hover:bg-rose-700 transition shadow-lg shadow-rose-200">Lanjutkan ke Checkout</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
-        // If no apiKey, use fallback (Unsplash) for demo — fast & works on GitHub Pages
-        if (!googleImagenUrl) {
-            // small delay to simulate processing
-            await new Promise(r => setTimeout(r, 700));
-            const url = fallbackImageForPrompt(prompt, 1200);
-            productImages = { ...productImages, [productId]: url };
-            loadingProductId = null;
-            showNotification("Fallback: gambar demo berhasil di-load (Unsplash).");
-            renderMainContent();
-            return;
-        }
+    <!-- simple toast for notifications -->
+    <div id="toast" class="fixed bottom-6 right-6 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-lg opacity-0 transition-opacity duration-300"></div>
+  </div>
 
-        // If we have an API key, try to call Google Imagen endpoint with exponential backoff.
-        const payload = {
-            instances: [{ prompt }],
-            parameters: { sampleCount: 1 }
-        };
+  <!-- Template product card (hidden) -->
+  <template id="productTemplate">
+    <div class="product-card bg-white rounded-xl card-shadow overflow-hidden cursor-pointer hover:shadow-xl transition duration-300 border border-rose-100">
+      <div class="ratio-1-1 p-3 bg-rose-50">
+        <img class="product-image" src="" alt="produk" onerror="this.src='https://placehold.co/192x192/f43f5e/ffffff?text=Produk'"/>
+      </div>
+      <div class="p-4">
+        <div class="flex flex-col gap-2">
+          <div>
+            <h4 class="product-name font-bold text-sm text-slate-800 truncate"></h4>
+            <div class="text-xs text-rose-500 product-category font-medium mt-1"></div>
+          </div>
+          <div class="flex items-center justify-between">
+            <div class="product-price font-extrabold text-rose-600 text-base"></div>
+            <button class="add-btn text-xs px-3 py-1 rounded-full bg-rose-600 text-white hover:bg-rose-700 transition font-semibold shadow-md shadow-rose-100">Beli</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
 
-        for (let attempt = 0; attempt < maxRetries; attempt++) {
-            try {
-                const resp = await fetch(googleImagenUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
+  <script type="module">
+    // Setup Firebase for local persistence (using a local polyfill for Canvas environment)
+    const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
 
-                // If CORS error occurs, the browser will throw before here — catch in catch{}.
-                if (!resp.ok) {
-                    // try to get body for debugging
-                    let body = null;
-                    try { body = await resp.json(); } catch(e){ body = await resp.text().catch(()=>null); }
-                    console.error('API HTTP error', resp.status, body);
-                    throw new Error(`HTTP ${resp.status} - ${JSON.stringify(body)}`);
-                }
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc, setDoc, onSnapshot, collection, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    
+    // Firestore & Auth Variables
+    let app, db, auth;
+    let userId = 'anonymous'; // Default ID
+    const appId = typeof __app_id !== 'undefined' ? __app_id : 'kaza-shop-default';
+    
+    // ---------------------------
+    // Dummy product data - Using placeholders for images
+    // ---------------------------
+    const products = [
+      {
+        id: 'p1',
+        name: 'Teddy KAZA Premium',
+        category: 'Teddy Bear',
+        price: 199000,
+        img: 'https://placehold.co/300x300/f43f5e/ffffff?text=Teddy',
+        desc: 'Boneka teddy berkualitas premium dengan pakaian denim eksklusif, cocok untuk hadiah atau pajangan koleksi. Edisi terbatas KAZA.'
+      },
+      {
+        id: 'p2',
+        name: 'Kaos Oversize Signature',
+        category: 'Kaos & Atasan',
+        price: 99000,
+        img: 'https://placehold.co/300x300/a3a3a3/ffffff?text=Kaos',
+        desc: 'Kaos minimalis berlogo KAZA di dada, bahan katun 24s halus dan dingin, nyaman dipakai sehari-hari. Tersedia dalam 3 warna.'
+      },
+      {
+        id: 'p3',
+        name: 'Hoodie KAZA Streetwear',
+        category: 'Jaket & Hoodie',
+        price: 159000,
+        img: 'https://placehold.co/300x300/475569/ffffff?text=Hoodie',
+        desc: 'Hoodie premium desain minimalis, *oversized fit*, cocok untuk *daily wear* dan gaya santai. Bahan fleece tebal.'
+      },
+      {
+        id: 'p4',
+        name: 'Tote Bag Kanvas Premium',
+        category: 'Aksesoris',
+        price: 59000,
+        img: 'https://placehold.co/300x300/8b5cf6/ffffff?text=Tote+Bag',
+        desc: 'Tas tote KAZA dengan bahan kanvas tebal, kuat, dan stylish. Desain logo minimalis. Ideal untuk membawa laptop dan kebutuhan harian.'
+      },
+      {
+        id: 'p5',
+        name: 'Sweater Knit Oversize',
+        category: 'Kaos & Atasan',
+        price: 189000,
+        img: 'https://placehold.co/300x300/fca5a5/444444?text=Sweater',
+        desc: 'Sweater rajut dengan potongan *oversize* yang trendi, nyaman dan hangat untuk cuaca dingin. Warna netral yang mudah dipadukan.'
+      },
+      {
+        id: 'p6',
+        name: 'Celana Cargo Minimalis',
+        category: 'Celana',
+        price: 210000,
+        img: 'https://placehold.co/300x300/10b981/ffffff?text=Cargo',
+        desc: 'Celana cargo dengan 6 kantong fungsional, bahan katun twill yang tidak mudah kusut. Desain slim-fit modern.'
+      },
+      {
+        id: 'p7',
+        name: 'Set Outfit Harian',
+        category: 'Set',
+        price: 349000,
+        img: 'https://placehold.co/300x300/fbbf24/333333?text=Outfit+Set',
+        desc: 'Paket hemat setelan kaos dan celana, cocok untuk tampilan kasual yang kohesif. Hemat 15% dari harga satuan.'
+      },
+    ];
 
-                const result = await resp.json();
+    // State
+    const state = {
+      cart: {}, // productId -> { product, qty }
+      query: '',
+      filters: { category: 'all', maxPrice: 500000 },
+      sortBy: 'newest',
+      isAuthReady: false,
+    };
 
-                // expected place: result.predictions[0].bytesBase64Encoded
-                const base64 = result?.predictions?.[0]?.bytesBase64Encoded;
-                if (!base64) {
-                    console.error('No base64 in response', result);
-                    throw new Error('Respons API tidak berisi data gambar.');
-                }
+    // Database Path (Private user data)
+    const getCartDocRef = () => doc(db, `artifacts/${appId}/users/${userId}/kaza_shop_cart`, 'active_cart');
 
-                // success
-                productImages = { ...productImages, [productId]: base64ToUrl(base64) };
-                loadingProductId = null;
-                renderMainContent();
-                showNotification("Visual AI berhasil dibuat!");
-                return;
-            } catch (err) {
-                console.warn(`Generate attempt ${attempt+1} failed:`, err.message || err);
-                // last attempt -> set error
-                if (attempt === maxRetries - 1) {
-                    error = `Gagal menghasilkan gambar AI. (${err.message || err}).`;
-                    // fallback: set a fallback Unsplash so UI still shows something
-                    productImages = { ...productImages, [productId]: fallbackImageForPrompt(prompt, 1200) };
-                    loadingProductId = null;
-                    renderMainContent();
-                    showNotification("Gagal ke API — menggunakan fallback demo.");
-                    return;
-                }
-                // wait with exponential backoff + jitter
-                const wait = Math.pow(2, attempt) * 700 + Math.random() * 500;
-                await new Promise(r => setTimeout(r, wait));
-            }
-        }
-    }
+    // Helpers
+    function formatRupiah(n){ return 'Rp' + n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.'); }
+    
+    function showToast(msg, timeout=2500){ 
+      const t = document.getElementById('toast'); 
+      t.textContent = msg; 
+      t.style.opacity = 1; 
+      setTimeout(() => { t.style.opacity = 0; }, timeout); 
+    }
 
-    // ========== RENDER FUNCTIONS ==========
-    function renderHeader() {
-        const headerHtml = `
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center py-4">
-                <h1 class="font-['Playfair_Display'] text-3xl font-bold text-gray-900 tracking-wider">KAZA</h1>
-                <nav class="flex space-x-6 mt-3 md:mt-0 items-center">
-                    <a href="#" id="nav-home" class="text-lg font-medium transition-colors pb-1 hover:text-red-700 ${activeSection==='home' ? 'text-red-700 border-b-2 border-red-700' : 'text-gray-700'}">Beranda/Produk</a>
-                    <a href="#" id="nav-about" class="text-lg font-medium transition-colors pb-1 hover:text-red-700 ${activeSection==='about' ? 'text-red-700 border-b-2 border-red-700' : 'text-gray-700'}">Tentang Kami</a>
-                    <a href="${waLink}" target="_blank" rel="noopener noreferrer" class="text-lg font-medium py-1 px-3 rounded-full bg-green-500 text-white hover:bg-green-600 transition-colors flex items-center shadow-md">
-                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12.002 0C6.182 0 1.5 4.682 1.5 10.5c0 1.954.542 3.844 1.57 5.513l-.99 3.61c-.13.47.013.98.375 1.344.364.364.87.506 1.342.373l3.61-.99c1.67.928 3.56 1.37 5.515 1.37C17.817 21 22.5 16.318 22.5 10.5S17.818 0 12.002 0zm0 18.818c-1.87 0-3.693-.5-5.26-1.442l-.37-.22-.38.1.37 1.35.12.44-.75.36c-1.25-.56-2.31-1.39-3.2-2.39l.23-.23.1-.38 1.35.37-.22-.37c-.94-1.565-1.44-3.388-1.44-5.26 0-5.11 4.15-9.26 9.26-9.26s9.26 4.15 9.26 9.26-4.15 9.26-9.26 9.26zm2.86-5.83c-.15-.07-.9-.45-.96-.48s-.1-.08-.14.07-.48.58-.58.69-.2.12-.37.06c-.17-.06-.72-.26-1.37-.84-.5-.45-.84-1.01-.94-1.18-.1-.17 0-.15.07-.22s.15-.17.22-.26.09-.16.07-.26-.06-.17-.26-.41c-.2-.24-.5-.6-.69-.87-.19-.26-.16-.22-.26-.23s-.2-.01-.3-.01c-.17 0-.46.06-.69.3s-.84.82-.84 2.02 1.05 2.34 1.2 2.5.38.25.61.26c.24.02.78.03 1.15-.3.37-.3.57-.7.82-1.06.25-.37.47-.63.64-.78.17-.15.35-.11.48-.04.14.07.95.48 1.08.54.14.05.24.08.26.12.02.04.02.26-.1.52-.12.26-.78.78-.9.9-.12.12-.22.18-.4.27z"/></svg>
-                        WA ${waNumber}
-                    </a>
-                    <a href="#" id="cart-icon" class="text-xl text-gray-700 hover:text-red-700 transition-colors">🛒</a>
-                </nav>
-            </div>
-        `;
-        document.getElementById('header-container').innerHTML = headerHtml;
+    // --- Firebase Initialization and Auth ---
+    async function initFirebase() {
+      try {
+        if (!firebaseConfig) {
+          console.error("Firebase config is missing.");
+          state.isAuthReady = true; // Still set ready to allow non-DB functionality
+          return;
+        }
 
-        document.getElementById('nav-home').addEventListener('click', e => { e.preventDefault(); activeSection='home'; renderApp(); });
-        document.getElementById('nav-about').addEventListener('click', e => { e.preventDefault(); activeSection='about'; renderApp(); });
-        document.getElementById('cart-icon').addEventListener('click', e => { e.preventDefault(); showNotification('Keranjang masih kosong, silakan tambah produk.'); });
-    }
+        app = initializeApp(firebaseConfig);
+        db = getFirestore(app);
+        auth = getAuth(app);
+        
+        // Authentication setup
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+        
+        await new Promise(resolve => {
+          onAuthStateChanged(auth, async (user) => {
+            if (user) {
+              userId = user.uid;
+            } else {
+              if (initialAuthToken) {
+                await signInWithCustomToken(auth, initialAuthToken);
+              } else {
+                await signInAnonymously(auth);
+              }
+              userId = auth.currentUser?.uid || crypto.randomUUID();
+            }
+            
+            state.isAuthReady = true;
+            resolve();
+          });
+        });
 
-    function renderProductCard(product) {
-        const isLoading = loadingProductId === product.id;
-        const imageUrl = productImages[product.id];
+        // Setup real-time cart listener
+        setupCartListener();
 
-        let imageHtml = '';
-        if (isLoading) {
-            imageHtml = `
-            <div class="w-full h-full flex flex-col items-center justify-center animate-pulse bg-gray-200">
-                <svg class="animate-spin h-8 w-8 text-red-700 mb-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                <p class="text-gray-700 font-semibold text-sm text-center px-4">Menciptakan Visual KAZA...</p>
-            </div>
-            `;
-        } else if (imageUrl) {
-            // onerror fallback (works correctly)
-            imageHtml = `<img src="${imageUrl}" alt="${escapeHtml(product.name)}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" onerror="this.onerror=null;this.src='https://placehold.co/1000x1000/B00020/FFFFFF?text=Gagal+Memuat+Gambar';" />`;
-        } else {
-            imageHtml = `
-            <div class="w-full h-full flex flex-col items-center justify-center text-gray-500 bg-gray-900 p-4">
-                <svg class="w-16 h-16 mb-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944c6.83-2.924 10.835 1.57 9.387 4.09l-2.028 3.468M10 20.098a10.026 10.026 0 01-4.022-.656m0 0a1 1 0 01-.637-1.11L5.942 16m0 0a1 1 0 011.11-.637l2.81 1.096"></path></svg>
-                <span class="text-xl font-bold mb-2 text-white">${escapeHtml(product.defaultText)}</span>
-                <p class="text-sm text-gray-400 text-center">Tekan 'Generate AI' untuk melihat visual premium produk ini.</p>
-            </div>
-            `;
-        }
+      } catch (error) {
+        console.error("Error initializing Firebase or signing in:", error);
+        state.isAuthReady = true;
+      }
+    }
 
-        // disabled attribute if loading
-        const generateDisabled = isLoading ? 'disabled' : '';
+    // --- Cart Functions (Firestore Integrated) ---
 
-        return `
-        <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group transform hover:-translate-y-1">
-            <div class="h-96 overflow-hidden bg-gray-100 flex items-center justify-center">
-                ${imageHtml}
-            </div>
-            <div class="p-6 text-center">
-                <h4 class="font-['Playfair_Display'] text-2xl font-semibold mb-2 text-gray-900 truncate-2">${escapeHtml(product.name)}</h4>
-                <p class="text-xl font-extrabold text-red-700 mb-4">${escapeHtml(product.price)}</p>
-                <div class="flex flex-col space-y-3">
-                    <button id="cart-btn-${product.id}" class="bg-gray-800 text-white py-2 px-6 rounded-lg font-semibold shadow-md hover:bg-black transition-all duration-300 transform hover:shadow-lg" data-product-id="${product.id}">
-                        Tambah ke Keranjang
-                    </button>
-                    <button id="generate-btn-${product.id}" class="py-2 px-6 rounded-lg font-bold text-sm transition-colors duration-300 ${isLoading ? 'bg-gray-400 text-gray-700 cursor-not-allowed' : 'bg-red-100 text-red-700 hover:bg-red-200'}" data-product-id="${product.id}" ${generateDisabled}>
-                        ${isLoading ? 'Sedang Diproses...' : 'Generate Gambar Produk (AI)'}
-                    </button>
-                </div>
-            </div>
-        </div>
-        `;
-    }
+    function setupCartListener() {
+      if (!db || !state.isAuthReady) return;
 
-    function renderHomeSection() {
-        let errorHtml = '';
-        if (error) {
-            errorHtml = `<div class="p-4 mb-8 text-center text-red-700 bg-red-100 border border-red-300 rounded-lg shadow-inner"><span class="font-bold">Error API:</span> ${escapeHtml(error)}</div>`;
-        }
+      const docRef = getCartDocRef();
 
-        const hero = `
-        <div class="bg-white p-12 md:p-20 rounded-2xl shadow-xl flex flex-col md:flex-row items-center justify-between my-8">
-            <div class="md:w-1/2 mb-10 md:mb-0 md:pr-10">
-                <h2 class="font-['Playfair_Display'] text-5xl font-bold text-gray-900 mb-4 leading-tight">KOLEKSI MINIMALIS. EKSKLUSIVITAS KAZA.</h2>
-                <p class="text-xl text-gray-600 mb-8">Jadilah yang berbeda. Temukan busana premium yang memadukan keanggunan minimalis dengan karakter KAZA yang berani.</p>
-                <a href="${waLink}" target="_blank" rel="noopener noreferrer">
-                    <button class="bg-red-700 text-white text-lg py-3 px-8 rounded-full font-semibold shadow-red-600/50 shadow-lg hover:bg-red-800 transition-all duration-300 transform hover:scale-105">HUBUNGI KAMI VIA WA SEKARANG</button>
-                </a>
-            </div>
-            <div class="md:w-5/12 w-full h-80 md:h-96 rounded-lg overflow-hidden shadow-2xl">
-                <img src="https://placehold.co/1000x1000/2C3E50/ECF0F1?text=KAZA+Premium+Style" alt="Koleksi Pakaian Premium KAZA" class="w-full h-full object-cover" />
-            </div>
-        </div>
-        `;
+      onSnapshot(docRef, (docSnap) => {
+        if (docSnap.exists()) {
+          const cartData = docSnap.data().items || {};
+          // Convert array/map in Firestore back to the state.cart object structure
+          const newCart = {};
+          Object.entries(cartData).forEach(([productId, item]) => {
+            const product = products.find(p => p.id === productId);
+            if (product) {
+              newCart[productId] = { product, qty: item.qty };
+            }
+          });
+          state.cart = newCart;
+          updateCartCount();
+          // Re-render cart modal if it's open
+          if (!document.getElementById('cartModal').classList.contains('hidden')) {
+            renderCartItems();
+          }
+        } else {
+          state.cart = {};
+          updateCartCount();
+        }
+      }, (error) => {
+        console.error("Error listening to cart changes:", error);
+      });
+    }
 
-        const productGrid = products.map(p => renderProductCard(p)).join('');
-        return `
-            <section id="home-section">
-                ${hero}
-                <h3 class="text-center font-['Playfair_Display'] text-4xl font-bold text-gray-900 mt-16 mb-12">PILAHAN EKSLUSIF KAZA</h3>
-                ${errorHtml}
-                <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
-                    ${productGrid}
-                </div>
-            </section>
-        `;
-    }
+    async function saveCartToDB() {
+      if (!db || !state.isAuthReady) {
+        console.error("DB not ready to save cart.");
+        return;
+      }
+      try {
+        const cartData = {};
+        Object.entries(state.cart).forEach(([id, item]) => {
+          cartData[id] = { qty: item.qty }; // Only store minimal data (qty)
+        });
 
-    function renderAboutSection() {
-        return `
-            <section id="about-us-section" class="py-20">
-                <div class="bg-white p-10 md:p-16 rounded-2xl shadow-2xl text-center">
-                    <h3 class="font-['Playfair_Display'] text-5xl font-bold text-red-700 mb-8">MEMBANGUN GAYA, MENCIPTAKAN KARAKTER</h3>
-                    <p class="text-lg text-gray-700 mb-6 max-w-3xl mx-auto">Selamat datang di KAZA. Kami bukan hanya merek pakaian; kami adalah kurator gaya hidup. ...</p>
-                    <a href="${waLink}" target="_blank" rel="noopener noreferrer">
-                        <button class="bg-red-700 text-white text-lg py-3 px-8 rounded-full font-semibold shadow-red-600/50 shadow-lg hover:bg-red-800 transition-all duration-300 transform hover:scale-105">HUBUNGI KAMI (WA: ${waNumber})</button>
-                    </a>
-                </div>
-            </section>
-        `;
-    }
+        await setDoc(getCartDocRef(), { 
+          userId: userId,
+          items: cartData,
+          lastUpdated: new Date().toISOString()
+        }, { merge: true });
+      } catch (error) {
+        console.error("Failed to save cart to Firestore:", error);
+        showToast('Gagal menyimpan keranjang. Coba lagi.');
+      }
+    }
 
-    function renderFooter() {
-        const footerHtml = `
-            <div class="container mx-auto px-4 text-center">
-                <h4 class="font-['Playfair_Display'] text-2xl font-bold mb-4">KAZA - Eksklusivitas dalam Kesederhanaan</h4>
-                <p class="text-md mb-4">Siap untuk koleksi terbaik Anda? Hubungi kami sekarang!</p>
-                <p class="text-xl mb-6">📞 WhatsApp: <a href="${waLink}" target="_blank" rel="noopener noreferrer" class="text-green-400 hover:text-green-300 font-extrabold ml-2 transition-colors underline">${waNumber}</a></p>
-                <p class="text-xs text-gray-400">KAZA | Fashion Minimalis Berkelas. &copy; 2025 All rights reserved.</p>
-            </div>
-        `;
-        document.getElementById('footer-container').innerHTML = footerHtml;
-    }
+    function updateCartCount(){ 
+      const count = Object.values(state.cart).reduce((s,it)=>s+it.qty,0); 
+      document.getElementById('cartCount').textContent = count; 
+      // Ensure Checkout button is enabled/disabled based on cart content
+      const checkoutBtn = document.getElementById('checkoutBtn');
+      if (checkoutBtn) {
+        checkoutBtn.disabled = count === 0;
+        checkoutBtn.classList.toggle('opacity-50', count === 0);
+        checkoutBtn.classList.toggle('cursor-not-allowed', count === 0);
+      }
+    }
 
-    function renderMainContent() {
-        const main = document.getElementById('main-content');
-        if (activeSection === 'home') {
-            main.innerHTML = renderHomeSection();
-            // attach listeners
-            products.forEach(product => {
-                const gen = document.getElementById(`generate-btn-${product.id}`);
-                if (gen) {
-                    gen.addEventListener('click', () => {
-                        if (!gen.disabled) generateProductImage(product.id, product.prompt);
-                    });
-                }
-                const cart = document.getElementById(`cart-btn-${product.id}`);
-                if (cart) {
-                    cart.addEventListener('click', () => {
-                        showNotification(`${product.name} berhasil ditambahkan ke keranjang!`);
-                    });
-                }
-            });
-        } else {
-            main.innerHTML = renderAboutSection();
-        }
-    }
+    function addToCart(productId, qty = 1){ 
+      if (!state.isAuthReady) { showToast('Sedang memuat data, coba lagi sebentar.'); return; }
 
-    function renderApp() {
-        renderHeader();
-        renderMainContent();
-        renderFooter();
-        renderNotification();
-    }
+      const prod = products.find(p => p.id === productId); 
+      if (!prod) { showToast('Produk tidak ditemukan'); return; }
 
-    // simple escape to avoid accidental HTML injection from product data
-    function escapeHtml(unsafe) {
-        return String(unsafe)
-          .replace(/&/g, "&amp;")
-          .replace(/</g, "&lt;")
-          .replace(/>/g, "&gt;")
-          .replace(/"/g, "&quot;")
-          .replace(/'/g, "&#039;");
-    }
+      const currentQty = state.cart[productId] ? state.cart[productId].qty : 0;
+      state.cart[productId] = { product: prod, qty: currentQty + qty };
+      
+      saveCartToDB(); 
+      showToast(`+${qty} ${prod.name} ditambahkan!`);
+    }
 
-    // run
-    window.addEventListener('load', () => {
-        renderApp();
-        // option: auto generate first product (comment out if tidak mau)
-        const first = products[0];
-        if (first && !productImages[first.id]) {
-            // small delay to let UI settle
-            setTimeout(() => {
-                generateProductImage(first.id, first.prompt);
-                console.log('Auto generate demo for first product (or using fallback if no apiKey).');
-            }, 800);
-        }
-    });
-    </script>
+    function updateCartItemQuantity(productId, newQty) {
+      if (newQty < 1) return;
+      if (state.cart[productId]) {
+        state.cart[productId].qty = newQty;
+        saveCartToDB();
+      }
+    }
+
+    function removeCartItem(productId) {
+      delete state.cart[productId];
+      saveCartToDB();
+      showToast('Produk dihapus dari keranjang.');
+    }
+
+    function renderCartItems(){ 
+      const container = document.getElementById('cartItems'); 
+      container.innerHTML='';
+      let total = 0;
+      const keys = Object.keys(state.cart);
+
+      if(keys.length === 0){ 
+        container.innerHTML = '<div class="text-base text-slate-500 text-center py-8">Keranjang belanja Anda kosong.</div>'; 
+        document.getElementById('cartTotal').textContent = formatRupiah(0); 
+        return; 
+      }
+
+      keys.forEach(k => {
+        const it = state.cart[k]; 
+        const p = it.product; 
+        const subtotal = p.price * it.qty; 
+        total += subtotal;
+
+        const row = document.createElement('div'); 
+        row.className = 'flex items-center gap-4 border border-slate-200 rounded-xl p-3 bg-white hover:bg-rose-50 transition';
+        row.innerHTML = `
+          <img src="${p.img}" alt="${p.name}" class="w-16 h-16 object-cover bg-rose-50 rounded-lg border border-rose-100" onerror="this.src='https://placehold.co/64x64/f43f5e/ffffff?text=P'"/>
+          <div class="flex-1 min-w-0">
+            <div class="font-semibold truncate text-slate-900">${p.name}</div>
+            <div class="text-xs text-rose-500 font-medium">${formatRupiah(p.price)}</div>
+          </div>
+          
+          <div class="flex items-center gap-3">
+            <div class="flex items-center border border-slate-300 rounded-full">
+              <button class="w-8 h-8 flex items-center justify-center text-sm decrease rounded-l-full hover:bg-slate-100">-</button>
+              <div class="w-8 text-center text-sm font-medium">${it.qty}</div>
+              <button class="w-8 h-8 flex items-center justify-center text-sm increase rounded-r-full hover:bg-slate-100">+</button>
+            </div>
+            <div class="font-bold text-rose-700 w-24 text-right hidden sm:block">${formatRupiah(subtotal)}</div>
+            <button class="ml-2 text-rose-500 hover:text-rose-700 remove">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 9a1 1 0 012 0v6a1 1 0 11-2 0V9zm6 0a1 1 0 112 0v6a1 1 0 11-2 0V9z" clip-rule="evenodd" /></svg>
+            </button>
+          </div>
+        `;
+        
+        // attach handlers
+        row.querySelector('.increase').addEventListener('click', () => updateCartItemQuantity(k, it.qty + 1));
+        row.querySelector('.decrease').addEventListener('click', () => { if (it.qty > 1) updateCartItemQuantity(k, it.qty - 1); });
+        row.querySelector('.remove').addEventListener('click', () => removeCartItem(k));
+
+        container.appendChild(row);
+      });
+      document.getElementById('cartTotal').textContent = formatRupiah(total);
+    }
+
+    // --- Modal Functions ---
+
+    function openModal(modalId) {
+      document.getElementById('modalBackdrop').classList.remove('hidden');
+      const modal = document.getElementById(modalId);
+      modal.classList.remove('hidden');
+      setTimeout(() => {
+        modal.querySelector(':first-child').classList.remove('scale-95', 'opacity-0');
+      }, 10);
+    }
+
+    function closeModal(modalId) {
+      const modal = document.getElementById(modalId);
+      modal.querySelector(':first-child').classList.add('scale-95', 'opacity-0');
+      setTimeout(() => {
+        modal.classList.add('hidden');
+        document.getElementById('modalBackdrop').classList.add('hidden');
+      }, 300);
+    }
+
+
+    function openCartModal(){ 
+      renderCartItems(); 
+      openModal('cartModal'); 
+    }
+    
+    function closeCartModal(){ 
+      closeModal('cartModal'); 
+    }
+
+    function openProductModal(p){ 
+      document.getElementById('modalImg').src = p.img; 
+      document.getElementById('modalTitle').textContent = p.name; 
+      document.getElementById('modalPrice').textContent = formatRupiah(p.price); 
+      document.getElementById('modalDesc').textContent = p.desc; 
+      document.getElementById('modalQty').value = 1; 
+
+      // wire add button
+      document.getElementById('addToCartBtn').onclick = () => { 
+        const q = Math.max(1, parseInt(document.getElementById('modalQty').value || 1)); 
+        addToCart(p.id, q); 
+        closeModal('productModal'); 
+      };
+
+      openModal('productModal');
+    }
+    
+    function closeProductModal(){ 
+      closeModal('productModal'); 
+    }
+
+    // Checkout flow (simple client-side simulation)
+    function checkout(){ 
+      const keys = Object.keys(state.cart); 
+      if(keys.length === 0){ showToast('Keranjang kosong, tidak bisa checkout.'); return; }
+
+      // Use a simple custom confirmation modal/dialog instead of alert/prompt
+      // This is a simplified internal function for demo
+      function askForDetails(callback) {
+        // Since we cannot use prompt, we just simulate success after a delay
+        showToast('Simulasi Checkout: Memproses pesanan...');
+        setTimeout(() => callback(true), 1000);
+      }
+
+      askForDetails((success) => {
+        if (success) {
+          // Simulate successful order submission and clear cart
+          state.cart = {}; 
+          saveCartToDB(); // Clear cart in DB
+          closeCartModal(); 
+          showToast('Pesanan berhasil dibuat! Terima kasih telah berbelanja di KAZA.');
+        }
+      });
+    }
+
+    // --- Product Grid Render ---
+    function renderProducts(){
+      const grid = document.getElementById('productGrid'); 
+      grid.innerHTML = '';
+      let list = products.slice();
+
+      // 1. Filter
+      const query = state.query.toLowerCase();
+      if(query) list = list.filter(p => (p.name + ' ' + p.desc).toLowerCase().includes(query));
+      
+      if(state.filters.category !== 'all') {
+        const catQuery = state.filters.category.toLowerCase();
+        list = list.filter(p => p.category.toLowerCase().includes(catQuery));
+      }
+      list = list.filter(p => p.price <= state.filters.maxPrice);
+      
+      // 2. Sort
+      if(state.sortBy === 'price_asc') list.sort((a, b) => a.price - b.price);
+      else if(state.sortBy === 'price_desc') list.sort((a, b) => b.price - a.price);
+      // newest (default order)
+
+      document.getElementById('resultsCount').textContent = list.length;
+
+      const tpl = document.getElementById('productTemplate');
+      list.forEach(p => {
+        const node = tpl.content.cloneNode(true);
+        
+        // Set content
+        node.querySelector('.product-image').src = p.img;
+        node.querySelector('.product-name').textContent = p.name;
+        node.querySelector('.product-category').textContent = p.category;
+        node.querySelector('.product-price').textContent = formatRupiah(p.price);
+        
+        // Attach event listeners
+        const addBtn = node.querySelector('.add-btn');
+        addBtn.addEventListener('click', (e) => {
+          e.stopPropagation(); // Prevent modal from opening
+          addToCart(p.id, 1);
+        });
+        
+        // Click to open product detail modal
+        node.querySelector('.product-card').addEventListener('click', () => openProductModal(p));
+        
+        grid.appendChild(node);
+      });
+    }
+
+    // --- Event Bindings and Initialization ---
+    document.addEventListener('DOMContentLoaded', async () => {
+      document.getElementById('year').textContent = new Date().getFullYear();
+
+      // Initialize Firebase and wait for auth
+      await initFirebase();
+
+      // bind search
+      const search = document.getElementById('search'); 
+      search.addEventListener('input', (e) => { state.query = e.target.value; renderProducts(); });
+
+      // filters
+      document.getElementById('filterCategory').addEventListener('change', (e) => { state.filters.category = e.target.value; renderProducts(); });
+      document.getElementById('sortBy').addEventListener('change', (e) => { state.sortBy = e.target.value; renderProducts(); });
+      
+      const maxPrice = document.getElementById('maxPrice'); 
+      const maxPriceVal = document.getElementById('maxPriceVal'); 
+      maxPrice.addEventListener('input', (e) => { 
+        state.filters.maxPrice = parseInt(e.target.value, 10); 
+        maxPriceVal.textContent = formatRupiah(e.target.value); 
+        renderProducts(); 
+      });
+
+      document.getElementById('clearFilters').addEventListener('click', () => { 
+        state.filters = { category: 'all', maxPrice: 500000 }; 
+        document.getElementById('filterCategory').value = 'all'; 
+        document.getElementById('maxPrice').value = 500000; 
+        maxPriceVal.textContent = formatRupiah(500000); 
+        document.getElementById('sortBy').value = 'newest'; 
+        state.query = '';
+        search.value = '';
+        renderProducts(); 
+        showToast('Filter diatur ulang.');
+      });
+
+      // cart open/close & checkout
+      document.getElementById('cartBtn').addEventListener('click', openCartModal);
+      document.getElementById('closeCart').addEventListener('click', closeCartModal);
+      document.getElementById('checkoutBtn').addEventListener('click', checkout);
+      document.getElementById('closeProductModal').addEventListener('click', closeProductModal);
+      document.getElementById('modalBackdrop').addEventListener('click', () => { closeProductModal(); closeCartModal(); });
+
+      // initial product render
+      renderProducts();
+
+      // small accessibility: close modals with Escape
+      document.addEventListener('keydown', (e) => { 
+        if (e.key === 'Escape') { 
+          closeProductModal(); 
+          closeCartModal(); 
+        } 
+      });
+    });
+  </script>
+
 </body>
 </html>
 
