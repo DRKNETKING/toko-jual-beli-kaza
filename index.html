@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
+// Tidak ada impor 'useEffect' yang diperlukan di sini, sehingga dihapus untuk kode yang lebih bersih.
 
 // --- Komponen Utama Aplikasi ---
 const App = () => {
@@ -15,6 +16,7 @@ const App = () => {
 
     // Nomor Kontak WA (085216991236, diformat untuk link internasional)
     const waNumber = '085216991236';
+    // Link WA dengan format 62
     const waLink = `https://wa.me/62${waNumber.substring(1)}`;
 
     // Konfigurasi API - Kosongkan jika menggunakan Canvas
@@ -59,10 +61,13 @@ const App = () => {
     // Fungsi untuk menampilkan notifikasi pop-up (menggantikan alert)
     const showNotification = useCallback((message) => {
         setNotification(message);
-        setTimeout(() => setNotification(''), 3000);
+        setTimeout(() => setNotification(''), 3000); // Notifikasi hilang setelah 3 detik
     }, []);
 
-    // Fungsi API Call dengan Exponential Backoff
+    /**
+     * Fungsi API Call dengan Exponential Backoff untuk menangani throttling atau kegagalan sementara.
+     * Menggunakan useCallback untuk stabilitas fungsi.
+     */
     const generateProductImage = useCallback(async (productId, prompt, maxRetries = 5) => {
         setLoadingProductId(productId);
         setError(null);
@@ -81,6 +86,7 @@ const App = () => {
                 });
 
                 if (!response.ok) {
+                    // Jika ada error HTTP, lempar error untuk memicu retry atau final failure
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
 
@@ -92,6 +98,7 @@ const App = () => {
                     throw new Error("Gagal mendapatkan data gambar dari API.");
                 }
 
+                // Update state gambar produk
                 setProductImages(prev => ({
                     ...prev,
                     [productId]: base64ToUrl(base64Data)
@@ -103,11 +110,11 @@ const App = () => {
                 if (attempt === maxRetries - 1) {
                     // Gagal setelah semua percobaan
                     console.error("Gagal generate gambar setelah beberapa kali coba:", err);
-                    setError("Gagal menghasilkan gambar. Coba lagi.");
+                    setError("Gagal menghasilkan gambar AI. Silakan periksa koneksi atau coba lagi nanti.");
                     setLoadingProductId(null);
                 } else {
-                    // Terapkan exponential backoff
-                    const delay = Math.pow(2, attempt) * 1000 + Math.random() * 1000;
+                    // Terapkan exponential backoff: 1s, 2s, 4s, 8s, ... + jitter
+                    const delay = Math.pow(2, attempt) * 1000 + Math.random() * 500;
                     await new Promise(resolve => setTimeout(resolve, delay));
                 }
             }
@@ -120,44 +127,51 @@ const App = () => {
         const imageUrl = productImages[product.id];
 
         return (
-            <div className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group">
+            // Animasi Hover: Shadow dan Scale Transisi
+            <div className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group transform hover:-translate-y-1">
                 <div className="h-96 overflow-hidden bg-gray-100 flex items-center justify-center">
                     {isLoading ? (
+                        // Indikator Loading yang Profesional
                         <div className="w-full h-full flex items-center justify-center animate-pulse bg-gray-200">
-                            <svg className="animate-spin h-8 w-8 text-gray-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <svg className="animate-spin h-8 w-8 text-red-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                             </svg>
-                            <p className="ml-3 text-gray-700">Menciptakan Gambar...</p>
+                            <p className="ml-3 text-gray-700 font-medium">Menciptakan Visual KAZA...</p>
                         </div>
                     ) : imageUrl ? (
+                        // Gambar Produk
                         <img 
                             src={imageUrl} 
                             alt={product.name} 
-                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                            // Animasi zoom saat hover
+                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                         />
                     ) : (
                         // Placeholder Awal
-                        <div className="w-full h-full flex flex-col items-center justify-center text-gray-500 bg-gray-200">
-                            <span className="text-xl font-semibold mb-2">{product.defaultText}</span>
-                            <p className="text-sm">Klik 'Generate' untuk visual.</p>
+                        <div className="w-full h-full flex flex-col items-center justify-center text-gray-500 bg-gray-200 p-4">
+                            <svg className="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-5 5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                            <span className="text-xl font-semibold mb-2 text-gray-700">{product.defaultText}</span>
+                            <p className="text-sm text-gray-500">Klik 'Generate' untuk melihat preview AI.</p>
                         </div>
                     )}
                 </div>
 
                 <div className="p-6 text-center">
-                    <h4 className="font-['Playfair_Display'] text-2xl font-semibold mb-2 text-gray-900">{product.name}</h4>
-                    <p className="text-xl font-bold text-red-700 mb-4">{product.price}</p>
+                    <h4 className="font-['Playfair_Display'] text-2xl font-semibold mb-2 text-gray-900 truncate">{product.name}</h4>
+                    <p className="text-xl font-extrabold text-red-700 mb-4">{product.price}</p>
                     
                     <div className="flex flex-col space-y-3">
+                        {/* Tombol Keranjang dengan efek shadow */}
                         <button 
-                            className="bg-gray-800 text-white py-2 px-6 rounded-lg font-semibold hover:bg-black transition-colors duration-300"
+                            className="bg-gray-800 text-white py-2 px-6 rounded-lg font-semibold shadow-md hover:bg-black transition-all duration-300 transform hover:shadow-lg"
                             onClick={() => showNotification(`${product.name} berhasil ditambahkan ke keranjang!`)}
                         >
                             Tambah ke Keranjang
                         </button>
+                        {/* Tombol Generate AI */}
                         <button 
-                            className={`py-2 px-6 rounded-lg font-semibold text-sm transition-colors duration-300 ${
+                            className={`py-2 px-6 rounded-lg font-bold text-sm transition-colors duration-300 ${
                                 isLoading ? 'bg-gray-400 text-gray-700 cursor-not-allowed' : 'bg-red-100 text-red-700 hover:bg-red-200'
                             }`}
                             onClick={() => !isLoading && generateProductImage(product.id, product.prompt)}
@@ -184,9 +198,13 @@ const App = () => {
 
     // Komponen Utama Layout
     return (
-        // INJEKSI CSS UNTUK ANIMASI BACKGROUND
+        // INJEKSI CSS UNTUK ANIMASI BACKGROUND (Menggunakan style tag bawaan React)
         <>
-            <style jsx="true">{`
+            <style>
+                {`
+                /* Font custom untuk judul agar lebih profesional */
+                @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap');
+
                 @keyframes gradient-shift {
                     0% { background-position: 0% 50%; }
                     50% { background-position: 100% 50%; }
@@ -194,35 +212,38 @@ const App = () => {
                 }
                 .animated-background {
                     /* Gradien lembut dari abu-abu terang ke krem */
-                    background: linear-gradient(-45deg, #f5f5f5, #ebebeb, #f5f5f5, #e0e0e0);
+                    background: linear-gradient(-45deg, #f0f0f0, #e8e8e8, #f0f0f0, #dcdcdc);
                     background-size: 400% 400%;
-                    animation: gradient-shift 20s ease infinite;
+                    animation: gradient-shift 25s ease infinite; /* Kecepatan sedikit diperlambat */
                 }
-            `}</style>
+                `}
+            </style>
             
-            <div className="min-h-screen animated-background">
+            <div className="min-h-screen animated-background font-inter">
                 {/* Header */}
-                <header className="sticky top-0 z-10 bg-white shadow-md">
+                <header className="sticky top-0 z-10 bg-white shadow-lg">
                     <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center py-4">
-                        <h1 className="font-['Playfair_Display'] text-3xl font-bold text-gray-900 tracking-wide">KAZA</h1>
-                        <nav className="flex space-x-6 mt-3 md:mt-0">
+                        <h1 className="font-['Playfair_Display'] text-3xl font-bold text-gray-900 tracking-wider">KAZA</h1>
+                        <nav className="flex space-x-6 mt-3 md:mt-0 items-center">
                             <a 
                                 href="#" 
-                                className={`text-lg font-medium transition-colors hover:text-red-700 ${activeSection === 'home' ? 'text-red-700 border-b-2 border-red-700' : 'text-gray-700'}`}
+                                className={`text-lg font-medium transition-colors pb-1 hover:text-red-700 ${activeSection === 'home' ? 'text-red-700 border-b-2 border-red-700' : 'text-gray-700'}`}
                                 onClick={() => setActiveSection('home')}
                             >
                                 Beranda/Produk
                             </a>
                             <a 
                                 href="#" 
-                                className={`text-lg font-medium transition-colors hover:text-red-700 ${activeSection === 'about' ? 'text-red-700 border-b-2 border-red-700' : 'text-gray-700'}`}
+                                className={`text-lg font-medium transition-colors pb-1 hover:text-red-700 ${activeSection === 'about' ? 'text-red-700 border-b-2 border-red-700' : 'text-gray-700'}`}
                                 onClick={() => setActiveSection('about')}
                             >
                                 Tentang Kami
                             </a>
-                            {/* Kontak tidak perlu page sendiri, cukup tautan WA */}
-                            <a href={waLink} target="_blank" rel="noopener noreferrer" className="text-lg font-medium text-gray-700 hover:text-green-600 transition-colors">
-                                📞 WA Kami
+                            {/* Kontak WA dengan logo yang jelas */}
+                            <a href={waLink} target="_blank" rel="noopener noreferrer" 
+                                className="text-lg font-medium py-1 px-3 rounded-full bg-green-500 text-white hover:bg-green-600 transition-colors flex items-center shadow-md">
+                                <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12.002 0C6.182 0 1.5 4.682 1.5 10.5c0 1.954.542 3.844 1.57 5.513l-.99 3.61c-.13.47.013.98.375 1.344.364.364.87.506 1.342.373l3.61-.99c1.67.928 3.56 1.37 5.515 1.37C17.817 21 22.5 16.318 22.5 10.5S17.818 0 12.002 0zm0 18.818c-1.87 0-3.693-.5-5.26-1.442l-.37-.22-.38.1.37 1.35.12.44-.75.36c-1.25-.56-2.31-1.39-3.2-2.39l.23-.23.1-.38 1.35.37-.22-.37c-.94-1.565-1.44-3.388-1.44-5.26 0-5.11 4.15-9.26 9.26-9.26s9.26 4.15 9.26 9.26-4.15 9.26-9.26 9.26zm2.86-5.83c-.15-.07-.9-.45-.96-.48s-.1-.08-.14.07-.48.58-.58.69-.2.12-.37.06c-.17-.06-.72-.26-1.37-.84-.5-.45-.84-1.01-.94-1.18-.1-.17 0-.15.07-.22s.15-.17.22-.26.09-.16.07-.26-.06-.17-.26-.41c-.2-.24-.5-.6-.69-.87-.19-.26-.16-.22-.26-.23s-.2-.01-.3-.01c-.17 0-.46.06-.69.3s-.84.82-.84 2.02 1.05 2.34 1.2 2.5.38.25.61.26c.24.02.78.03 1.15-.3.37-.3.57-.7.82-1.06.25-.37.47-.63.64-.78.17-.15.35-.11.48-.04.14.07.95.48 1.08.54.14.05.24.08.26.12.02.04.02.26-.1.52-.12.26-.78.78-.9.9-.12.12-.22.18-.4.27z"/></svg>
+                                WA {waNumber}
                             </a>
                             <a href="#" className="text-xl text-gray-700 hover:text-red-700 transition-colors">🛒</a>
                         </nav>
@@ -237,8 +258,8 @@ const App = () => {
                     {activeSection === 'home' && (
                         <section id="home-section">
                             
-                            {/* Hero Section */}
-                            <div className="bg-white p-12 md:p-20 rounded-2xl shadow-xl flex flex-col md:flex-row items-center justify-between my-8">
+                            {/* Hero Section dengan animasi masuk */}
+                            <div className="bg-white p-12 md:p-20 rounded-2xl shadow-xl flex flex-col md:flex-row items-center justify-between my-8 animate-in fade-in slide-in-from-top-10 duration-700">
                                 <div className="md:w-1/2 mb-10 md:mb-0 md:pr-10">
                                     <h2 className="font-['Playfair_Display'] text-5xl font-bold text-gray-900 mb-4 leading-tight">
                                         KOLEKSI MINIMALIS. EKSKLUSIVITAS KAZA.
@@ -247,15 +268,16 @@ const App = () => {
                                         Jadilah yang berbeda. Temukan busana premium yang memadukan keanggunan minimalis dengan karakter KAZA yang berani.
                                     </p>
                                     <a href={waLink} target="_blank" rel="noopener noreferrer">
-                                        <button className="bg-red-700 text-white text-lg py-3 px-8 rounded-full font-semibold shadow-lg hover:bg-red-800 transition-all duration-300 transform hover:scale-105">
-                                            HUBUNGI KAMI VIA WA
+                                        {/* Tombol utama dengan efek 3D shadow */}
+                                        <button className="bg-red-700 text-white text-lg py-3 px-8 rounded-full font-semibold shadow-red-600/50 shadow-lg hover:bg-red-800 transition-all duration-300 transform hover:scale-105">
+                                            HUBUNGI KAMI VIA WA SEKARANG
                                         </button>
                                     </a>
                                 </div>
                                 <div className="md:w-5/12 w-full h-80 md:h-96 rounded-lg overflow-hidden shadow-2xl">
                                     {/* Placeholder Gambar Hero */}
                                     <img 
-                                        src="https://placehold.co/1000x1000/1A1A1A/FFFFFF?text=KAZA+Premium+Style" 
+                                        src="https://placehold.co/1000x1000/2C3E50/ECF0F1?text=KAZA+Premium+Style" 
                                         alt="Koleksi Pakaian Premium KAZA" 
                                         className="w-full h-full object-cover"
                                     />
@@ -263,14 +285,14 @@ const App = () => {
                             </div>
 
                             {/* Judul Produk */}
-                            <h3 className="text-center font-['Playfair_Display'] text-4xl font-bold text-gray-900 mt-16 mb-12">
+                            <h3 className="text-center font-['Playfair_Display'] text-4xl font-bold text-gray-900 mt-16 mb-12 animate-in fade-in duration-1000">
                                 PILAHAN EKSLUSIF KAZA
                             </h3>
 
                             {/* Grid Produk */}
                             {error && (
-                                <div className="p-4 mb-4 text-center text-red-700 bg-red-100 border border-red-300 rounded-lg">
-                                    **Error:** {error}
+                                <div className="p-4 mb-8 text-center text-red-700 bg-red-100 border border-red-300 rounded-lg animate-pulse">
+                                    **ERROR API:** {error}
                                 </div>
                             )}
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
@@ -283,14 +305,14 @@ const App = () => {
 
                     {/* --- ABOUT US SECTION --- */}
                     {activeSection === 'about' && (
-                        <section id="about-us-section" className="py-20">
+                        <section id="about-us-section" className="py-20 animate-in fade-in duration-700">
                             <div className="bg-white p-10 md:p-16 rounded-2xl shadow-2xl text-center">
                                 <h3 className="font-['Playfair_Display'] text-5xl font-bold text-red-700 mb-8">
                                     MEMBANGUN GAYA, MENCIPTAKAN KARAKTER
                                 </h3>
                                 
                                 <p className="text-lg text-gray-700 mb-6 max-w-3xl mx-auto">
-                                    Selamat datang di KAZA. Kami bukan hanya merek pakaian; kami adalah kurator gaya hidup. Kami berdiri di atas keyakinan bahwa kualitas sejati terletak pada detail, dan fashion harus menjadi perpanjangan otentik dari diri Anda. Didirikan pada tahun 2024, KAZA bertekad untuk mendefinisikan ulang pakaian sehari-hari menjadi **karya seni yang wearable**.
+                                    Selamat datang di KAZA. Kami bukan hanya merek pakaian; kami adalah kurator gaya hidup. Kami berdiri di atas keyakinan bahwa kualitas sejati terletak pada detail, dan fashion harus menjadi perpanjangan otentik dari diri Anda. Didirikan pada tahun 2024, KAZA bertekad untuk mendefinisikan ulang pakaian sehari-hari menjadi **karya seni yang *wearable***.
                                 </p>
 
                                 <p className="text-lg text-gray-700 mb-6 max-w-3xl mx-auto">
@@ -302,7 +324,7 @@ const App = () => {
                                 </p>
                                 
                                 <a href={waLink} target="_blank" rel="noopener noreferrer">
-                                    <button className="bg-red-700 text-white text-lg py-3 px-8 rounded-full font-semibold shadow-lg hover:bg-red-800 transition-all duration-300 transform hover:scale-105">
+                                    <button className="bg-red-700 text-white text-lg py-3 px-8 rounded-full font-semibold shadow-red-600/50 shadow-lg hover:bg-red-800 transition-all duration-300 transform hover:scale-105">
                                         HUBUNGI KAMI (WA: {waNumber})
                                     </button>
                                 </a>
@@ -311,11 +333,20 @@ const App = () => {
                     )}
                 </main>
 
-                {/* Footer */}
-                <footer className="bg-gray-800 text-white py-8 mt-10">
+                {/* Footer yang lebih menonjol */}
+                <footer className="bg-gray-900 text-white py-10 mt-10 shadow-inner">
                     <div className="container mx-auto px-4 text-center">
-                        <p className="text-sm mb-2">📞 Hubungi Kami via WhatsApp: <a href={waLink} target="_blank" rel="noopener noreferrer" className="text-red-400 hover:text-red-300 font-bold">{waNumber}</a></p>
-                        <p className="text-sm">KAZA | Fashion Minimalis Berkelas. &copy; 2025 All rights reserved. | Dirancang untuk Eksklusivitas.</p>
+                        <h4 className="font-['Playfair_Display'] text-2xl font-bold mb-4">KAZA - Eksklusivitas dalam Kesederhanaan</h4>
+                        <p className="text-md mb-4">Siap untuk koleksi terbaik Anda? Hubungi kami sekarang!</p>
+                        
+                        {/* Kontak WA yang besar di Footer */}
+                        <p className="text-xl mb-6">📞 WhatsApp: 
+                            <a href={waLink} target="_blank" rel="noopener noreferrer" className="text-green-400 hover:text-green-300 font-extrabold ml-2 transition-colors underline">
+                                {waNumber}
+                            </a>
+                        </p>
+                        
+                        <p className="text-xs text-gray-400">KAZA | Fashion Minimalis Berkelas. &copy; 2025 All rights reserved. | Dirancang untuk Profesionalisme.</p>
                     </div>
                 </footer>
             </div>
