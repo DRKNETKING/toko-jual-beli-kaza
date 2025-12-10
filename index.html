@@ -1,529 +1,514 @@
 <!doctype html>
 <html lang="id">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>KAZA Shop — Koleksi Pakaian Minimalis Premium</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>KAZA Shop — Koleksi Pakaian Minimalis Premium</title>
 
-    <!-- Memuat Tailwind CSS dari CDN untuk tampilan modern -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <style>
-        /* small custom styles to polish visuals */
-        /* Efek glassmorphism pada elemen transparan */
-        .glass { background: rgba(255,255,255,0.8); backdrop-filter: blur(8px); }
-        .card-shadow { box-shadow: 0 8px 30px rgba(20,20,30,0.08); }
-        /* product image container keep aspect ratio 1:1 */
-        .ratio-1-1{ position: relative; padding-bottom:100%; }
-        .ratio-1-1 > img{ position:absolute; inset:0; width:100%; height:100%; object-fit:contain; }
-    </style>
+        <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        /* small custom styles to polish visuals */
+        /* Efek glassmorphism pada elemen transparan */
+        .glass { background: rgba(255,255,255,0.8); backdrop-filter: blur(8px); }
+        .card-shadow { box-shadow: 0 8px 30px rgba(20,20,30,0.08); }
+        /* product image container keep aspect ratio 1:1 */
+        .ratio-1-1{ position: relative; padding-bottom:100%; }
+        .ratio-1-1 > img{ position:absolute; inset:0; width:100%; height:100%; object-fit:contain; }
+    </style>
 </head>
 <body class="bg-rose-50 text-slate-800 font-sans">
 
-    <!-- Header (Navigasi Sticky) -->
-    <header class="sticky top-0 z-40 bg-white/80 backdrop-blur glass border-b">
-        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
-            <div class="flex items-center gap-3">
-                <!-- Placeholder Logo -->
-                <img src="https://placehold.co/120x30/f0f0f0/333?text=KAZA+Shop" alt="KAZA" class="w-28 h-auto object-contain rounded"/>
-                <div>
-                    <h1 class="text-xl font-bold tracking-tight">KAZA Shop</h1>
-                    <p class="text-xs text-slate-500">Minimalis • Premium • Ramah Kantong</p>
-                </div>
-            </div>
+        <header class="sticky top-0 z-40 bg-white/80 backdrop-blur glass border-b">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                                <img src="https://placehold.co/120x30/f0f0f0/333?text=KAZA+Shop" alt="KAZA" class="w-28 h-auto object-contain rounded"/>
+                <div>
+                    <h1 class="text-xl font-bold tracking-tight">KAZA Shop</h1>
+                    <p class="text-xs text-slate-500">Minimalis • Premium • Ramah Kantong</p>
+                </div>
+            </div>
 
-            <div class="flex-1 max-w-xl">
-                <!-- Search Bar -->
-                <input id="search" type="search" placeholder="Cari produk, mis: kaos, teddy..." class="w-full rounded-full px-4 py-2 border focus:ring-2 focus:ring-rose-300 outline-none transition"/>
-            </div>
+            <div class="flex-1 max-w-xl">
+                                <input id="search" type="search" placeholder="Cari produk, mis: kaos, teddy..." class="w-full rounded-full px-4 py-2 border focus:ring-2 focus:ring-rose-300 outline-none transition"/>
+            </div>
 
-            <!-- Tombol Aksi Kanan -->
-            <div class="flex items-center gap-3">
-                <!-- Tombol Kontak Cepat (WA) -->
-                <a href="https://wa.me/0851-6898-0966?text=Halo%20KAZA%20Shop%2C%20saya%20tertarik%20dengan%20produk%20Anda." target="_blank" class="hidden sm:inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-green-500 text-white font-semibold hover:bg-green-600 transition shadow-lg shadow-green-200">
-                    <!-- WhatsApp Icon SVG -->
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.001 0C6.115 0 1.341 4.774 1.341 10.658c0 1.76.438 3.42 1.22 4.887L1.05 23.33l7.98-2.112c1.42.77 3.03 1.18 4.07 1.18 5.885 0 10.659-4.774 10.659-10.658C22.66 4.774 17.886 0 12.001 0zm4.5 13.905c-.244 0-.488-.122-.732-.244l-1.954-1.096c-.122-.061-.305-.122-.488-.061l-.061.061c-.549.366-1.159.854-1.768 1.159-.61.305-1.28.488-1.953.488-.61 0-1.159-.122-1.768-.427-.61-.305-1.159-.732-1.768-1.28-1.159-1.159-1.953-2.5-1.953-4.145 0-1.159.549-2.013 1.28-2.562.732-.549 1.464-.854 2.196-.854.122 0 .244.061.427.183l1.954 1.096c.122.061.305.122.488.061l.061-.061c.549-.366 1.159-.854 1.768-1.159.61-.305 1.28-.488 1.953-.488 1.159 0 2.256.488 3.294 1.464 1.038.976 1.587 2.196 1.587 3.66c0 1.645-.794 3.05-1.953 4.209-.854.854-1.83 1.28-2.927 1.28zm1.096-7.442c-.244-.244-.549-.305-.854-.305-.305 0-.61.061-.854.305l-1.28 1.28c-.183.183-.305.427-.305.732s.122.549.305.732l.732.732c.122.122.305.183.488.183s.366-.061.488-.183l.732-.732c-.122-.122-.305-.183-.488-.183s.366.061.488.183l1.28 1.28c.244.244.549.305.854.305.305 0 .61-.061.854-.305l1.28-1.28c.183-.183.305-.427.305-.732s-.122-.549-.305-.732l-1.28-1.28c-.244-.244-.549-.305-.854-.305z"/></svg>
-                    Hubungi (0852...)
-                </a>
+                        <div class="flex items-center gap-3">
+                                <a href="https://wa.me/085168980966?text=Halo%20KAZA%20Shop%2C%20saya%20tertarik%20dengan%20produk%20Anda." target="_blank" class="hidden sm:inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-green-500 text-white font-semibold hover:bg-green-600 transition shadow-lg shadow-green-200">
+                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.001 0C6.115 0 1.341 4.774 1.341 10.658c0 1.76.438 3.42 1.22 4.887L1.05 23.33l7.98-2.112c1.42.77 3.03 1.18 4.07 1.18 5.885 0 10.659-4.774 10.659-10.658C22.66 4.774 17.886 0 12.001 0zm4.5 13.905c-.244 0-.488-.122-.732-.244l-1.954-1.096c-.122-.061-.305-.122-.488-.061l-.061.061c-.549.366-1.159.854-1.768 1.159-.61.305-1.28.488-1.953.488-.61 0-1.159-.122-1.768-.427-.61-.305-1.159-.732-1.768-1.28-1.159-1.159-1.953-2.5-1.953-4.145 0-1.159.549-2.013 1.28-2.562.732-.549 1.464-.854 2.196-.854.122 0 .244.061.427.183l1.954 1.096c.122.061.305.122.488.061l.061-.061c.549-.366 1.159-.854 1.768-1.159.61-.305 1.28-.488 1.953-.488 1.159 0 2.256.488 3.294 1.464 1.038.976 1.587 2.196 1.587 3.66c0 1.645-.794 3.05-1.953 4.209-.854.854-1.83 1.28-2.927 1.28zm1.096-7.442c-.244-.244-.549-.305-.854-.305-.305 0-.61.061-.854.305l-1.28 1.28c-.183.183-.305.427-.305.732s.122.549.305.732l.732.732c.122.122.305.183.488.183s.366-.061.488-.183l.732-.732c-.122-.122-.305-.183-.488-.183s.366.061.488.183l1.28 1.28c.244.244.549.305.854.305.305 0 .61-.061.854-.305l1.28-1.28c.183-.183.305-.427.305-.732s-.122-.549-.305-.732l-1.28-1.28c-.244-.244-.549-.305-.854-.305z"/></svg>
+                    Hubungi (0851...)
+                </a>
 
-                <button id="wishlistBtn" class="hidden md:inline-flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-slate-100 transition">Wishlist</button>
-                <button id="cartBtn" class="relative inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-rose-600 text-white hover:opacity-95 transition shadow-lg shadow-rose-200">
-                    <!-- Cart Icon SVG -->
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 9m13-9l2 9m-6-9v9"/></svg>
-                    <span id="cartCount" class="absolute -top-2 -right-2 text-xs bg-white text-rose-600 rounded-full w-5 h-5 flex items-center justify-center font-semibold border-2 border-rose-500">0</span>
-                    <span class="hidden sm:inline">Keranjang</span>
-                </button>
-            </div>
-        </div>
-    </header>
+                <button id="wishlistBtn" class="hidden md:inline-flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-slate-100 transition">Wishlist</button>
+                <button id="cartBtn" class="relative inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-rose-600 text-white hover:opacity-95 transition shadow-lg shadow-rose-200">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 9m13-9l2 9m-6-9v9"/></svg>
+                    <span id="cartCount" class="absolute -top-2 -right-2 text-xs bg-white text-rose-600 rounded-full w-5 h-5 flex items-center justify-center font-semibold border-2 border-rose-500">0</span>
+                    <span class="hidden sm:inline">Keranjang</span>
+                </button>
+            </div>
+        </div>
+    </header>
 
-    <!-- Main Content -->
-    <main class="max-w-6xl mx-auto px-4 py-8">
-        <section class="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <main class="max-w-6xl mx-auto px-4 py-8">
+        <section class="grid grid-cols-1 md:grid-cols-4 gap-6">
 
-            <!-- Left Filters -->
-            <aside class="md:col-span-1 hidden md:block">
-                <div class="p-4 glass card-shadow rounded-2xl border border-rose-100">
-                    <h3 class="font-semibold mb-3 text-lg text-slate-700">Filter Belanja</h3>
-                    <div class="space-y-4 text-sm text-slate-700">
-                        
-                        <div>
-                            <label class="block text-xs text-slate-500 mb-1">Kategori</label>
-                            <select id="filterCategory" class="w-full rounded-lg border px-3 py-2 focus:ring-rose-300 outline-none">
-                                <option value="all">Semua Produk</option>
-                                <option value="teddy">Teddy Bear</option>
-                                <option value="kaos">Kaos</option>
-                                <option value="jaket">Jaket/Hoodie</option>
-                                <option value="aksesoris">Aksesoris</option>
-                            </select>
-                        </div>
+                        <aside class="md:col-span-1 hidden md:block">
+                <div class="p-4 glass card-shadow rounded-2xl border border-rose-100">
+                    <h3 class="font-semibold mb-3 text-lg text-slate-700">Filter Belanja</h3>
+                    <div class="space-y-4 text-sm text-slate-700">
+                        
+                        <div>
+                            <label class="block text-xs text-slate-500 mb-1">Kategori</label>
+                            <select id="filterCategory" class="w-full rounded-lg border px-3 py-2 focus:ring-rose-300 outline-none">
+                                <option value="all">Semua Produk</option>
+                                <option value="teddy">Teddy Bear</option>
+                                <option value="kaos">Kaos</option>
+                                <option value="jaket">Jaket/Hoodie</option>
+                                <option value="aksesoris">Aksesoris</option>
+                            </select>
+                        </div>
 
-                        <div>
-                            <label class="block text-xs text-slate-500 mb-1">Urutkan Berdasarkan</label>
-                            <select id="sortBy" class="w-full rounded-lg border px-3 py-2 focus:ring-rose-300 outline-none">
-                                <option value="newest">Terbaru</option>
-                                <option value="price_asc">Harga: Rendah ke Tinggi</option>
-                                <option value="price_desc">Harga: Tinggi ke Rendah</option>
-                            </select>
-                        </div>
+                        <div>
+                            <label class="block text-xs text-slate-500 mb-1">Urutkan Berdasarkan</label>
+                            <select id="sortBy" class="w-full rounded-lg border px-3 py-2 focus:ring-rose-300 outline-none">
+                                <option value="newest">Terbaru</option>
+                                <option value="price_asc">Harga: Rendah ke Tinggi</option>
+                                <option value="price_desc">Harga: Tinggi ke Rendah</option>
+                            </select>
+                        </div>
 
-                        <div>
-                            <label class="block text-xs text-slate-500 mb-1">Maksimal Harga</label>
-                            <input id="maxPrice" type="range" min="0" max="500000" step="10000" value="500000" class="w-full h-2 bg-rose-200 rounded-lg appearance-none cursor-pointer range-lg" />
-                            <div class="text-xs text-slate-600 mt-2 font-medium">Maks: <span id="maxPriceVal" class="text-rose-600">Rp500.000</span></div>
-                        </div>
+                        <div>
+                            <label class="block text-xs text-slate-500 mb-1">Maksimal Harga</label>
+                            <input id="maxPrice" type="range" min="0" max="500000" step="10000" value="500000" class="w-full h-2 bg-rose-200 rounded-lg appearance-none cursor-pointer range-lg" />
+                            <div class="text-xs text-slate-600 mt-2 font-medium">Maks: <span id="maxPriceVal" class="text-rose-600">Rp500.000</span></div>
+                        </div>
 
-                        <button id="clearFilters" class="w-full mt-3 text-sm py-2 rounded-xl bg-slate-100 hover:bg-slate-200 transition">Reset Filter</button>
-                    </div>
-                </div>
-            </aside>
+                        <button id="clearFilters" class="w-full mt-3 text-sm py-2 rounded-xl bg-slate-100 hover:bg-slate-200 transition">Reset Filter</button>
+                    </div>
+                </div>
+            </aside>
 
-            <!-- Product Grid -->
-            <div class="md:col-span-3">
-                <div class="flex items-center justify-between mb-6 border-b pb-2">
-                    <h2 class="text-2xl font-bold">Koleksi Produk Terbaru</h2>
-                    <div class="text-sm text-slate-500">Menampilkan <span id="resultsCount">0</span> produk</div>
-                </div>
+                        <div class="md:col-span-3">
+                <div class="flex items-center justify-between mb-6 border-b pb-2">
+                    <h2 class="text-2xl font-bold">Koleksi Produk Terbaru</h2>
+                    <div class="text-sm text-slate-500">Menampilkan <span id="resultsCount">0</span> produk</div>
+                </div>
 
-                <div id="productGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-                    <!-- Produk akan dirender di sini oleh JavaScript -->
-                </div>
-            </div>
-        </section>
-        
-        <!-- Profil KAZA -->
-        <section class="max-w-6xl mx-auto py-12">
-            <div class="bg-white rounded-3xl card-shadow p-8 glass flex flex-col md:flex-row items-center gap-8 border border-rose-100">
-                <img src="https://placehold.co/150x150/f9f9f9/888?text=KAZA" alt="Profil KAZA" class="w-40 h-40 object-cover rounded-full border-4 border-rose-100 shadow-xl"/>
-                <div>
-                    <h2 class="text-3xl font-bold mb-3 text-rose-600">Filosofi KAZA</h2>
-                    <p class="text-slate-600 leading-relaxed">KAZA adalah brand fashion minimalis premium yang berfokus pada kualitas terbaik, desain yang abadi (timeless), namun tetap **ramah kantong**. Kami menyediakan pakaian dan aksesoris dengan desain modern, simple, dan cocok untuk segala aktivitas harian Anda. Kenakan KAZA, rasakan kualitas premium setiap hari.</p>
-                </div>
-            </div>
-        </section>
+                <div id="productGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                                    </div>
+            </div>
+        </section>
+        
+                <section class="max-w-6xl mx-auto py-12">
+            <div class="bg-white rounded-3xl card-shadow p-8 glass flex flex-col md:flex-row items-center gap-8 border border-rose-100">
+                <img src="https://placehold.co/150x150/f9f9f9/888?text=KAZA" alt="Profil KAZA" class="w-40 h-40 object-cover rounded-full border-4 border-rose-100 shadow-xl"/>
+                <div>
+                    <h2 class="text-3xl font-bold mb-3 text-rose-600">Filosofi KAZA</h2>
+                    <p class="text-slate-600 leading-relaxed">KAZA adalah brand fashion minimalis premium yang berfokus pada kualitas terbaik, desain yang abadi (timeless), namun tetap **ramah kantong**. Kami menyediakan pakaian dan aksesoris dengan desain modern, simple, dan cocok untuk segala aktivitas harian Anda. Kenakan KAZA, rasakan kualitas premium setiap hari.</p>
+                </div>
+            </div>
+        </section>
 
-        <!-- Section Katalog Lengkap (tetap dipertahankan) -->
-        <section id="katalog" class="py-20 px-4 bg-white/50 border-t border-b border-rose-100">
-            <div class="max-w-7xl mx-auto">
-                <h2 class="text-4xl font-bold text-center mb-10 text-black">Katalog Produk Unggulan</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-[1.02]">
-                        <img src="https://placehold.co/500x600/f0f0f0/333?text=Kemeja+Minimalis" class="rounded-xl mb-4" alt="Kemeja Minimalis" />
-                        <h3 class="text-xl font-semibold">Kemeja Minimalis</h3>
-                        <p class="text-gray-600">Material premium, jahitan halus, sangat nyaman untuk bekerja atau santai.</p>
-                    </div>
-                    <div class="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-[1.02]">
-                        <img src="https://placehold.co/500x600/f0f0f0/333?text=Kaos+Oversize" class="rounded-xl mb-4" alt="Kaos Oversize" />
-                        <h3 class="text-xl font-semibold">Kaos Oversize</h3>
-                        <p class="text-gray-600">Nyaman dipakai, gaya modern, bahan adem tidak panas.</p>
-                    </div>
-                    <div class="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-[1.02]">
-                        <img src="https://placehold.co/500x600/f0f0f0/333?text=Hoodie+Premium" class="rounded-xl mb-4" alt="Hoodie Premium" />
-                        <h3 class="text-xl font-semibold">Hoodie Premium</h3>
-                        <p class="text-gray-600">Hangat, minimalis, elegan. Wajib punya untuk musim dingin.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+                <section id="katalog" class="py-20 px-4 bg-white/50 border-t border-b border-rose-100">
+            <div class="max-w-7xl mx-auto">
+                <h2 class="text-4xl font-bold text-center mb-10 text-black">Katalog Produk Unggulan</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-[1.02]">
+                        <img src="https://placehold.co/500x600/f0f0f0/333?text=Kemeja+Minimalis" class="rounded-xl mb-4" alt="Kemeja Minimalis" />
+                        <h3 class="text-xl font-semibold">Kemeja Minimalis</h3>
+                        <p class="text-gray-600">Material premium, jahitan halus, sangat nyaman untuk bekerja atau santai.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-[1.02]">
+                        <img src="https://placehold.co/500x600/f0f0f0/333?text=Kaos+Oversize" class="rounded-xl mb-4" alt="Kaos Oversize" />
+                        <h3 class="text-xl font-semibold">Kaos Oversize</h3>
+                        <p class="text-gray-600">Nyaman dipakai, gaya modern, bahan adem tidak panas.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-[1.02]">
+                        <img src="https://placehold.co/500x600/f0f0f0/333?text=Hoodie+Premium" class="rounded-xl mb-4" alt="Hoodie Premium" />
+                        <h3 class="text-xl font-semibold">Hoodie Premium</h3>
+                        <p class="text-gray-600">Hangat, minimalis, elegan. Wajib punya untuk musim dingin.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        <!-- Contact Section DENGAN NOMOR BARU -->
-        <section id="contact" class="py-20 px-4 bg-gray-100 text-black rounded-b-xl">
-            <div class="max-w-6xl mx-auto text-center">
-                <h2 class="text-4xl font-bold mb-10 text-rose-600">Kontak Kami</h2>
-                <p class="text-lg text-slate-700">Hubungi kami segera untuk pemesanan atau pertanyaan terkait produk.</p>
+                <section id="contact" class="py-20 px-4 bg-gray-100 text-black rounded-b-xl">
+            <div class="max-w-6xl mx-auto text-center">
+                <h2 class="text-4xl font-bold mb-10 text-rose-600">Kontak Kami</h2>
+                <p class="text-lg text-slate-700">Hubungi kami segera untuk pemesanan atau pertanyaan terkait produk.</p>
 
-                <div class="mt-8 space-y-4 p-6 bg-white rounded-2xl shadow-lg inline-block border border-gray-200">
-                    <p class="text-xl font-semibold text-slate-800">Layanan Pelanggan KAZA:</p>
-                    <p class="text-lg">Email: <span class="font-bold text-blue-600">support@kaza.co</span></p>
-                    <p class="text-lg">Instagram: <span class="font-bold text-rose-600">@kaza.style</span></p>
-                    
-                    <!-- NOMOR KONTAK BARU DENGAN LINK WA -->
-                    <p class="text-2xl mt-4 font-extrabold">WhatsApp/Telp:</p>
-                    <a href="https://wa.me/085168980966" class="text-3xl font-extrabold text-green-600 hover:text-green-700 hover:underline transition">0851-6898-0966</a>
-                </div>
-            </div>
-        </section>
+                <div class="mt-8 space-y-4 p-6 bg-white rounded-2xl shadow-lg inline-block border border-gray-200">
+                    <p class="text-xl font-semibold text-slate-800">Layanan Pelanggan KAZA:</p>
+                    <p class="text-lg">Email: <span class="font-bold text-blue-600">support@kaza.co</span></p>
+                    <p class="text-lg">Instagram: <span class="font-bold text-rose-600">@kaza.style</span></p>
+                    
+                                        <p class="text-2xl mt-4 font-extrabold">WhatsApp/Telp:</p>
+                    <a href="https://wa.me/085168980966" class="text-3xl font-extrabold text-green-600 hover:text-green-700 hover:underline transition">0851-6898-0966</a>
+                </div>
+            </div>
+        </section>
 
-    </main>
+    </main>
 
-    <!-- Footer -->
-    <footer class="mt-12 border-t py-6 bg-white/80 glass">
-        <div class="max-w-6xl mx-auto px-4 text-sm text-slate-600 flex justify-between">
-            <div>&copy; <span id="year"></span> KAZA Shop — Semua hak dilindungi</div>
-            <div>Dibuat dengan semangat minimalis</div>
-        </div>
-    </footer>
+        <footer class="mt-12 border-t py-6 bg-white/80 glass">
+        <div class="max-w-6xl mx-auto px-4 text-sm text-slate-600 flex justify-between">
+            <div>&copy; <span id="year"></span> KAZA Shop — Semua hak dilindungi</div>
+            <div>Dibuat dengan semangat minimalis</div>
+        </div>
+    </footer>
 
-    <!-- Product Detail / Cart Modals (Hidden) -->
-    <div id="modals" class="fixed inset-0 z-50 pointer-events-none">
-        
-        <!-- Product Detail Modal -->
-        <div id="productModal" class="fixed inset-0 flex items-center justify-center p-4 hidden pointer-events-auto bg-black/30">
-            <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden animate-in fade-in zoom-in duration-300">
-                <div class="flex flex-col sm:flex-row gap-4 p-6">
-                    <div class="w-full sm:w-44 ratio-1-1 bg-slate-100 rounded-xl overflow-hidden p-3 flex-shrink-0">
-                        <img id="modalImg" src="" alt="product" class="w-full h-full object-contain" />
-                    </div>
-                    <div class="flex-1">
-                        <h3 id="modalTitle" class="text-2xl font-bold text-slate-800"></h3>
-                        <div id="modalPrice" class="text-rose-600 font-extrabold mt-2 text-xl"></div>
-                        <p id="modalDesc" class="mt-3 text-slate-600 text-sm leading-relaxed"></p>
+        <div id="modals" class="fixed inset-0 z-50 pointer-events-none">
+        
+                <div id="productModal" class="fixed inset-0 flex items-center justify-center p-4 hidden pointer-events-auto bg-black/30">
+            <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden animate-in fade-in zoom-in duration-300">
+                <div class="flex flex-col sm:flex-row gap-4 p-6">
+                    <div class="w-full sm:w-44 ratio-1-1 bg-slate-100 rounded-xl overflow-hidden p-3 flex-shrink-0">
+                        <img id="modalImg" src="" alt="product" class="w-full h-full object-contain" />
+                    </div>
+                    <div class="flex-1">
+                        <h3 id="modalTitle" class="text-2xl font-bold text-slate-800"></h3>
+                        <div id="modalPrice" class="text-rose-600 font-extrabold mt-2 text-xl"></div>
+                        <p id="modalDesc" class="mt-3 text-slate-600 text-sm leading-relaxed"></p>
 
-                        <div class="mt-6 flex items-center gap-3">
-                            <label class="text-sm font-semibold">Jumlah</label>
-                            <input id="modalQty" type="number" min="1" value="1" class="w-20 px-3 py-2 border rounded-lg focus:ring-rose-300 focus:border-rose-300 transition" />
-                            <button id="addToCartBtn" class="ml-auto bg-rose-600 text-white px-5 py-2 rounded-xl hover:bg-rose-700 transition font-semibold">Tambah ke Keranjang</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="p-4 text-right border-t bg-gray-50">
-                    <button id="closeProductModal" class="px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-200 transition">Tutup Detail</button>
-                </div>
-            </div>
-        </div>
+                        <div class="mt-6 flex items-center gap-3">
+                            <label class="text-sm font-semibold">Jumlah</label>
+                            <input id="modalQty" type="number" min="1" value="1" class="w-20 px-3 py-2 border rounded-lg focus:ring-rose-300 focus:border-rose-300 transition" />
+                            <button id="addToCartBtn" class="ml-auto bg-rose-600 text-white px-5 py-2 rounded-xl hover:bg-rose-700 transition font-semibold">Tambah ke Keranjang</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-4 text-right border-t bg-gray-50">
+                    <button id="closeProductModal" class="px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-200 transition">Tutup Detail</button>
+                </div>
+            </div>
+        </div>
 
-        <!-- Cart Modal -->
-        <div id="cartModal" class="fixed inset-0 flex items-center justify-center p-4 hidden pointer-events-auto bg-black/30">
-            <div class="bg-white rounded-2xl shadow-2xl w-full max-w-3xl overflow-hidden animate-in fade-in zoom-in duration-300">
-                <div class="p-6">
-                    <h3 class="text-2xl font-bold border-b pb-3 text-slate-800">Keranjang Belanja Anda</h3>
-                    
-                    <div id="cartItems" class="mt-4 space-y-4 max-h-80 overflow-y-auto pr-2">
-                        <!-- Items rendered here -->
-                    </div>
+                <div id="cartModal" class="fixed inset-0 flex items-center justify-center p-4 hidden pointer-events-auto bg-black/30">
+            <div class="bg-white rounded-2xl shadow-2xl w-full max-w-3xl overflow-hidden animate-in fade-in zoom-in duration-300">
+                <div class="p-6">
+                    <h3 class="text-2xl font-bold border-b pb-3 text-slate-800">Keranjang Belanja Anda</h3>
+                    
+                    <div id="cartItems" class="mt-4 space-y-4 max-h-80 overflow-y-auto pr-2">
+                                            </div>
 
-                    <div class="mt-6 flex items-center justify-between border-t pt-4">
-                        <div class="text-lg font-medium text-slate-700">Subtotal</div>
-                        <div id="cartTotal" class="text-2xl font-extrabold text-rose-600">Rp0</div>
-                    </div>
+                    <div class="mt-6 flex items-center justify-between border-t pt-4">
+                        <div class="text-lg font-medium text-slate-700">Subtotal</div>
+                        <div id="cartTotal" class="text-2xl font-extrabold text-rose-600">Rp0</div>
+                    </div>
 
-                    <div class="mt-6 flex gap-3">
-                        <button id="closeCart" class="px-4 py-2 rounded-xl border hover:bg-slate-100 transition flex-1">Lanjut Belanja</button>
-                        <!-- Tombol Checkout yang mengarahkan ke fungsi WhatsApp -->
-                        <button id="checkoutBtn" class="px-4 py-2 rounded-xl bg-green-600 text-white hover:bg-green-700 transition font-semibold flex-1 flex items-center justify-center gap-2 shadow-lg shadow-green-200">
-                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.001 0C6.115 0 1.341 4.774 1.341 10.658c0 1.76.438 3.42 1.22 4.887L1.05 23.33l7.98-2.112c1.42.77 3.03 1.18 4.07 1.18 5.885 0 10.659-4.774 10.659-10.658C22.66 4.774 17.886 0 12.001 0zm4.5 13.905c-.244 0-.488-.122-.732-.244l-1.954-1.096c-.122-.061-.305-.122-.488-.061l-.061.061c-.549.366-1.159.854-1.768 1.159-.61.305-1.28.488-1.953.488-.61 0-1.159-.122-1.768-.427-.61-.305-1.159-.732-1.768-1.28-1.159-1.159-1.953-2.5-1.953-4.145 0-1.159.549-2.013 1.28-2.562.732-.549 1.464-.854 2.196-.854.122 0 .244.061.427.183l1.954 1.096c.122.061.305.122.488.061l.061-.061c.549-.366 1.159-.854 1.768-1.159.61-.305 1.28-.488 1.953-.488 1.159 0 2.256.488 3.294 1.464 1.038.976 1.587 2.196 1.587 3.66c0 1.645-.794 3.05-1.953 4.209-.854.854-1.83 1.28-2.927 1.28zm1.096-7.442c-.244-.244-.549-.305-.854-.305-.305 0-.61.061-.854.305l-1.28 1.28c-.183.183-.305.427-.305.732s.122.549.305.732l.732.732c.122.122.305.183.488.183s.366-.061.488-.183l.732-.732c-.122-.122-.305-.183-.488-.183s.366.061.488.183l1.28 1.28c.244.244.549.305.854.305.305 0 .61-.061.854-.305l1.28-1.28c.183-.183.305-.427.305-.732s-.122-.549-.305-.732l-1.28-1.28c-.244-.244-.549-.305-.854-.305z"/></svg>
-                            Checkout via WhatsApp
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
+                    <div class="mt-6 flex gap-3">
+                        <button id="closeCart" class="px-4 py-2 rounded-xl border hover:bg-slate-100 transition flex-1">Lanjut Belanja</button>
+                                                <button id="checkoutBtn" class="px-4 py-2 rounded-xl bg-green-600 text-white hover:bg-green-700 transition font-semibold flex-1 flex items-center justify-center gap-2 shadow-lg shadow-green-200">
+                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.001 0C6.115 0 1.341 4.774 1.341 10.658c0 1.76.438 3.42 1.22 4.887L1.05 23.33l7.98-2.112c1.42.77 3.03 1.18 4.07 1.18 5.885 0 10.659-4.774 10.659-10.658C22.66 4.774 17.886 0 12.001 0zm4.5 13.905c-.244 0-.488-.122-.732-.244l-1.954-1.096c-.122-.061-.305-.122-.488-.061l-.061.061c-.549.366-1.159.854-1.768 1.159-.61.305-1.28.488-1.953.488-.61 0-1.159-.122-1.768-.427-.61-.305-1.159-.732-1.768-1.28-1.159-1.159-1.953-2.5-1.953-4.145 0-1.159.549-2.013 1.28-2.562.732-.549 1.464-.854 2.196-.854.122 0 .244.061.427.183l1.954 1.096c.122.061.305.122.488.061l.061-.061c.549-.366 1.159-.854 1.768-1.159.61-.305 1.28-.488 1.953-.488 1.159 0 2.256.488 3.294 1.464 1.038.976 1.587 2.196 1.587 3.66c0 1.645-.794 3.05-1.953 4.209-.854.854-1.83 1.28-2.927 1.28zm1.096-7.442c-.244-.244-.549-.305-.854-.305-.305 0-.61.061-.854.305l-1.28 1.28c-.183.183-.305.427-.305.732s.122.549.305.732l.732.732c.122.122.305.183.488.183s.366-.061.488-.183l.732-.732c-.122-.122-.305-.183-.488-.183s.366.061.488.183l1.28 1.28c.244.244.549.305.854.305.305 0 .61-.061.854-.305l1.28-1.28c.183-.183.305-.427.305-.732s-.122-.549-.305-.732l-1.28-1.28c-.244-.244-.549-.305-.854-.305z"/></svg>
+                            Checkout via WhatsApp
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        <!-- Simple Toast Notification -->
-        <div id="toast" class="fixed bottom-6 right-6 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-xl opacity-0 transition duration-300"></div>
-    </div>
+                <div id="toast" class="fixed bottom-6 right-6 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-xl opacity-0 transition duration-300"></div>
+    </div>
 
-    <!-- Template product card (hidden) -->
-    <template id="productTemplate">
-        <div class="bg-white rounded-xl card-shadow overflow-hidden cursor-pointer transition duration-200 hover:shadow-xl hover:scale-[1.03]">
-            <div class="ratio-1-1 p-3 bg-slate-50">
-                <img class="product-image w-full h-full" src="" alt="produk" onerror="this.onerror=null;this.src='https://placehold.co/400x400/fff/ccc?text=Produk';" />
-            </div>
-            <div class="p-3">
-                <div class="flex flex-col gap-2">
-                    <div class="flex-1">
-                        <h4 class="product-name font-semibold text-sm truncate"></h4>
-                        <div class="text-xs text-slate-500 product-category capitalize"></div>
-                    </div>
-                    <div class="flex justify-between items-center">
-                        <div class="product-price font-bold text-rose-600 text-lg"></div>
-                        <button class="add-btn text-xs px-3 py-1 rounded-full bg-rose-500 text-white border border-rose-600 hover:bg-rose-700 transition">Beli</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </template>
+        <template id="productTemplate">
+        <div class="bg-white rounded-xl card-shadow overflow-hidden cursor-pointer transition duration-200 hover:shadow-xl hover:scale-[1.03]">
+            <div class="ratio-1-1 p-3 bg-slate-50">
+                <img class="product-image w-full h-full" src="" alt="produk" onerror="this.onerror=null;this.src='https://placehold.co/400x400/fff/ccc?text=Produk';" />
+            </div>
+            <div class="p-3">
+                <div class="flex flex-col gap-2">
+                    <div class="flex-1">
+                        <h4 class="product-name font-semibold text-sm truncate"></h4>
+                        <div class="text-xs text-slate-500 product-category capitalize"></div>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <div class="product-price font-bold text-rose-600 text-lg"></div>
+                        <button class="add-btn text-xs px-3 py-1 rounded-full bg-rose-500 text-white border border-rose-600 hover:bg-rose-700 transition">Beli</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
 
-    <script>
-        // ---------------------------
-        // Dummy product data
-        // ---------------------------
+    <script>
+        // ---------------------------
+        // Dummy product data
+        // ---------------------------
 
-        const products = [
-            // Menggunakan placeholder image untuk memastikan kode berjalan tanpa error
-            { id: 'p4', name: 'Hoodie KAZA Streetwear', category: 'jaket', price: 159000, img: 'images/hoodie.png', desc: 'Hoodie premium desain minimalis, cocok untuk daily wear dengan bahan tebal.' },
-            { id: 'p5', name: 'Tote Bag KAZA Edition', category: 'aksesoris', price: 59000, img: 'images/totebag.png', desc: 'Tas tote KAZA dengan bahan tebal, kuat, dan stylish.' },
-            { id: 'p1', name: 'Teddy KAZA Premium', category: 'teddy', price: 199000, img: 'images/bd504d90-0d23-4b04-91d4-5db8edff5f38.png', desc: 'Boneka teddy berkualitas premium, pakaian denim, cocok hadiah atau pajangan.' },
-            { id: 'p2', name: 'Kaos KAZA Minimal', category: 'kaos', price: 99000, img: 'images/kaos.png', desc: 'Kaos minimalis berlogo KAZA, bahan katun halus, nyaman dipakai sehari-hari.' },
-            { id: 'p3', name: 'Set Teddy + Kaos', category: 'set', price: 279000, img: 'images/outfit.png', desc: 'Paket hemat teddy + kaos KAZA.' },
-            { id: 'p6', name: 'Celana Cargo Minimal', category: 'celana', price: 179000, img: 'images/cargo.png', desc: 'Celana cargo modern dengan potongan slimfit dan banyak kantong.' },
-        ];
+        const products = [
+            // Menggunakan placeholder image untuk memastikan kode berjalan tanpa error
+            { id: 'p4', name: 'Hoodie KAZA Streetwear', category: 'jaket', price: 159000, img: 'images/hoodie.png', desc: 'Hoodie premium desain minimalis, cocok untuk daily wear dengan bahan tebal.' },
+            { id: 'p5', name: 'Tote Bag KAZA Edition', category: 'aksesoris', price: 59000, img: 'images/totebag.png', desc: 'Tas tote KAZA dengan bahan tebal, kuat, dan stylish.' },
+            { id: 'p1', name: 'Teddy KAZA Premium', category: 'teddy', price: 199000, img: 'images/bd504d90-0d23-4b04-91d4-5db8edff5f38.png', desc: 'Boneka teddy berkualitas premium, pakaian denim, cocok hadiah atau pajangan.' },
+            { id: 'p2', name: 'Kaos KAZA Minimal', category: 'kaos', price: 99000, img: 'images/kaos.png', desc: 'Kaos minimalis berlogo KAZA, bahan katun halus, nyaman dipakai sehari-hari.' },
+            { id: 'p3', name: 'Set Teddy + Kaos', category: 'set', price: 279000, img: 'images/outfit.png', desc: 'Paket hemat teddy + kaos KAZA.' },
+            { id: 'p6', name: 'Celana Cargo Minimal', category: 'celana', price: 179000, img: 'images/cargo.png', desc: 'Celana cargo modern dengan potongan slimfit dan banyak kantong.' },
+        ];
 
-        // State Management
-        const state = {
-            cart: {}, // { productId: { product, qty } }
-            query: '',
-            filters: { category: 'all', maxPrice: 500000 },
-            sortBy: 'newest'
-        };
+        // State Management
+        const state = {
+            cart: {}, // { productId: { product, qty } }
+            query: '',
+            filters: { category: 'all', maxPrice: 500000 },
+            sortBy: 'newest'
+        };
 
-        // Helpers
-        function formatRupiah(n){ return 'Rp' + n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.'); }
-        function showToast(msg, timeout=3000){ 
-            const t=document.getElementById('toast'); 
-            t.textContent = msg; 
-            t.style.opacity=1; 
-            setTimeout(()=>t.style.opacity=0, timeout); 
-        }
+        // Helpers
+        function formatRupiah(n){ return 'Rp' + n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.'); }
+        function showToast(msg, timeout=3000){ 
+            const t=document.getElementById('toast'); 
+            t.textContent = msg; 
+            t.style.opacity=1; 
+            setTimeout(()=>t.style.opacity=0, timeout); 
+        }
 
-        // Render functions
-        function renderProducts(){
-            const grid = document.getElementById('productGrid'); 
-            grid.innerHTML='';
-            let list = products.slice();
+        // Render functions
+        function renderProducts(){
+            const grid = document.getElementById('productGrid'); 
+            grid.innerHTML='';
+            let list = products.slice();
 
-            // 1. Filter & Search
-            if(state.query) list = list.filter(p=> (p.name + ' ' + p.desc).toLowerCase().includes(state.query.toLowerCase()));
-            if(state.filters.category !== 'all') list = list.filter(p=>p.category===state.filters.category);
-            list = list.filter(p=> p.price <= state.filters.maxPrice);
-            
-            // 2. Sort
-            if(state.sortBy==='price_asc') list.sort((a,b)=>a.price-b.price);
-            else if(state.sortBy==='price_desc') list.sort((a,b)=>b.price-a.price);
-            // 'newest' uses default array order
+            // 1. Filter & Search
+            if(state.query) list = list.filter(p=> (p.name + ' ' + p.desc).toLowerCase().includes(state.query.toLowerCase()));
+            if(state.filters.category !== 'all') list = list.filter(p=>p.category===state.filters.category);
+            list = list.filter(p=> p.price <= state.filters.maxPrice);
+            
+            // 2. Sort
+            if(state.sortBy==='price_asc') list.sort((a,b)=>a.price-b.price);
+            else if(state.sortBy==='price_desc') list.sort((a,b)=>b.price-a.price);
+            // 'newest' uses default array order
 
-            document.getElementById('resultsCount').textContent = list.length;
+            document.getElementById('resultsCount').textContent = list.length;
 
-            // 3. Render
-            const tpl = document.getElementById('productTemplate');
-            list.forEach(p=>{
-                const node = tpl.content.cloneNode(true);
-                const card = node.querySelector('.bg-white');
-                
-                // Set product data
-                node.querySelector('.product-image').src = `https://placehold.co/400x400/fff/333?text=${p.name.split(' ')[0]}`; // Fallback placeholder
-                node.querySelector('.product-name').textContent = p.name;
-                node.querySelector('.product-category').textContent = p.category;
-                node.querySelector('.product-price').textContent = formatRupiah(p.price);
-                
-                // Add to Cart button handler
-                const addBtn = node.querySelector('.add-btn');
-                addBtn.addEventListener('click', (e)=> {
-                    e.stopPropagation(); // Stop click from opening modal
-                    addToCart(p.id,1);
-                });
-                
-                // Open Product Detail Modal on card click
-                card.addEventListener('click', ()=> openProductModal(p));
-                
-                grid.appendChild(node);
-            });
-        }
+            // 3. Render
+            const tpl = document.getElementById('productTemplate');
+            list.forEach(p=>{
+                const node = tpl.content.cloneNode(true);
+                const card = node.querySelector('.bg-white');
+                
+                // Set product data
+                node.querySelector('.product-image').src = `https://placehold.co/400x400/fff/333?text=${p.name.split(' ')[0]}`; // Fallback placeholder
+                node.querySelector('.product-name').textContent = p.name;
+                node.querySelector('.product-category').textContent = p.category;
+                node.querySelector('.product-price').textContent = formatRupiah(p.price);
+                
+                // Add to Cart button handler
+                const addBtn = node.querySelector('.add-btn');
+                addBtn.addEventListener('click', (e)=> {
+                    e.stopPropagation(); // Stop click from opening modal
+                    addToCart(p.id,1);
+                });
+                
+                // Open Product Detail Modal on card click
+                card.addEventListener('click', ()=> openProductModal(p));
+                
+                grid.appendChild(node);
+            });
+        }
 
-        // Cart functions
-        function updateCartCount(){ 
-            const count = Object.values(state.cart).reduce((s,it)=>s+it.qty,0); 
-            document.getElementById('cartCount').textContent = count; 
-        }
+        // Cart functions
+        function updateCartCount(){ 
+            const count = Object.values(state.cart).reduce((s,it)=>s+it.qty,0); 
+            document.getElementById('cartCount').textContent = count; 
+        }
 
-        function addToCart(productId, qty=1){ 
-            const prod = products.find(p=>p.id===productId); 
-            if(!prod){ showToast('Produk tidak ditemukan'); return; }
+        function addToCart(productId, qty=1){ 
+            const prod = products.find(p=>p.id===productId); 
+            if(!prod){ showToast('Produk tidak ditemukan'); return; }
 
-            if(state.cart[productId]) state.cart[productId].qty += qty; 
-            else state.cart[productId] = { product: prod, qty };
-            
-            saveCart(); 
-            updateCartCount(); 
-            showToast(`"${prod.name}" ditambahkan!`);
-        }
+            if(state.cart[productId]) state.cart[productId].qty += qty; 
+            else state.cart[productId] = { product: prod, qty };
+            
+            saveCart(); 
+            updateCartCount(); 
+            showToast(`"${prod.name}" ditambahkan!`);
+        }
 
-        function saveCart(){ localStorage.setItem('kaza_cart', JSON.stringify(state.cart)); }
-        function loadCart(){ 
-            const raw = localStorage.getItem('kaza_cart'); 
-            if(raw){ 
-                try{ state.cart = JSON.parse(raw); }
-                catch(e){ state.cart = {}; } 
-            } 
-            updateCartCount(); 
-        }
+        function saveCart(){ localStorage.setItem('kaza_cart', JSON.stringify(state.cart)); }
+        function loadCart(){ 
+            const raw = localStorage.getItem('kaza_cart'); 
+            if(raw){ 
+                try{ state.cart = JSON.parse(raw); }
+                catch(e){ state.cart = {}; } 
+            } 
+            updateCartCount(); 
+        }
 
-        function openCartModal(){ 
-            const m = document.getElementById('cartModal'); 
-            renderCartItems(); 
-            m.classList.remove('hidden'); 
-        }
-        function closeCartModal(){ document.getElementById('cartModal').classList.add('hidden'); }
+        function openCartModal(){ 
+            const m = document.getElementById('cartModal'); 
+            renderCartItems(); 
+            m.classList.remove('hidden'); 
+        }
+        function closeCartModal(){ document.getElementById('cartModal').classList.add('hidden'); }
 
-        function renderCartItems(){ 
-            const container = document.getElementById('cartItems'); 
-            container.innerHTML='';
-            let total = 0;
-            const keys = Object.keys(state.cart);
-            
-            if(keys.length===0){ 
-                container.innerHTML = '<div class="text-center text-sm text-slate-500 py-6">Keranjang kosong. Yuk, segera isi keranjang Anda!</div>'; 
-                document.getElementById('cartTotal').textContent = formatRupiah(0); 
-                return; 
-            }
+        function renderCartItems(){ 
+            const container = document.getElementById('cartItems'); 
+            container.innerHTML='';
+            let total = 0;
+            const keys = Object.keys(state.cart);
+            
+            if(keys.length===0){ 
+                container.innerHTML = '<div class="text-center text-sm text-slate-500 py-6">Keranjang kosong. Yuk, segera isi keranjang Anda!</div>'; 
+                document.getElementById('cartTotal').textContent = formatRupiah(0); 
+                return; 
+            }
 
-            keys.forEach(k=>{
-                const it = state.cart[k]; 
-                const p = it.product; 
-                const subtotal = p.price * it.qty; 
-                total += subtotal;
-                
-                const row = document.createElement('div'); 
-                row.className = 'flex items-center gap-4 border border-rose-100 rounded-xl p-3 bg-white';
-                row.innerHTML = `
-                    <img src="https://placehold.co/60x60/f0f0f0/333?text=Item" alt="${p.name}" class="w-16 h-16 object-contain bg-slate-50 rounded-lg" />
-                    <div class="flex-1 min-w-0">
-                        <div class="font-semibold truncate">${p.name}</div>
-                        <div class="text-xs text-slate-500">${p.category}</div>
-                        <div class="text-sm text-rose-600 font-semibold">${formatRupiah(p.price)}</div>
-                    </div>
-                    <div class="flex items-center gap-2 flex-shrink-0">
-                        <div class="flex border rounded-lg">
-                            <button class="px-2 py-1 text-lg decrease hover:bg-slate-100 rounded-l-lg transition">-</button>
-                            <div class="w-8 text-center py-1 border-x text-sm">${it.qty}</div>
-                            <button class="px-2 py-1 text-lg increase hover:bg-slate-100 rounded-r-lg transition">+</button>
-                        </div>
-                        <div class="ml-4 font-bold text-slate-800 w-20 text-right">${formatRupiah(subtotal)}</div>
-                        <button class="ml-2 text-xs text-red-500 remove hover:text-red-700 transition">Hapus</button>
-                    </div>
-                `;
-                
-                // attach handlers
-                row.querySelector('.increase').addEventListener('click', ()=>{ it.qty++; saveCart(); renderCartItems(); updateCartCount(); });
-                row.querySelector('.decrease').addEventListener('click', ()=>{ 
-                    if(it.qty>1){ it.qty--; saveCart(); renderCartItems(); updateCartCount(); } 
-                    else { delete state.cart[k]; saveCart(); renderCartItems(); updateCartCount(); }
-                });
-                row.querySelector('.remove').addEventListener('click', ()=>{ 
-                    delete state.cart[k]; 
-                    saveCart(); 
-                    renderCartItems(); 
-                    updateCartCount(); 
-                });
+            keys.forEach(k=>{
+                const it = state.cart[k]; 
+                const p = it.product; 
+                const subtotal = p.price * it.qty; 
+                total += subtotal;
+                
+                const row = document.createElement('div'); 
+                row.className = 'flex items-center gap-4 border border-rose-100 rounded-xl p-3 bg-white';
+                row.innerHTML = `
+                    <img src="https://placehold.co/60x60/f0f0f0/333?text=Item" alt="${p.name}" class="w-16 h-16 object-contain bg-slate-50 rounded-lg" />
+                    <div class="flex-1 min-w-0">
+                        <div class="font-semibold truncate">${p.name}</div>
+                        <div class="text-xs text-slate-500">${p.category}</div>
+                        <div class="text-sm text-rose-600 font-semibold">${formatRupiah(p.price)}</div>
+                    </div>
+                    <div class="flex items-center gap-2 flex-shrink-0">
+                        <div class="flex border rounded-lg">
+                            <button class="px-2 py-1 text-lg decrease hover:bg-slate-100 rounded-l-lg transition">-</button>
+                            <div class="w-8 text-center py-1 border-x text-sm">${it.qty}</div>
+                            <button class="px-2 py-1 text-lg increase hover:bg-slate-100 rounded-r-lg transition">+</button>
+                        </div>
+                        <div class="ml-4 font-bold text-slate-800 w-20 text-right">${formatRupiah(subtotal)}</div>
+                        <button class="ml-2 text-xs text-red-500 remove hover:text-red-700 transition">Hapus</button>
+                    </div>
+                `;
+                
+                // attach handlers
+                row.querySelector('.increase').addEventListener('click', ()=>{ it.qty++; saveCart(); renderCartItems(); updateCartCount(); });
+                row.querySelector('.decrease').addEventListener('click', ()=>{ 
+                    if(it.qty>1){ it.qty--; saveCart(); renderCartItems(); updateCartCount(); } 
+                    else { delete state.cart[k]; saveCart(); renderCartItems(); updateCartCount(); }
+                });
+                row.querySelector('.remove').addEventListener('click', ()=>{ 
+                    delete state.cart[k]; 
+                    saveCart(); 
+                    renderCartItems(); 
+                    updateCartCount(); 
+                });
 
-                container.appendChild(row);
-            });
-            document.getElementById('cartTotal').textContent = formatRupiah(total);
-        }
+                container.appendChild(row);
+            });
+            document.getElementById('cartTotal').textContent = formatRupiah(total);
+        }
 
-        // Product modal
-        function openProductModal(p){ 
-            document.getElementById('modalImg').src = `https://placehold.co/400x400/fff/333?text=${p.name.split(' ')[0]}`; // Fallback placeholder
-            document.getElementById('modalTitle').textContent = p.name; 
-            document.getElementById('modalPrice').textContent = formatRupiah(p.price); 
-            document.getElementById('modalDesc').textContent = p.desc; 
-            document.getElementById('modalQty').value = 1; 
-            document.getElementById('productModal').classList.remove('hidden');
+        // Product modal
+        function openProductModal(p){ 
+            document.getElementById('modalImg').src = `https://placehold.co/400x400/fff/333?text=${p.name.split(' ')[0]}`; // Fallback placeholder
+            document.getElementById('modalTitle').textContent = p.name; 
+            document.getElementById('modalPrice').textContent = formatRupiah(p.price); 
+            document.getElementById('modalDesc').textContent = p.desc; 
+            document.getElementById('modalQty').value = 1; 
+            document.getElementById('productModal').classList.remove('hidden');
 
-            // wire add button
-            document.getElementById('addToCartBtn').onclick = ()=>{ 
-                const q = Math.max(1,parseInt(document.getElementById('modalQty').value||1)); 
-                addToCart(p.id,q); 
-                closeProductModal(); 
-            };
-        }
-        function closeProductModal(){ document.getElementById('productModal').classList.add('hidden'); }
+            // wire add button
+            document.getElementById('addToCartBtn').onclick = ()=>{ 
+                const q = Math.max(1,parseInt(document.getElementById('modalQty').value||1)); 
+                addToCart(p.id,q); 
+                closeProductModal(); 
+            };
+        }
+        function closeProductModal(){ document.getElementById('productModal').classList.add('hidden'); }
 
-        // Checkout flow (MENGGUNAKAN WHATSAPP)
-        function checkout(){ 
-            const keys = Object.keys(state.cart); 
-            if(keys.length===0){ showToast('Keranjang kosong. Tidak ada yang bisa dibayar.'); return; }
+        // Checkout flow (MENGGUNAKAN WHATSAPP)
+        function checkout(){ 
+            const keys = Object.keys(state.cart); 
+            if(keys.length===0){ showToast('Keranjang kosong. Tidak ada yang bisa dibayar.'); return; }
 
-            let total = 0;
-            let message = "*Pemesanan KAZA Shop (Checkout Otomatis)*\n\nHalo KAZA Shop, saya ingin melakukan pemesanan produk berikut:\n\n";
+            let total = 0;
+            let message = "*Pemesanan KAZA Shop (Checkout Otomatis)*\n\nHalo KAZA Shop, saya ingin melakukan pemesanan produk berikut:\n\n";
 
-            keys.forEach(k=>{
-                const it = state.cart[k];
-                const p = it.product;
-                const subtotal = p.price * it.qty;
-                total += subtotal;
-                message += `* ${it.qty}x ${p.name} (${formatRupiah(subtotal)})\n`;
-            });
+            keys.forEach(k=>{
+                const it = state.cart[k];
+                const p = it.product;
+                const subtotal = p.price * it.qty;
+                total += subtotal;
+                message += `* ${it.qty}x ${p.name} (${formatRupiah(subtotal)})\n`;
+            });
 
-            message += "\n----------------------------------------\n";
-            message += `*TOTAL Pembayaran: ${formatRupiah(total)}*\n`;
-            message += "----------------------------------------\n";
-            message += "Mohon infokan rincian total, stok, dan rekening transfer untuk proses pembayaran. Terima kasih!";
+            message += "\n----------------------------------------\n";
+            message += `*TOTAL Pembayaran: ${formatRupiah(total)}*\n`;
+            message += "----------------------------------------\n";
+            message += "Mohon infokan rincian total, stok, dan rekening transfer untuk proses pembayaran. Terima kasih!";
 
-            // Nomor WA yang diminta user
-            const waNumber = '085168980966'; 
-            const waLink = `https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`;
+            // Nomor WA yang diminta user - SUDAH DIPERBARUI
+            const waNumber = '085168980966'; 
+            const waLink = `https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`;
 
-            // Clear cart and redirect
-            state.cart = {}; 
-            saveCart(); 
-            updateCartCount(); 
-            closeCartModal(); 
-            
-            showToast('Mengarahkan ke WhatsApp untuk Checkout...');
-            // Redirect to WhatsApp
-            window.open(waLink, '_blank');
-        }
+            // Clear cart and redirect
+            state.cart = {}; 
+            saveCart(); 
+            updateCartCount(); 
+            closeCartModal(); 
+            
+            showToast('Mengarahkan ke WhatsApp untuk Checkout...');
+            // Redirect to WhatsApp
+            window.open(waLink, '_blank');
+        }
 
-        // Event bindings and UI initialization
-        document.addEventListener('DOMContentLoaded', ()=>{
-            document.getElementById('year').textContent = new Date().getFullYear();
-            
-            // bind search
-            const search = document.getElementById('search'); 
-            search.addEventListener('input', (e)=>{ state.query = e.target.value; renderProducts(); });
-            
-            // filters
-            document.getElementById('filterCategory').addEventListener('change', (e)=>{ state.filters.category = e.target.value; renderProducts(); });
-            document.getElementById('sortBy').addEventListener('change', (e)=>{ state.sortBy = e.target.value; renderProducts(); });
-            
-            const maxPrice = document.getElementById('maxPrice'); 
-            const maxPriceVal = document.getElementById('maxPriceVal'); 
-            maxPrice.addEventListener('input', (e)=>{ 
-                state.filters.maxPrice = parseInt(e.target.value,10); 
-                maxPriceVal.textContent = formatRupiah(e.target.value); 
-                renderProducts(); 
-            });
-            
-            document.getElementById('clearFilters').addEventListener('click', ()=>{ 
-                state.filters = { category: 'all', maxPrice: 500000 }; 
-                document.getElementById('filterCategory').value='all'; 
-                document.getElementById('maxPrice').value=500000; 
-                document.getElementById('maxPriceVal').textContent='Rp500.000'; 
-                document.getElementById('sortBy').value='newest'; 
-                renderProducts(); 
-            });
+        // Event bindings and UI initialization
+        document.addEventListener('DOMContentLoaded', ()=>{
+            document.getElementById('year').textContent = new Date().getFullYear();
+            
+            // bind search
+            const search = document.getElementById('search'); 
+            search.addEventListener('input', (e)=>{ state.query = e.target.value; renderProducts(); });
+            
+            // filters
+            document.getElementById('filterCategory').addEventListener('change', (e)=>{ state.filters.category = e.target.value; renderProducts(); });
+            document.getElementById('sortBy').addEventListener('change', (e)=>{ state.sortBy = e.target.value; renderProducts(); });
+            
+            const maxPrice = document.getElementById('maxPrice'); 
+            const maxPriceVal = document.getElementById('maxPriceVal'); 
+            maxPrice.addEventListener('input', (e)=>{ 
+                state.filters.maxPrice = parseInt(e.target.value,10); 
+                maxPriceVal.textContent = formatRupiah(e.target.value); 
+                renderProducts(); 
+            });
+            
+            document.getElementById('clearFilters').addEventListener('click', ()=>{ 
+                state.filters = { category: 'all', maxPrice: 500000 }; 
+                document.getElementById('filterCategory').value='all'; 
+                document.getElementById('maxPrice').value=500000; 
+                document.getElementById('maxPriceVal').textContent='Rp500.000'; 
+                document.getElementById('sortBy').value='newest'; 
+                renderProducts(); 
+            });
 
-            // cart open/close
-            document.getElementById('cartBtn').addEventListener('click', ()=>openCartModal());
-            document.getElementById('closeCart').addEventListener('click', ()=>closeCartModal());
-            document.getElementById('checkoutBtn').addEventListener('click', ()=>checkout());
-            document.getElementById('closeProductModal').addEventListener('click', ()=>closeProductModal());
+            // cart open/close
+            document.getElementById('cartBtn').addEventListener('click', ()=>openCartModal());
+            document.getElementById('closeCart').addEventListener('click', ()=>closeCartModal());
+            document.getElementById('checkoutBtn').addEventListener('click', ()=>checkout());
+            document.getElementById('closeProductModal').addEventListener('click', ()=>closeProductModal());
 
-            // load cart
-            loadCart();
-            // initial render
-            renderProducts();
+            // load cart
+            loadCart();
+            // initial render
+            renderProducts();
 
-            // small accessibility: close modals with Escape
-            document.addEventListener('keydown', (e)=>{ 
-                if(e.key==='Escape'){ 
-                    closeProductModal(); 
-                    closeCartModal(); 
-                } 
-            });
-        });
-    </script>
+            // small accessibility: close modals with ESC key
+            document.addEventListener('keydown', (e)=>{
+                if(e.key === 'Escape'){
+                    closeCartModal();
+                    closeProductModal();
+                }
+            });
+
+            // If the user clicks outside the modal, close it
+            document.getElementById('productModal').addEventListener('click', (e)=>{
+                if(e.target.id === 'productModal') closeProductModal();
+            });
+            document.getElementById('cartModal').addEventListener('click', (e)=>{
+                if(e.target.id === 'cartModal') closeCartModal();
+            });
+
+        });
+    </script>
 </body>
 </html>
 
