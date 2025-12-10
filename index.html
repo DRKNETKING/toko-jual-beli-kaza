@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KAZA - Koleksi Pakaian Minimalis Premium dengan AI Visual</title>
-    <!-- Memuat Tailwind CSS CDN -->
+    <!-- Memuat Tailwind CSS CDN untuk styling yang profesional dan responsif -->
     <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- Memuat Font Inter dan Playfair Display -->
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Playfair+Display:wght@700&display=swap');
 
-        /* CSS Kustom untuk Animasi Latar Belakang */
+        /* CSS Kustom untuk Animasi Latar Belakang yang lembut */
         @keyframes gradient-shift {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
@@ -32,7 +32,7 @@
         <!-- Header akan dirender di sini -->
         <header id="header-container" class="sticky top-0 z-10 bg-white shadow-lg"></header>
 
-        <!-- Notifikasi Pop-up -->
+        <!-- Notifikasi Pop-up (menggantikan alert) -->
         <div id="notification-popup" class="fixed top-5 right-5 z-50 transition-opacity duration-500 opacity-0 pointer-events-none"></div>
 
         <!-- Konten Utama (Home/About) akan dirender di sini -->
@@ -54,11 +54,11 @@
         const waNumber = '085216991236';
         const waLink = `https://wa.me/62${waNumber.substring(1)}`;
 
-        // Konfigurasi API (Sama seperti di versi React)
+        // Konfigurasi API Imagen 4.0 untuk Image Generation
         const apiKey = ""; 
         const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${apiKey}`;
         
-        // Detail Produk KAZA
+        // Detail Produk KAZA dan Prompt AI spesifik untuk visual premium
         const products = [
             { 
                 id: 1, 
@@ -92,7 +92,7 @@
 
         // --- FUNGSI UTILITAS ---
         
-        // Konversi Base64 ke URL
+        // Konversi Base64 yang diterima dari API ke format URL gambar
         const base64ToUrl = (base64) => `data:image/png;base64,${base64}`;
 
         // Tampilkan Notifikasi (menggantikan alert)
@@ -105,7 +105,7 @@
             }, 3000); // Hilang setelah 3 detik
         }
         
-        // Fungsi Renderer Notifikasi
+        // Fungsi Renderer Notifikasi Pop-up
         function renderNotification() {
             const popup = document.getElementById('notification-popup');
             const visibilityClass = notification ? 'opacity-100' : 'opacity-0 pointer-events-none';
@@ -114,10 +114,10 @@
             popup.innerHTML = notification;
         }
 
-        // --- LOGIKA API DAN BACKOFF ---
+        // --- LOGIKA API DAN BACKOFF (Penting untuk keandalan) ---
 
         /**
-         * Panggil API Imagen 4.0 dengan Exponential Backoff.
+         * Panggil API Imagen 4.0 dengan Exponential Backoff untuk retry yang aman.
          */
         async function generateProductImage(productId, prompt, maxRetries = 5) {
             loadingProductId = productId;
@@ -138,6 +138,7 @@
                     });
 
                     if (!response.ok) {
+                        // Jika error, lempar dan coba lagi (kecuali attempt terakhir)
                         throw new Error(`HTTP error! status: ${response.status}`);
                     }
 
@@ -174,7 +175,7 @@
             }
         }
 
-        // --- FUNGSI RENDER KOMPONEN HTML ---
+        // --- FUNGSI RENDER KOMPONEN HTML (Menggantikan JSX) ---
 
         // Render Kartu Produk
         function renderProductCard(product) {
@@ -184,6 +185,7 @@
             // Konten Gambar/Placeholder
             let imageContent;
             if (isLoading) {
+                // Indikator Loading
                 imageContent = `
                     <div class="w-full h-full flex items-center justify-center animate-pulse bg-gray-200">
                         <svg class="animate-spin h-8 w-8 text-red-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -194,11 +196,12 @@
                     </div>
                 `;
             } else if (imageUrl) {
-                // Gunakan inline style untuk transisi yang sama seperti di React
+                // Gambar yang dihasilkan AI
                 imageContent = `<img src="${imageUrl}" alt="${product.name}" 
                     class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />`;
             } else {
+                // Placeholder awal sebelum generate
                 imageContent = `
                     <div class="w-full h-full flex flex-col items-center justify-center text-gray-500 bg-gray-200 p-4">
                         <svg class="w-10 h-10 mb-3 text-gray-400" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 3h16a1 1 0 011 1v16a1 1 0 01-1 1H4a1 1 0 01-1-1V4a1 1 0 011-1zM4 5v14h16V5H4zm2 2h2v2H6V7zm4 0h8v2h-8V7zM6 11h2v2H6v-2zm4 0h8v2h-8v-2zm-4 4h2v2H6v-2zm4 0h8v2h-8v-2z"></path></svg>
@@ -325,7 +328,7 @@
             `;
         }
 
-        // Render Header
+        // Render Header dan Pasang Event Listener Navigasi
         function renderHeader() {
             const headerHtml = `
                 <div class="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center py-4">
@@ -385,14 +388,14 @@
             document.getElementById('footer-container').innerHTML = footerHtml;
         }
 
-        // Render Konten Utama dan Pasang Event Listener
+        // Render Konten Utama dan Pasang Event Listener untuk Produk
         function renderMainContent() {
             const mainContent = document.getElementById('main-content');
             
             if (activeSection === 'home') {
                 mainContent.innerHTML = renderHomeSection();
                 
-                // Pasang Event Listener untuk setiap tombol Generate dan Cart
+                // Pasang Event Listener untuk setiap tombol Generate dan Cart setelah konten dirender
                 products.forEach(product => {
                     // Tombol Generate AI
                     const generateBtn = document.getElementById(`generate-btn-${product.id}`);
