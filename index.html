@@ -572,6 +572,90 @@
       }
     }
   </style>
+
+<style id="foto-warung-style">
+.foto-warung-section {
+    width: 100%;
+    padding: 40px 20px;
+    box-sizing: border-box;
+}
+
+.foto-warung-container {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.15);
+    background: #f5f5f5;
+}
+
+.foto-warung-container img {
+    display: block;
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+}
+
+.foto-warung-overlay {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 80px 30px 30px;
+    color: #fff;
+    background: linear-gradient(
+        to top,
+        rgba(0,0,0,.78),
+        rgba(0,0,0,0)
+    );
+}
+
+.foto-warung-overlay h2 {
+    margin: 0 0 8px;
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.foto-warung-overlay p {
+    margin: 0;
+    font-size: 17px;
+}
+
+@media (max-width: 768px) {
+    .foto-warung-section {
+        padding: 25px 15px;
+    }
+
+    .foto-warung-container img {
+        height: 350px;
+    }
+
+    .foto-warung-overlay {
+        padding: 60px 20px 20px;
+    }
+
+    .foto-warung-overlay h2 {
+        font-size: 25px;
+    }
+
+    .foto-warung-overlay p {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .foto-warung-container img {
+        height: 280px;
+    }
+
+    .foto-warung-overlay h2 {
+        font-size: 22px;
+    }
+}
+</style>
+
 </head>
 
 <body>
@@ -1226,6 +1310,21 @@
     });
 
   </script>
+
+
+<section class="foto-warung-section" aria-label="Foto Warung">
+    <div class="foto-warung-container">
+        <img
+            src="images/foto_warung.png"
+            alt="Foto Warung"
+            loading="lazy"
+        >
+        <div class="foto-warung-overlay">
+            <h2>Warung Kami</h2>
+            <p>Selamat datang di warung kami</p>
+        </div>
+    </div>
+</section>
 
 </body>
 </html>
