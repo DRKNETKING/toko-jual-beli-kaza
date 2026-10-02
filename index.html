@@ -1,1124 +1,1419 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Warung Ridwan Shaleh | Sayur & Ayam Segar</title>
-  <meta name="description" content="Warung Ridwan Shaleh menyediakan sayur segar, ayam segar, dan kebutuhan harian. Hubungi kami melalui WhatsApp.">
-  <meta name="keywords" content="Warung Ridwan Shaleh, sayur segar, ayam segar, kebutuhan harian">
-  <meta name="author" content="Warung Ridwan Shaleh">
-
-  <meta property="og:title" content="Warung Ridwan Shaleh">
-  <meta property="og:description" content="Sayur segar • Ayam segar • Kebutuhan harian">
-  <meta property="og:type" content="website">
-
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%231f8f4c'/%3E%3Ctext x='50' y='68' text-anchor='middle' font-size='55'%3E%F0%9F%A5%AC%3C/text%3E%3C/svg%3E">
-
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      background: #f7faf8;
-      color: #17231c;
-      line-height: 1.6;
-    }
-
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    img {
-      width: 100%;
-      display: block;
-    }
-
-    .container {
-      width: min(1180px, 92%);
-      margin: auto;
-    }
-
-    /* HEADER */
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      background: rgba(255,255,255,.96);
-      border-bottom: 1px solid #e7ece9;
-      backdrop-filter: blur(12px);
-    }
-
-    .navbar {
-      min-height: 74px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 25px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 11px;
-      font-weight: 800;
-      font-size: 19px;
-      color: #176b3b;
-      white-space: nowrap;
-    }
-
-    .brand-icon {
-      width: 42px;
-      height: 42px;
-      display: grid;
-      place-items: center;
-      border-radius: 13px;
-      background: #e4f6e9;
-      font-size: 24px;
-    }
-
-    nav {
-      display: flex;
-      align-items: center;
-      gap: 24px;
-      font-size: 14px;
-      font-weight: 700;
-    }
-
-    nav a {
-      color: #4d5b52;
-      transition: .2s;
-    }
-
-    nav a:hover {
-      color: #1f8f4c;
-    }
-
-    .nav-wa {
-      padding: 10px 16px;
-      background: #1f8f4c;
-      color: white !important;
-      border-radius: 999px;
-    }
-
-    /* HERO */
-    .hero {
-      padding: 72px 0 55px;
-      background:
-        radial-gradient(circle at top right, #dff5e6 0, transparent 35%),
-        linear-gradient(135deg, #f8fcf9, #edf8f0);
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      align-items: center;
-      gap: 55px;
-    }
-
-    .badge {
-      display: inline-flex;
-      padding: 8px 13px;
-      background: #e3f5e8;
-      color: #176b3b;
-      border-radius: 999px;
-      font-size: 13px;
-      font-weight: 800;
-      margin-bottom: 18px;
-    }
-
-    h1 {
-      font-size: clamp(38px, 5vw, 68px);
-      line-height: 1.05;
-      letter-spacing: -2px;
-      margin-bottom: 20px;
-    }
-
-    .hero h1 span {
-      color: #1f8f4c;
-    }
-
-    .hero-text {
-      max-width: 610px;
-      color: #59675e;
-      font-size: 18px;
-      margin-bottom: 28px;
-    }
-
-    .hero-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 14px 20px;
-      border-radius: 13px;
-      font-weight: 800;
-      border: 1px solid transparent;
-      transition: .2s;
-      cursor: pointer;
-    }
-
-    .btn-primary {
-      background: #1f8f4c;
-      color: white;
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      background: #176f3b;
-    }
-
-    .btn-secondary {
-      background: white;
-      border-color: #dce5df;
-      color: #26342b;
-    }
-
-    .hero-photo {
-      position: relative;
-    }
-
-    .hero-photo img {
-      height: 500px;
-      object-fit: cover;
-      border-radius: 28px;
-      box-shadow: 0 25px 70px rgba(29, 65, 43, .18);
-    }
-
-    .photo-label {
-      position: absolute;
-      left: 18px;
-      bottom: 18px;
-      background: rgba(255,255,255,.95);
-      padding: 14px 17px;
-      border-radius: 16px;
-      font-weight: 800;
-      box-shadow: 0 8px 25px rgba(0,0,0,.12);
-    }
-
-    /* STATS */
-    .stats {
-      padding: 25px 0;
-      background: white;
-      border-bottom: 1px solid #edf1ee;
-    }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      text-align: center;
-    }
-
-    .stat strong {
-      display: block;
-      font-size: 28px;
-      color: #1f8f4c;
-    }
-
-    .stat span {
-      color: #6a756e;
-      font-size: 14px;
-    }
-
-    /* SECTIONS */
-    section {
-      padding: 80px 0;
-    }
-
-    .section-head {
-      text-align: center;
-      max-width: 700px;
-      margin: 0 auto 42px;
-    }
-
-    .section-head .mini {
-      color: #1f8f4c;
-      font-weight: 800;
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .section-head h2 {
-      font-size: clamp(30px, 4vw, 45px);
-      margin: 8px 0 12px;
-      line-height: 1.15;
-    }
-
-    .section-head p {
-      color: #68746d;
-    }
-
-    /* GALLERY */
-    .gallery {
-      display: grid;
-      grid-template-columns: 1.3fr .7fr .7fr;
-      grid-template-rows: 230px 230px;
-      gap: 14px;
-    }
-
-    .gallery-item {
-      overflow: hidden;
-      border-radius: 20px;
-      position: relative;
-      background: #dfe9e2;
-    }
-
-    .gallery-item:first-child {
-      grid-row: span 2;
-    }
-
-    .gallery-item img {
-      height: 100%;
-      object-fit: cover;
-      transition: .35s;
-    }
-
-    .gallery-item:hover img {
-      transform: scale(1.04);
-    }
-
-    /* PRODUCTS */
-    .products {
-      background: white;
-    }
-
-    .product-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 22px;
-    }
-
-    .product-card {
-      background: #f8fbf9;
-      border: 1px solid #e4ebe6;
-      border-radius: 22px;
-      overflow: hidden;
-      transition: .25s;
-    }
-
-    .product-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 18px 45px rgba(30, 73, 45, .10);
-    }
-
-    .product-card img {
-      height: 230px;
-      object-fit: cover;
-    }
-
-    .product-body {
-      padding: 22px;
-    }
-
-    .product-body h3 {
-      font-size: 21px;
-      margin-bottom: 7px;
-    }
-
-    .product-body p {
-      color: #68746d;
-      font-size: 14px;
-      margin-bottom: 15px;
-    }
-
-    .price {
-      font-weight: 900;
-      color: #1f8f4c;
-      font-size: 19px;
-      margin-bottom: 15px;
-    }
-
-    .product-btn {
-      width: 100%;
-    }
-
-    /* BENEFITS */
-    .benefit-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 18px;
-    }
-
-    .benefit {
-      background: white;
-      border: 1px solid #e4ebe6;
-      padding: 25px 20px;
-      border-radius: 20px;
-      text-align: center;
-    }
-
-    .benefit-icon {
-      font-size: 32px;
-      margin-bottom: 10px;
-    }
-
-    .benefit h3 {
-      margin-bottom: 7px;
-    }
-
-    .benefit p {
-      color: #6a756e;
-      font-size: 14px;
-    }
-
-    /* PROMO */
-    .promo-box {
-      background: #183b26;
-      color: white;
-      border-radius: 28px;
-      padding: 45px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 30px;
-    }
-
-    .promo-box h2 {
-      font-size: 34px;
-      line-height: 1.2;
-      margin-bottom: 8px;
-    }
-
-    .promo-box p {
-      color: #c9d9ce;
-    }
-
-    /* ORDER */
-    .order-section {
-      background: #eef8f1;
-    }
-
-    .order-grid {
-      display: grid;
-      grid-template-columns: .8fr 1.2fr;
-      gap: 35px;
-      align-items: start;
-    }
-
-    .order-info {
-      background: #183b26;
-      color: white;
-      border-radius: 25px;
-      padding: 32px;
-    }
-
-    .order-info h2 {
-      font-size: 32px;
-      margin-bottom: 12px;
-    }
-
-    .order-info p {
-      color: #d0ddd4;
-      margin-bottom: 25px;
-    }
-
-    .contact-line {
-      padding: 13px 0;
-      border-top: 1px solid rgba(255,255,255,.13);
-    }
-
-    .form-card {
-      background: white;
-      border-radius: 25px;
-      padding: 32px;
-      border: 1px solid #e1eae3;
-    }
-
-    .form-group {
-      margin-bottom: 17px;
-    }
-
-    label {
-      display: block;
-      font-weight: 800;
-      font-size: 14px;
-      margin-bottom: 7px;
-    }
-
-    input,
-    textarea,
-    select {
-      width: 100%;
-      border: 1px solid #dce5df;
-      padding: 13px 14px;
-      border-radius: 12px;
-      font: inherit;
-      outline: none;
-      background: white;
-    }
-
-    input:focus,
-    textarea:focus,
-    select:focus {
-      border-color: #1f8f4c;
-    }
-
-    textarea {
-      min-height: 110px;
-      resize: vertical;
-    }
-
-    /* MAP */
-    .map-wrap {
-      overflow: hidden;
-      border-radius: 25px;
-      border: 1px solid #dfe8e2;
-      background: white;
-    }
-
-    .map-wrap iframe {
-      width: 100%;
-      height: 430px;
-      border: 0;
-      display: block;
-    }
-
-    .map-note {
-      padding: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .map-note p {
-      color: #66736a;
-      font-size: 14px;
-    }
-
-    /* FOOTER */
-    footer {
-      background: #10251a;
-      color: white;
-      padding: 45px 0 25px;
-    }
-
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 1.4fr 1fr 1fr;
-      gap: 35px;
-      padding-bottom: 30px;
-    }
-
-    footer h3 {
-      margin-bottom: 10px;
-    }
-
-    footer p,
-    footer a {
-      color: #bdcfc2;
-      font-size: 14px;
-    }
-
-    footer a:hover {
-      color: white;
-    }
-
-    .footer-bottom {
-      border-top: 1px solid rgba(255,255,255,.1);
-      padding-top: 20px;
-      color: #9fb3a5;
-      font-size: 13px;
-      text-align: center;
-    }
-
-    /* FLOATING WA */
-    .floating-wa {
-      position: fixed;
-      right: 20px;
-      bottom: 20px;
-      width: 58px;
-      height: 58px;
-      display: grid;
-      place-items: center;
-      background: #20b85a;
-      color: white;
-      border-radius: 50%;
-      font-size: 28px;
-      z-index: 2000;
-      box-shadow: 0 10px 30px rgba(0,0,0,.2);
-    }
-
-    /* MOBILE */
-    @media (max-width: 900px) {
-      nav {
-        gap: 12px;
-      }
-
-      .hero-grid,
-      .order-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .hero-photo img {
-        height: 400px;
-      }
-
-      .product-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .benefit-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 650px) {
-      .navbar {
-        min-height: 65px;
-      }
-
-      .brand {
-        font-size: 15px;
-      }
-
-      .brand-icon {
-        width: 37px;
-        height: 37px;
-      }
-
-      nav a:not(.nav-wa) {
-        display: none;
-      }
-
-      .nav-wa {
-        padding: 8px 12px;
-        font-size: 12px;
-      }
-
-      section {
-        padding: 60px 0;
-      }
-
-      .hero {
-        padding: 50px 0 40px;
-      }
-
-      h1 {
-        font-size: 42px;
-        letter-spacing: -1.5px;
-      }
-
-      .hero-text {
-        font-size: 16px;
-      }
-
-      .hero-photo img {
-        height: 320px;
-        border-radius: 20px;
-      }
-
-      .stats-grid {
-        grid-template-columns: 1fr;
-        gap: 14px;
-      }
-
-      .gallery {
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: 210px 160px 160px;
-      }
-
-      .gallery-item:first-child {
-        grid-column: span 2;
-        grid-row: span 1;
-      }
-
-      .product-grid,
-      .benefit-grid,
-      .footer-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .promo-box {
-        padding: 30px 23px;
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .promo-box h2 {
-        font-size: 28px;
-      }
-
-      .form-card,
-      .order-info {
-        padding: 24px;
-      }
-
-      .map-wrap iframe {
-        height: 330px;
-      }
-
-      .map-note {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .floating-wa {
-        width: 54px;
-        height: 54px;
-        right: 15px;
-        bottom: 15px;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Warung Ridwan Shaleh | Sayur & Ayam Segar</title>
+
+<meta name="description" content="Warung Ridwan Shaleh - sayur segar, ayam segar, dan kebutuhan harian. Hubungi kami melalui WhatsApp.">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%231f8f4c'/%3E%3Ctext x='50' y='70' text-anchor='middle' font-size='55'%3E%F0%9F%A5%AC%3C/text%3E%3C/svg%3E">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f7faf8;
+  color:#16231b;
+  line-height:1.6;
+}
+
+img{
+  display:block;
+  width:100%;
+}
+
+a{
+  text-decoration:none;
+}
+
+button,
+input,
+textarea,
+select{
+  font:inherit;
+}
+
+.container{
+  width:min(1180px,92%);
+  margin:auto;
+}
+
+/* HEADER */
+header{
+  position:sticky;
+  top:0;
+  z-index:1000;
+  background:rgba(255,255,255,.96);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid #e5ebe7;
+}
+
+.navbar{
+  min-height:72px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  color:#176d3c;
+  font-weight:800;
+  font-size:18px;
+}
+
+.logo-icon{
+  width:42px;
+  height:42px;
+  border-radius:13px;
+  background:#e4f5e9;
+  display:grid;
+  place-items:center;
+  font-size:24px;
+}
+
+nav{
+  display:flex;
+  align-items:center;
+  gap:22px;
+}
+
+nav a{
+  color:#4c5b52;
+  font-size:14px;
+  font-weight:700;
+}
+
+nav a:hover{
+  color:#1f8f4c;
+}
+
+.nav-wa{
+  background:#1f8f4c;
+  color:#fff!important;
+  padding:10px 16px;
+  border-radius:999px;
+}
+
+/* LANGUAGE */
+.language-switch{
+  display:flex;
+  align-items:center;
+  gap:5px;
+  background:#f0f4f1;
+  padding:4px;
+  border-radius:999px;
+}
+
+.language-switch button{
+  border:0;
+  background:transparent;
+  cursor:pointer;
+  padding:7px 10px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:800;
+  color:#5c6961;
+}
+
+.language-switch button.active{
+  background:#1f8f4c;
+  color:white;
+}
+
+/* HERO */
+.hero{
+  padding:70px 0;
+  background:
+    radial-gradient(circle at 90% 10%,#dff5e7 0,transparent 32%),
+    linear-gradient(135deg,#f8fcf9,#edf8f0);
+}
+
+.hero-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:55px;
+  align-items:center;
+}
+
+.badge{
+  display:inline-block;
+  background:#e3f5e8;
+  color:#176d3c;
+  padding:8px 14px;
+  border-radius:999px;
+  font-size:13px;
+  font-weight:800;
+  margin-bottom:18px;
+}
+
+h1{
+  font-size:clamp(40px,6vw,70px);
+  line-height:1.02;
+  letter-spacing:-2px;
+  margin-bottom:20px;
+}
+
+h1 span{
+  color:#1f8f4c;
+}
+
+.hero-description{
+  max-width:620px;
+  color:#5f6c64;
+  font-size:18px;
+  margin-bottom:28px;
+}
+
+.buttons{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  border:0;
+  cursor:pointer;
+  padding:14px 20px;
+  border-radius:13px;
+  font-weight:800;
+  transition:.2s;
+}
+
+.btn-primary{
+  background:#1f8f4c;
+  color:white;
+}
+
+.btn-primary:hover{
+  background:#176e3c;
+  transform:translateY(-2px);
+}
+
+.btn-light{
+  background:white;
+  color:#24332a;
+  border:1px solid #dce6df;
+}
+
+.btn-light:hover{
+  transform:translateY(-2px);
+}
+
+/* WARUNG PHOTO */
+.warung-photo{
+  position:relative;
+}
+
+.warung-photo img{
+  height:510px;
+  object-fit:cover;
+  border-radius:28px;
+  box-shadow:0 25px 70px rgba(30,70,45,.18);
+}
+
+.photo-caption{
+  position:absolute;
+  left:18px;
+  bottom:18px;
+  background:rgba(255,255,255,.96);
+  padding:14px 18px;
+  border-radius:16px;
+  font-weight:800;
+  box-shadow:0 10px 30px rgba(0,0,0,.12);
+}
+
+/* STATS */
+.stats{
+  background:white;
+  border-bottom:1px solid #e9eeeb;
+}
+
+.stats-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+}
+
+.stat{
+  text-align:center;
+  padding:25px 15px;
+  border-right:1px solid #edf1ee;
+}
+
+.stat:last-child{
+  border-right:0;
+}
+
+.stat-icon{
+  font-size:25px;
+  margin-bottom:4px;
+}
+
+.stat strong{
+  display:block;
+  color:#1f8f4c;
+  font-size:20px;
+}
+
+.stat small{
+  color:#6b776f;
+}
+
+/* GENERAL */
+section{
+  padding:80px 0;
+}
+
+.section-title{
+  text-align:center;
+  max-width:700px;
+  margin:0 auto 42px;
+}
+
+.section-title small{
+  color:#1f8f4c;
+  text-transform:uppercase;
+  font-weight:800;
+  letter-spacing:1px;
+}
+
+.section-title h2{
+  font-size:clamp(30px,4vw,45px);
+  line-height:1.15;
+  margin:8px 0 12px;
+}
+
+.section-title p{
+  color:#69766e;
+}
+
+/* GALLERY */
+.gallery{
+  display:grid;
+  grid-template-columns:1.4fr .8fr .8fr;
+  grid-template-rows:230px 230px;
+  gap:14px;
+}
+
+.gallery-item{
+  overflow:hidden;
+  border-radius:20px;
+  background:#dfe9e2;
+}
+
+.gallery-item:first-child{
+  grid-row:span 2;
+}
+
+.gallery-item img{
+  height:100%;
+  object-fit:cover;
+  transition:.35s;
+}
+
+.gallery-item:hover img{
+  transform:scale(1.05);
+}
+
+/* PRODUCTS */
+.products{
+  background:white;
+}
+
+.product-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:22px;
+}
+
+.product{
+  background:#f8fbf9;
+  border:1px solid #e1e9e3;
+  border-radius:22px;
+  overflow:hidden;
+  transition:.25s;
+}
+
+.product:hover{
+  transform:translateY(-5px);
+  box-shadow:0 20px 45px rgba(30,70,45,.10);
+}
+
+.product img{
+  height:230px;
+  object-fit:cover;
+}
+
+.product-body{
+  padding:22px;
+}
+
+.product-body h3{
+  font-size:21px;
+  margin-bottom:8px;
+}
+
+.product-body p{
+  color:#68756d;
+  font-size:14px;
+  margin-bottom:15px;
+}
+
+.price{
+  color:#1f8f4c;
+  font-weight:800;
+  margin-bottom:15px;
+}
+
+.full{
+  width:100%;
+}
+
+/* BENEFITS */
+.benefits{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+}
+
+.benefit{
+  background:white;
+  border:1px solid #e3ebe5;
+  border-radius:20px;
+  padding:25px 18px;
+  text-align:center;
+}
+
+.benefit-icon{
+  font-size:32px;
+  margin-bottom:8px;
+}
+
+.benefit h3{
+  margin-bottom:7px;
+}
+
+.benefit p{
+  color:#69766e;
+  font-size:14px;
+}
+
+/* PROMO */
+.promo{
+  background:#173b26;
+  color:white;
+  border-radius:28px;
+  padding:45px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:25px;
+}
+
+.promo h2{
+  font-size:34px;
+  line-height:1.2;
+  margin-bottom:8px;
+}
+
+.promo p{
+  color:#cad9ce;
+}
+
+/* FORM */
+.order-section{
+  background:#eef8f1;
+}
+
+.order-grid{
+  display:grid;
+  grid-template-columns:.8fr 1.2fr;
+  gap:30px;
+}
+
+.order-info{
+  background:#173b26;
+  color:white;
+  padding:32px;
+  border-radius:25px;
+}
+
+.order-info h2{
+  font-size:32px;
+  line-height:1.2;
+  margin-bottom:12px;
+}
+
+.order-info > p{
+  color:#cedbd1;
+  margin-bottom:20px;
+}
+
+.contact-item{
+  border-top:1px solid rgba(255,255,255,.14);
+  padding:13px 0;
+}
+
+.form-card{
+  background:white;
+  padding:32px;
+  border-radius:25px;
+  border:1px solid #dfe8e2;
+}
+
+.form-group{
+  margin-bottom:17px;
+}
+
+label{
+  display:block;
+  font-size:14px;
+  font-weight:800;
+  margin-bottom:7px;
+}
+
+input,
+textarea,
+select{
+  width:100%;
+  border:1px solid #dce5df;
+  border-radius:12px;
+  padding:13px 14px;
+  outline:none;
+  background:white;
+}
+
+input:focus,
+textarea:focus,
+select:focus{
+  border-color:#1f8f4c;
+}
+
+textarea{
+  min-height:115px;
+  resize:vertical;
+}
+
+/* MAP */
+.map-box{
+  overflow:hidden;
+  border-radius:25px;
+  border:1px solid #dfe8e2;
+  background:white;
+}
+
+.map-box iframe{
+  display:block;
+  width:100%;
+  height:430px;
+  border:0;
+}
+
+.map-bottom{
+  padding:20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.map-bottom p{
+  color:#69766e;
+  font-size:14px;
+}
+
+/* FOOTER */
+footer{
+  background:#10251a;
+  color:white;
+  padding:45px 0 25px;
+}
+
+.footer-grid{
+  display:grid;
+  grid-template-columns:1.4fr 1fr 1fr;
+  gap:30px;
+  padding-bottom:30px;
+}
+
+footer h3{
+  margin-bottom:10px;
+}
+
+footer p,
+footer a{
+  color:#bdcec2;
+  font-size:14px;
+}
+
+footer a:hover{
+  color:white;
+}
+
+.footer-bottom{
+  border-top:1px solid rgba(255,255,255,.1);
+  padding-top:20px;
+  text-align:center;
+  color:#9db1a3;
+  font-size:13px;
+}
+
+/* FLOATING */
+.floating-wa{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  width:58px;
+  height:58px;
+  display:grid;
+  place-items:center;
+  background:#20b85a;
+  color:white;
+  border-radius:50%;
+  font-size:28px;
+  z-index:2000;
+  box-shadow:0 10px 30px rgba(0,0,0,.2);
+}
+
+/* MOBILE */
+@media(max-width:950px){
+
+  nav a:not(.nav-wa){
+    display:none;
+  }
+
+  .hero-grid{
+    grid-template-columns:1fr;
+  }
+
+  .product-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .benefits{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .order-grid{
+    grid-template-columns:1fr;
+  }
+
+}
+
+@media(max-width:650px){
+
+  .navbar{
+    min-height:65px;
+  }
+
+  .logo{
+    font-size:14px;
+  }
+
+  .logo-icon{
+    width:37px;
+    height:37px;
+  }
+
+  .language-switch button{
+    padding:6px 8px;
+  }
+
+  .nav-wa{
+    display:none;
+  }
+
+  .hero{
+    padding:48px 0;
+  }
+
+  h1{
+    font-size:43px;
+    letter-spacing:-1px;
+  }
+
+  .hero-description{
+    font-size:16px;
+  }
+
+  .warung-photo img{
+    height:330px;
+    border-radius:20px;
+  }
+
+  .stats-grid{
+    grid-template-columns:1fr;
+  }
+
+  .stat{
+    border-right:0;
+    border-bottom:1px solid #edf1ee;
+  }
+
+  .stat:last-child{
+    border-bottom:0;
+  }
+
+  section{
+    padding:60px 0;
+  }
+
+  .gallery{
+    grid-template-columns:1fr 1fr;
+    grid-template-rows:210px 160px 160px;
+  }
+
+  .gallery-item:first-child{
+    grid-column:span 2;
+    grid-row:span 1;
+  }
+
+  .product-grid,
+  .benefits,
+  .footer-grid{
+    grid-template-columns:1fr;
+  }
+
+  .promo{
+    padding:30px 23px;
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .promo h2{
+    font-size:28px;
+  }
+
+  .form-card,
+  .order-info{
+    padding:24px;
+  }
+
+  .map-box iframe{
+    height:330px;
+  }
+
+  .map-bottom{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .floating-wa{
+    width:54px;
+    height:54px;
+    right:15px;
+    bottom:15px;
+  }
+}
+</style>
 </head>
 
 <body>
 
 <header>
   <div class="container navbar">
-    <a href="#home" class="brand">
-      <span class="brand-icon">🥬</span>
-      <span>Warung Ridwan Shaleh</span>
+
+    <a href="#home" class="logo">
+      <span class="logo-icon">🥬</span>
+      <span data-id="Warung Ridwan Shaleh" data-en="Ridwan Shaleh Grocery">Warung Ridwan Shaleh</span>
     </a>
 
     <nav>
-      <a href="#home">Home</a>
-      <a href="#produk">Produk</a>
-      <a href="#galeri">Galeri</a>
-      <a href="#lokasi">Lokasi</a>
-      <a href="#pesan" class="nav-wa">WhatsApp</a>
+      <a href="#home" data-id="Beranda" data-en="Home">Beranda</a>
+      <a href="#produk" data-id="Produk" data-en="Products">Produk</a>
+      <a href="#galeri" data-id="Galeri" data-en="Gallery">Galeri</a>
+      <a href="#lokasi" data-id="Lokasi" data-en="Location">Lokasi</a>
+
+      <a class="nav-wa"
+         href="https://wa.me/6285692828522"
+         target="_blank">
+        WhatsApp
+      </a>
+
+      <div class="language-switch">
+        <button id="idBtn" class="active" onclick="setLanguage('id')">🇮🇩 ID</button>
+        <button id="enBtn" onclick="setLanguage('en')">🇬🇧 EN</button>
+      </div>
     </nav>
+
   </div>
 </header>
 
 <main>
 
-  <!-- HERO -->
-  <section class="hero" id="home">
-    <div class="container hero-grid">
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="container hero-grid">
 
-      <div>
-        <div class="badge">🛒 Belanja kebutuhan harian</div>
+    <div>
 
-        <h1>
-          Warung <span>Ridwan Shaleh</span>
-        </h1>
-
-        <p class="hero-text">
-          Sayur segar • Ayam segar • Kebutuhan harian.
-          Pilihan praktis untuk kebutuhan rumah tangga sehari-hari.
-        </p>
-
-        <div class="hero-buttons">
-          <a class="btn btn-primary"
-             href="https://wa.me/6285692828522?text=Halo%20Warung%20Ridwan%20Shaleh%2C%20saya%20ingin%20bertanya%20tentang%20produk."
-             target="_blank">
-            💬 Pesan via WhatsApp
-          </a>
-
-          <a class="btn btn-secondary"
-             href="https://maps.app.goo.gl/1crFGWncz4DJKMjAA"
-             target="_blank">
-            📍 Lihat Google Maps
-          </a>
-        </div>
+      <div class="badge"
+           data-id="🛒 Kebutuhan rumah tangga sehari-hari"
+           data-en="🛒 Everyday household needs">
+        🛒 Kebutuhan rumah tangga sehari-hari
       </div>
 
-      <!-- FOTO UTAMA WARUNG -->
-      <div class="hero-photo">
-        <!-- GANTI FOTO INI DENGAN FOTO WARUNG ASLI -->
-        <img
-          src="https://images.unsplash.com/photo-1601593768797-6f0a6b9d2a9b?auto=format&fit=crop&w=1200&q=85"
-          alt="Warung Ridwan Shaleh">
+      <h1>
+        <span data-id="Warung Ridwan Shaleh"
+              data-en="Ridwan Shaleh Grocery">
+          Warung Ridwan Shaleh
+        </span>
+      </h1>
 
-        <div class="photo-label">
-          🥬 Segar setiap hari
-        </div>
-      </div>
+      <p class="hero-description"
+         data-id="Sayur segar • Ayam segar • Kebutuhan harian. Belanja kebutuhan rumah menjadi lebih praktis."
+         data-en="Fresh vegetables • Fresh chicken • Daily essentials. Making your everyday shopping more convenient.">
+        Sayur segar • Ayam segar • Kebutuhan harian.
+        Belanja kebutuhan rumah menjadi lebih praktis.
+      </p>
 
-    </div>
-  </section>
-
-  <!-- STATS -->
-  <div class="stats">
-    <div class="container stats-grid">
-      <div class="stat">
-        <strong>🥬</strong>
-        <span>Sayuran segar</span>
-      </div>
-
-      <div class="stat">
-        <strong>🍗</strong>
-        <span>Ayam segar</span>
-      </div>
-
-      <div class="stat">
-        <strong>🛒</strong>
-        <span>Kebutuhan harian</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- GALERI -->
-  <section id="galeri">
-    <div class="container">
-
-      <div class="section-head">
-        <div class="mini">Galeri</div>
-        <h2>Produk & suasana warung</h2>
-        <p>
-          Galeri ini siap diganti dengan foto asli Warung Ridwan Shaleh.
-        </p>
-      </div>
-
-      <div class="gallery">
-
-        <!-- FOTO 1 -->
-        <div class="gallery-item">
-          <img
-            src="https://images.unsplash.com/photo-1488459716781-31db52582fe9?auto=format&fit=crop&w=1200&q=85"
-            alt="Sayuran segar">
-        </div>
-
-        <!-- FOTO 2 -->
-        <div class="gallery-item">
-          <img
-            src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=900&q=85"
-            alt="Sayuran">
-        </div>
-
-        <!-- FOTO 3 -->
-        <div class="gallery-item">
-          <img
-            src="https://images.unsplash.com/photo-1604503468506-a8da13d82791?auto=format&fit=crop&w=900&q=85"
-            alt="Ayam">
-        </div>
-
-        <!-- FOTO 4 -->
-        <div class="gallery-item">
-          <img
-            src="https://images.unsplash.com/photo-1587593810167-a84920ea0781?auto=format&fit=crop&w=900&q=85"
-            alt="Kebutuhan makanan">
-        </div>
-
-        <!-- FOTO 5 -->
-        <div class="gallery-item">
-          <img
-            src="https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=900&q=85"
-            alt="Bahan makanan">
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- PRODUK -->
-  <section id="produk" class="products">
-    <div class="container">
-
-      <div class="section-head">
-        <div class="mini">Produk</div>
-        <h2>Kebutuhan untuk rumah</h2>
-        <p>
-          Harga dapat berubah mengikuti ketersediaan dan kondisi pasar.
-          Silakan hubungi kami untuk harga terbaru.
-        </p>
-      </div>
-
-      <div class="product-grid">
-
-        <article class="product-card">
-          <img
-            src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1000&q=85"
-            alt="Sayuran segar">
-
-          <div class="product-body">
-            <h3>🥬 Sayuran Segar</h3>
-            <p>
-              Berbagai pilihan sayuran untuk kebutuhan masak sehari-hari.
-            </p>
-
-            <div class="price">Harga terbaru: Hubungi kami</div>
-
-            <a class="btn btn-primary product-btn"
-               href="https://wa.me/6285692828522?text=Halo%20Warung%20Ridwan%20Shaleh%2C%20saya%20ingin%20bertanya%20harga%20sayuran."
-               target="_blank">
-              Tanya Harga
-            </a>
-          </div>
-        </article>
-
-        <article class="product-card">
-          <img
-            src="https://images.unsplash.com/photo-1604503468506-a8da13d82791?auto=format&fit=crop&w=1000&q=85"
-            alt="Ayam segar">
-
-          <div class="product-body">
-            <h3>🍗 Ayam Segar</h3>
-            <p>
-              Pilihan ayam untuk kebutuhan masakan keluarga.
-            </p>
-
-            <div class="price">Harga terbaru: Hubungi kami</div>
-
-            <a class="btn btn-primary product-btn"
-               href="https://wa.me/6285692828522?text=Halo%20Warung%20Ridwan%20Shaleh%2C%20saya%20ingin%20bertanya%20harga%20ayam."
-               target="_blank">
-              Tanya Harga
-            </a>
-          </div>
-        </article>
-
-        <article class="product-card">
-          <img
-            src="https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=1000&q=85"
-            alt="Kebutuhan harian">
-
-          <div class="product-body">
-            <h3>🛒 Kebutuhan Harian</h3>
-            <p>
-              Kebutuhan rumah tangga yang tersedia di warung.
-            </p>
-
-            <div class="price">Harga terbaru: Hubungi kami</div>
-
-            <a class="btn btn-primary product-btn"
-               href="https://wa.me/6285692828522?text=Halo%20Warung%20Ridwan%20Shaleh%2C%20saya%20ingin%20bertanya%20tentang%20kebutuhan%20harian."
-               target="_blank">
-              Tanya Produk
-            </a>
-          </div>
-        </article>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- KEUNGGULAN -->
-  <section>
-    <div class="container">
-
-      <div class="section-head">
-        <div class="mini">Kenapa di sini?</div>
-        <h2>Belanja lebih praktis</h2>
-        <p>
-          Informasi sederhana agar pelanggan lebih mudah menghubungi warung.
-        </p>
-      </div>
-
-      <div class="benefit-grid">
-
-        <div class="benefit">
-          <div class="benefit-icon">🥬</div>
-          <h3>Produk Segar</h3>
-          <p>Sayuran dan bahan makanan untuk kebutuhan sehari-hari.</p>
-        </div>
-
-        <div class="benefit">
-          <div class="benefit-icon">💬</div>
-          <h3>Mudah Bertanya</h3>
-          <p>Hubungi langsung melalui WhatsApp untuk informasi produk.</p>
-        </div>
-
-        <div class="benefit">
-          <div class="benefit-icon">📍</div>
-          <h3>Mudah Dicari</h3>
-          <p>Gunakan Google Maps untuk melihat lokasi warung.</p>
-        </div>
-
-        <div class="benefit">
-          <div class="benefit-icon">🛒</div>
-          <h3>Kebutuhan Harian</h3>
-          <p>Tempat belanja kebutuhan rumah tangga sehari-hari.</p>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- PROMO -->
-  <section>
-    <div class="container">
-
-      <div class="promo-box">
-        <div>
-          <h2>Mau cek stok atau harga?</h2>
-          <p>
-            Chat Warung Ridwan Shaleh melalui WhatsApp.
-          </p>
-        </div>
+      <div class="buttons">
 
         <a class="btn btn-primary"
-           href="https://wa.me/6285692828522?text=Halo%20Warung%20Ridwan%20Shaleh%2C%20saya%20ingin%20cek%20stok%20dan%20harga."
+           href="https://wa.me/6285692828522?text=Halo%20Warung%20Ridwan%20Shaleh%2C%20saya%20ingin%20bertanya%20tentang%20produk."
            target="_blank">
-          💬 Chat Sekarang
+          💬
+          <span data-id="Pesan via WhatsApp"
+                data-en="Order via WhatsApp">
+            Pesan via WhatsApp
+          </span>
         </a>
-      </div>
 
-    </div>
-  </section>
-
-  <!-- ORDER -->
-  <section class="order-section" id="pesan">
-    <div class="container order-grid">
-
-      <div class="order-info">
-        <h2>Pesan lewat WhatsApp</h2>
-
-        <p>
-          Isi kebutuhan yang ingin ditanyakan.
-          Setelah tombol diklik, WhatsApp akan terbuka dengan pesan otomatis.
-        </p>
-
-        <div class="contact-line">
-          📱 0856-9282-8522
-        </div>
-
-        <div class="contact-line">
-          🥬 Sayur segar
-        </div>
-
-        <div class="contact-line">
-          🍗 Ayam segar
-        </div>
-
-        <div class="contact-line">
-          🛒 Kebutuhan harian
-        </div>
-      </div>
-
-      <div class="form-card">
-
-        <form id="orderForm">
-
-          <div class="form-group">
-            <label for="nama">Nama</label>
-            <input
-              id="nama"
-              type="text"
-              placeholder="Nama Anda"
-              required>
-          </div>
-
-          <div class="form-group">
-            <label for="produkForm">Produk yang ditanyakan</label>
-
-            <select id="produkForm" required>
-              <option value="">Pilih produk</option>
-              <option value="Sayuran Segar">Sayuran Segar</option>
-              <option value="Ayam Segar">Ayam Segar</option>
-              <option value="Kebutuhan Harian">Kebutuhan Harian</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="pesanForm">Pesan</label>
-
-            <textarea
-              id="pesanForm"
-              placeholder="Contoh: Saya ingin bertanya harga dan ketersediaan..."
-              required></textarea>
-          </div>
-
-          <button type="submit" class="btn btn-primary" style="width:100%;">
-            💬 Kirim ke WhatsApp
-          </button>
-
-        </form>
+        <a class="btn btn-light"
+           href="https://maps.app.goo.gl/1crFGWncz4DJKMjAA"
+           target="_blank">
+          📍
+          <span data-id="Lihat Google Maps"
+                data-en="View Google Maps">
+            Lihat Google Maps
+          </span>
+        </a>
 
       </div>
 
     </div>
-  </section>
 
-  <!-- LOKASI -->
-  <section id="lokasi">
-    <div class="container">
+    <!-- FOTO WARUNG -->
+    <div class="warung-photo">
 
-      <div class="section-head">
-        <div class="mini">Lokasi</div>
-        <h2>Temukan Warung Ridwan Shaleh</h2>
-        <p>
-          Buka Google Maps untuk melihat lokasi yang dibagikan.
-        </p>
+      <!-- FOTO UTAMA SEMENTARA -->
+      <img
+        src="https://images.unsplash.com/photo-1604719312566-8912e9227c6a?auto=format&fit=crop&w=1200&q=90"
+        alt="Warung Ridwan Shaleh">
+
+      <div class="photo-caption"
+           data-id="🏪 Warung Ridwan Shaleh"
+           data-en="🏪 Ridwan Shaleh Grocery">
+        🏪 Warung Ridwan Shaleh
       </div>
 
-      <div class="map-wrap">
+    </div>
 
-        <iframe
-          src="https://www.google.com/maps?q=-6.2564806,106.7191577&z=17&output=embed"
-          loading="lazy"
-          allowfullscreen
-          referrerpolicy="no-referrer-when-downgrade">
-        </iframe>
+  </div>
+</section>
 
-        <div class="map-note">
-          <p>
-            📍 Untuk lokasi yang tepat, gunakan tombol Google Maps di bawah.
+<!-- STATS -->
+<div class="stats">
+  <div class="container stats-grid">
+
+    <div class="stat">
+      <div class="stat-icon">🥬</div>
+      <strong data-id="Sayuran Segar" data-en="Fresh Vegetables">
+        Sayuran Segar
+      </strong>
+      <small data-id="Untuk kebutuhan masak" data-en="For everyday cooking">
+        Untuk kebutuhan masak
+      </small>
+    </div>
+
+    <div class="stat">
+      <div class="stat-icon">🍗</div>
+      <strong data-id="Ayam Segar" data-en="Fresh Chicken">
+        Ayam Segar
+      </strong>
+      <small data-id="Pilihan kebutuhan keluarga" data-en="For family meals">
+        Pilihan kebutuhan keluarga
+      </small>
+    </div>
+
+    <div class="stat">
+      <div class="stat-icon">🛒</div>
+      <strong data-id="Kebutuhan Harian" data-en="Daily Essentials">
+        Kebutuhan Harian
+      </strong>
+      <small data-id="Belanja lebih praktis" data-en="Convenient shopping">
+        Belanja lebih praktis
+      </small>
+    </div>
+
+  </div>
+</div>
+
+<!-- GALERI -->
+<section id="galeri">
+  <div class="container">
+
+    <div class="section-title">
+      <small data-id="Galeri" data-en="Gallery">Galeri</small>
+
+      <h2 data-id="Produk & suasana warung"
+          data-en="Products & grocery atmosphere">
+        Produk & suasana warung
+      </h2>
+
+      <p data-id="Galeri siap menampilkan foto asli Warung Ridwan Shaleh."
+         data-en="This gallery is ready for photos of Ridwan Shaleh Grocery.">
+        Galeri siap menampilkan foto asli Warung Ridwan Shaleh.
+      </p>
+    </div>
+
+    <div class="gallery">
+
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1200&q=90"
+             alt="Sayuran segar">
+      </div>
+
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1488459716781-31db52582fe9?auto=format&fit=crop&w=900&q=90"
+             alt="Sayuran">
+      </div>
+
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1604503468506-a8da13d82791?auto=format&fit=crop&w=900&q=90"
+             alt="Ayam">
+      </div>
+
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1587593810167-a84920ea0781?auto=format&fit=crop&w=900&q=90"
+             alt="Bahan makanan">
+      </div>
+
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=900&q=90"
+             alt="Kebutuhan makanan">
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- PRODUK -->
+<section class="products" id="produk">
+  <div class="container">
+
+    <div class="section-title">
+
+      <small data-id="Produk" data-en="Products">
+        Produk
+      </small>
+
+      <h2 data-id="Kebutuhan untuk rumah"
+          data-en="Essentials for your home">
+        Kebutuhan untuk rumah
+      </h2>
+
+      <p data-id="Hubungi kami untuk informasi stok dan harga terbaru."
+         data-en="Contact us for the latest stock and prices.">
+        Hubungi kami untuk informasi stok dan harga terbaru.
+      </p>
+
+    </div>
+
+    <div class="product-grid">
+
+      <!-- SAYUR -->
+      <article class="product">
+
+        <img
+          src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1000&q=90"
+          alt="Sayuran segar">
+
+        <div class="product-body">
+
+          <h3 data-id="🥬 Sayuran Segar"
+              data-en="🥬 Fresh Vegetables">
+            🥬 Sayuran Segar
+          </h3>
+
+          <p data-id="Berbagai pilihan sayuran untuk kebutuhan masak sehari-hari."
+             data-en="Various vegetables for everyday cooking.">
+            Berbagai pilihan sayuran untuk kebutuhan masak sehari-hari.
           </p>
 
-          <a
-            class="btn btn-primary"
-            href="https://maps.app.goo.gl/1crFGWncz4DJKMjAA"
-            target="_blank">
-            Buka Google Maps
+          <div class="price"
+               data-id="Harga: Hubungi kami"
+               data-en="Price: Contact us">
+            Harga: Hubungi kami
+          </div>
+
+          <a class="btn btn-primary full"
+             href="https://wa.me/6285692828522?text=Halo%20Warung%20Ridwan%20Shaleh%2C%20saya%20ingin%20bertanya%20harga%20sayuran."
+             target="_blank">
+            💬
+            <span data-id="Tanya Harga" data-en="Ask Price">
+              Tanya Harga
+            </span>
           </a>
+
         </div>
+      </article>
+
+      <!-- AYAM -->
+      <article class="product">
+
+        <img
+          src="https://images.unsplash.com/photo-1604503468506-a8da13d82791?auto=format&fit=crop&w=1000&q=90"
+          alt="Ayam segar">
+
+        <div class="product-body">
+
+          <h3 data-id="🍗 Ayam Segar"
+              data-en="🍗 Fresh Chicken">
+            🍗 Ayam Segar
+          </h3>
+
+          <p data-id="Pilihan ayam untuk kebutuhan masakan keluarga."
+             data-en="Chicken for your family's daily meals.">
+            Pilihan ayam untuk kebutuhan masakan keluarga.
+          </p>
+
+          <div class="price"
+               data-id="Harga: Hubungi kami"
+               data-en="Price: Contact us">
+            Harga: Hubungi kami
+          </div>
+
+          <a class="btn btn-primary full"
+             href="https://wa.me/6285692828522?text=Halo%20Warung%20Ridwan%20Shaleh%2C%20saya%20ingin%20bertanya%20harga%20ayam."
+             target="_blank">
+            💬
+            <span data-id="Tanya Harga" data-en="Ask Price">
+              Tanya Harga
+            </span>
+          </a>
+
+        </div>
+      </article>
+
+      <!-- KEBUTUHAN HARIAN -->
+      <article class="product">
+
+        <img
+          src="https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=1000&q=90"
+          alt="Kebutuhan harian">
+
+        <div class="product-body">
+
+          <h3 data-id="🛒 Kebutuhan Harian"
+              data-en="🛒 Daily Essentials">
+            🛒 Kebutuhan Harian
+          </h3>
+
+          <p data-id="Kebutuhan rumah tangga yang tersedia di warung."
+             data-en="Everyday household essentials available at the store.">
+            Kebutuhan rumah tangga yang tersedia di warung.
+          </p>
+
+          <div class="price"
+               data-id="Harga: Hubungi kami"
+               data-en="Price: Contact us">
+            Harga: Hubungi kami
+          </div>
+
+          <a class="btn btn-primary full"
+             href="https://wa.me/6285692828522?text=Halo%20Warung%20Ridwan%20Shaleh%2C%20saya%20ingin%20bertanya%20tentang%20kebutuhan%20harian."
+             target="_blank">
+            💬
+            <span data-id="Tanya Produk" data-en="Ask Product">
+              Tanya Produk
+            </span>
+          </a>
+
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- KEUNGGULAN -->
+<section>
+  <div class="container">
+
+    <div class="section-title">
+
+      <small data-id="Keunggulan" data-en="Benefits">
+        Keunggulan
+      </small>
+
+      <h2 data-id="Belanja lebih praktis"
+          data-en="Shopping made easier">
+        Belanja lebih praktis
+      </h2>
+
+      <p data-id="Informasi dan kontak dibuat sederhana agar pelanggan mudah menghubungi warung."
+         data-en="Simple information and contact options make it easy to reach the store.">
+        Informasi dan kontak dibuat sederhana agar pelanggan mudah menghubungi warung.
+      </p>
+
+    </div>
+
+    <div class="benefits">
+
+      <div class="benefit">
+        <div class="benefit-icon">🥬</div>
+        <h3 data-id="Produk Segar" data-en="Fresh Products">
+          Produk Segar
+        </h3>
+        <p data-id="Pilihan sayuran dan bahan makanan untuk kebutuhan sehari-hari."
+           data-en="Vegetables and food ingredients for everyday needs.">
+          Pilihan sayuran dan bahan makanan untuk kebutuhan sehari-hari.
+        </p>
+      </div>
+
+      <div class="benefit">
+        <div class="benefit-icon">💬</div>
+        <h3 data-id="Mudah Bertanya" data-en="Easy to Contact">
+          Mudah Bertanya
+        </h3>
+        <p data-id="Hubungi langsung melalui WhatsApp."
+           data-en="Contact us directly through WhatsApp.">
+          Hubungi langsung melalui WhatsApp.
+        </p>
+      </div>
+
+      <div class="benefit">
+        <div class="benefit-icon">📍</div>
+        <h3 data-id="Lokasi Mudah" data-en="Easy Location">
+          Lokasi Mudah
+        </h3>
+        <p data-id="Gunakan Google Maps untuk menuju lokasi."
+           data-en="Use Google Maps to find the location.">
+          Gunakan Google Maps untuk menuju lokasi.
+        </p>
+      </div>
+
+      <div class="benefit">
+        <div class="benefit-icon">🛒</div>
+        <h3 data-id="Kebutuhan Harian" data-en="Daily Needs">
+          Kebutuhan Harian
+        </h3>
+        <p data-id="Belanja kebutuhan rumah dengan lebih praktis."
+           data-en="Shop for household needs more conveniently.">
+          Belanja kebutuhan rumah dengan lebih praktis.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- PROMO -->
+<section>
+  <div class="container">
+
+    <div class="promo">
+
+      <div>
+        <h2 data-id="Mau cek stok atau harga?"
+            data-en="Want to check stock or prices?">
+          Mau cek stok atau harga?
+        </h2>
+
+        <p data-id="Chat Warung Ridwan Shaleh melalui WhatsApp."
+           data-en="Chat with Ridwan Shaleh Grocery through WhatsApp.">
+          Chat Warung Ridwan Shaleh melalui WhatsApp.
+        </p>
+      </div>
+
+      <a class="btn btn-primary"
+         href="https://wa.me/6285692828522?text=Halo%20Warung%20Ridwan%20Shaleh%2C%20saya%20ingin%20cek%20stok%20dan%20harga."
+         target="_blank">
+
+        💬
+        <span data-id="Chat Sekarang" data-en="Chat Now">
+          Chat Sekarang
+        </span>
+
+      </a>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ORDER -->
+<section class="order-section" id="pesan">
+
+  <div class="container order-grid">
+
+    <div class="order-info">
+
+      <h2 data-id="Pesan lewat WhatsApp"
+          data-en="Order via WhatsApp">
+        Pesan lewat WhatsApp
+      </h2>
+
+      <p data-id="Isi kebutuhan yang ingin ditanyakan. Setelah dikirim, WhatsApp akan terbuka."
+         data-en="Fill in what you would like to ask. WhatsApp will open after submission.">
+        Isi kebutuhan yang ingin ditanyakan. Setelah dikirim, WhatsApp akan terbuka.
+      </p>
+
+      <div class="contact-item">
+        📱 0856-9282-8522
+      </div>
+
+      <div class="contact-item">
+        🥬 <span data-id="Sayur segar" data-en="Fresh vegetables">
+          Sayur segar
+        </span>
+      </div>
+
+      <div class="contact-item">
+        🍗 <span data-id="Ayam segar" data-en="Fresh chicken">
+          Ayam segar
+        </span>
+      </div>
+
+      <div class="contact-item">
+        🛒 <span data-id="Kebutuhan harian" data-en="Daily essentials">
+          Kebutuhan harian
+        </span>
+      </div>
+
+    </div>
+
+    <div class="form-card">
+
+      <form id="orderForm">
+
+        <div class="form-group">
+
+          <label for="nama"
+                 data-id="Nama"
+                 data-en="Name">
+            Nama
+          </label>
+
+          <input
+            id="nama"
+            type="text"
+            placeholder="Nama Anda"
+            data-placeholder-id="Nama Anda"
+            data-placeholder-en="Your name"
+            required>
+
+        </div>
+
+        <div class="form-group">
+
+          <label for="produkForm"
+                 data-id="Produk yang ditanyakan"
+                 data-en="Product">
+            Produk yang ditanyakan
+          </label>
+
+          <select id="produkForm" required>
+
+            <option value=""
+                    data-id="Pilih produk"
+                    data-en="Choose a product">
+              Pilih produk
+            </option>
+
+            <option value="Sayuran Segar"
+                    data-id="Sayuran Segar"
+                    data-en="Fresh Vegetables">
+              Sayuran Segar
+            </option>
+
+            <option value="Ayam Segar"
+                    data-id="Ayam Segar"
+                    data-en="Fresh Chicken">
+              Ayam Segar
+            </option>
+
+            <option value="Kebutuhan Harian"
+                    data-id="Kebutuhan Harian"
+                    data-en="Daily Essentials">
+              Kebutuhan Harian
+            </option>
+
+          </select>
+
+        </div>
+
+        <div class="form-group">
+
+          <label for="pesanForm"
+                 data-id="Pesan"
+                 data-en="Message">
+            Pesan
+          </label>
+
+          <textarea
+            id="pesanForm"
+            placeholder="Contoh: Saya ingin bertanya harga..."
+            data-placeholder-id="Contoh: Saya ingin bertanya harga..."
+            data-placeholder-en="Example: I would like to ask about the price..."
+            required></textarea>
+
+        </div>
+
+        <button type="submit" class="btn btn-primary full">
+          💬
+          <span data-id="Kirim ke WhatsApp"
+                data-en="Send to WhatsApp">
+            Kirim ke WhatsApp
+          </span>
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- LOKASI -->
+<section id="lokasi">
+
+  <div class="container">
+
+    <div class="section-title">
+
+      <small data-id="Lokasi" data-en="Location">
+        Lokasi
+      </small>
+
+      <h2 data-id="Temukan Warung Ridwan Shaleh"
+          data-en="Find Ridwan Shaleh Grocery">
+        Temukan Warung Ridwan Shaleh
+      </h2>
+
+      <p data-id="Gunakan tombol Google Maps untuk melihat lokasi yang dibagikan."
+         data-en="Use the Google Maps button to view the shared location.">
+        Gunakan tombol Google Maps untuk melihat lokasi yang dibagikan.
+      </p>
+
+    </div>
+
+    <div class="map-box">
+
+      <iframe
+        src="https://www.google.com/maps?q=-6.2564806,106.7191577&z=17&output=embed"
+        loading="lazy"
+        allowfullscreen
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+
+      <div class="map-bottom">
+
+        <p data-id="📍 Lokasi dibuka melalui Google Maps."
+           data-en="📍 Location opens through Google Maps.">
+          📍 Lokasi dibuka melalui Google Maps.
+        </p>
+
+        <a
+          class="btn btn-primary"
+          href="https://maps.app.goo.gl/1crFGWncz4DJKMjAA"
+          target="_blank">
+
+          📍
+          <span data-id="Buka Google Maps"
+                data-en="Open Google Maps">
+            Buka Google Maps
+          </span>
+
+        </a>
 
       </div>
 
     </div>
-  </section>
+
+  </div>
+
+</section>
 
 </main>
 
 <!-- FOOTER -->
 <footer>
+
   <div class="container">
 
     <div class="footer-grid">
 
       <div>
         <h3>🥬 Warung Ridwan Shaleh</h3>
-        <p>
+
+        <p data-id="Sayur segar • Ayam segar • Kebutuhan harian."
+           data-en="Fresh vegetables • Fresh chicken • Daily essentials.">
           Sayur segar • Ayam segar • Kebutuhan harian.
         </p>
       </div>
 
       <div>
-        <h3>Menu</h3>
-        <p><a href="#home">Home</a></p>
-        <p><a href="#produk">Produk</a></p>
-        <p><a href="#galeri">Galeri</a></p>
-        <p><a href="#lokasi">Lokasi</a></p>
+
+        <h3 data-id="Menu" data-en="Menu">
+          Menu
+        </h3>
+
+        <p><a href="#home" data-id="Beranda" data-en="Home">Beranda</a></p>
+        <p><a href="#produk" data-id="Produk" data-en="Products">Produk</a></p>
+        <p><a href="#galeri" data-id="Galeri" data-en="Gallery">Galeri</a></p>
+        <p><a href="#lokasi" data-id="Lokasi" data-en="Location">Lokasi</a></p>
+
       </div>
 
       <div>
-        <h3>Hubungi</h3>
+
+        <h3 data-id="Hubungi" data-en="Contact">
+          Hubungi
+        </h3>
+
         <p>WhatsApp: 0856-9282-8522</p>
+
         <p>
-          <a href="https://maps.app.goo.gl/1crFGWncz4DJKMjAA"
-             target="_blank">
+          <a
+            href="https://maps.app.goo.gl/1crFGWncz4DJKMjAA"
+            target="_blank">
             📍 Google Maps
           </a>
         </p>
+
       </div>
 
     </div>
 
     <div class="footer-bottom">
-      © <span id="year"></span> Warung Ridwan Shaleh. All rights reserved.
+      © <span id="year"></span> Warung Ridwan Shaleh.
     </div>
 
   </div>
+
 </footer>
 
 <!-- FLOATING WHATSAPP -->
@@ -1131,34 +1426,101 @@
 </a>
 
 <script>
-  const NOMOR_WA = "6285692828522";
 
-  document.getElementById("year").textContent =
-    new Date().getFullYear();
+const NOMOR_WA = "6285692828522";
 
-  document.getElementById("orderForm").addEventListener("submit", function(e) {
-    e.preventDefault();
+document.getElementById("year").textContent =
+  new Date().getFullYear();
 
-    const nama = document.getElementById("nama").value.trim();
-    const produk = document.getElementById("produkForm").value;
-    const pesan = document.getElementById("pesanForm").value.trim();
+/* LANGUAGE */
+function setLanguage(language){
 
-    if (!nama || !produk || !pesan) {
-      alert("Mohon lengkapi semua data terlebih dahulu.");
-      return;
-    }
+  document.documentElement.lang = language;
 
-    const message =
-      "Halo Warung Ridwan Shaleh,%0A%0A" +
-      "Nama: " + encodeURIComponent(nama) + "%0A" +
-      "Produk: " + encodeURIComponent(produk) + "%0A" +
-      "Pesan: " + encodeURIComponent(pesan);
+  document.querySelectorAll("[data-id][data-en]").forEach(function(element){
 
-    window.open(
-      "https://wa.me/" + NOMOR_WA + "?text=" + message,
-      "_blank"
-    );
+    element.textContent =
+      language === "id"
+      ? element.getAttribute("data-id")
+      : element.getAttribute("data-en");
+
   });
+
+  document.querySelectorAll("input[data-placeholder-id], textarea[data-placeholder-id]").forEach(function(element){
+
+    element.placeholder =
+      language === "id"
+      ? element.getAttribute("data-placeholder-id")
+      : element.getAttribute("data-placeholder-en");
+
+  });
+
+  document.querySelectorAll("option[data-id][data-en]").forEach(function(option){
+
+    option.textContent =
+      language === "id"
+      ? option.getAttribute("data-id")
+      : option.getAttribute("data-en");
+
+  });
+
+  document.getElementById("idBtn").classList.toggle(
+    "active",
+    language === "id"
+  );
+
+  document.getElementById("enBtn").classList.toggle(
+    "active",
+    language === "en"
+  );
+
+  localStorage.setItem("language",language);
+}
+
+/* LOAD LANGUAGE */
+const savedLanguage =
+  localStorage.getItem("language") || "id";
+
+setLanguage(savedLanguage);
+
+/* WHATSAPP FORM */
+document.getElementById("orderForm").addEventListener("submit",function(event){
+
+  event.preventDefault();
+
+  const nama =
+    document.getElementById("nama").value.trim();
+
+  const produk =
+    document.getElementById("produkForm").value;
+
+  const pesan =
+    document.getElementById("pesanForm").value.trim();
+
+  if(!nama || !produk || !pesan){
+
+    alert(
+      document.documentElement.lang === "en"
+      ? "Please complete all fields."
+      : "Mohon lengkapi semua data."
+    );
+
+    return;
+  }
+
+  const text =
+    "Halo Warung Ridwan Shaleh,%0A%0A" +
+    "Nama: " + encodeURIComponent(nama) + "%0A" +
+    "Produk: " + encodeURIComponent(produk) + "%0A" +
+    "Pesan: " + encodeURIComponent(pesan);
+
+  window.open(
+    "https://wa.me/" + NOMOR_WA + "?text=" + text,
+    "_blank"
+  );
+
+});
+
 </script>
 
 </body>
