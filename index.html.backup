@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Warung Ridwan Saleh | Sayur, Ayam & Kebutuhan Dapur</title>
+
+  <meta name="description" content="Warung Ridwan Saleh menyediakan sayuran segar, ayam, kebutuhan dapur dan jasa pembuatan website portfolio modern.">
+
+  <!-- FAVICON -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🛒%3C/text%3E%3C/svg%3E">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    :root {
+      --green: #15803d;
+      --green-dark: #14532d;
+      --green-light: #dcfce7;
+      --orange: #f97316;
+      --yellow: #facc15;
+      --dark: #111827;
+      --text: #374151;
+      --white: #ffffff;
+      --gray: #f8fafc;
+      --border: #e5e7eb;
+      --shadow: 0 15px 40px rgba(0,0,0,.08);
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #ffffff;
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .container {
+      width: min(1150px, 92%);
+      margin: auto;
+    }
+
+    /* NAVBAR */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      background: rgba(255,255,255,.95);
+      backdrop-filter: blur(15px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      min-height: 74px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      color: var(--green-dark);
+      font-size: 19px;
+    }
+
+    .logo-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: var(--green-light);
+      font-size: 23px;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 700;
+      color: #374151;
+    }
+
+    .nav-links a:hover {
+      color: var(--green);
+    }
+
+    /* LANGUAGE */
+    .language-switch {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: #f1f5f9;
+      padding: 5px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+    }
+
+    .lang-btn {
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+      padding: 8px 10px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 800;
+      color: #475569;
+      transition: .2s;
+      white-space: nowrap;
+    }
+
+    .lang-btn:hover {
+      background: #ffffff;
+    }
+
+    .lang-btn.active {
+      background: var(--green);
+      color: white;
+      box-shadow: 0 4px 12px rgba(21,128,61,.25);
+    }
+
+    /* HERO */
+    .hero {
+      padding: 85px 0 70px;
+      background:
+        radial-gradient(circle at 10% 20%, #dcfce7 0, transparent 28%),
+        radial-gradient(circle at 90% 10%, #ffedd5 0, transparent 28%),
+        linear-gradient(180deg,#ffffff,#f8fafc);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 55px;
+      align-items: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--green-light);
+      color: var(--green-dark);
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      color: var(--dark);
+      font-size: clamp(38px,6vw,68px);
+      line-height: 1.05;
+      letter-spacing: -2px;
+      margin-bottom: 20px;
+    }
+
+    h1 span {
+      color: var(--green);
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: #64748b;
+      max-width: 650px;
+      margin-bottom: 30px;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .btn {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 20px;
+      border-radius: 14px;
+      font-weight: 800;
+      border: 1px solid transparent;
+      transition: .25s;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: var(--green);
+      color: white;
+      box-shadow: 0 10px 25px rgba(21,128,61,.2);
+    }
+
+    .btn-secondary {
+      background: white;
+      border-color: var(--border);
+      color: var(--dark);
+    }
+
+    /* HERO CARD */
+    .hero-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 25px;
+      box-shadow: var(--shadow);
+    }
+
+    .shop-visual {
+      min-height: 330px;
+      border-radius: 22px;
+      background:
+        linear-gradient(135deg,#dcfce7,#fef3c7);
+      display: grid;
+      place-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .shop-emoji {
+      font-size: 120px;
+      filter: drop-shadow(0 15px 15px rgba(0,0,0,.12));
+    }
+
+    .floating-card {
+      position: absolute;
+      background: white;
+      padding: 12px 15px;
+      border-radius: 14px;
+      box-shadow: 0 10px 25px rgba(0,0,0,.1);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .floating-one {
+      top: 20px;
+      left: 18px;
+    }
+
+    .floating-two {
+      right: 18px;
+      bottom: 20px;
+    }
+
+    /* SECTION */
+    section {
+      padding: 80px 0;
+    }
+
+    .section-head {
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto 45px;
+    }
+
+    .section-head small {
+      color: var(--green);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .section-head h2 {
+      font-size: clamp(30px,4vw,44px);
+      color: var(--dark);
+      margin: 8px 0 12px;
+    }
+
+    .section-head p {
+      color: #64748b;
+    }
+
+    /* CARDS */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 28px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.05);
+      transition: .25s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow);
+    }
+
+    .card-icon {
+      width: 58px;
+      height: 58px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      background: var(--green-light);
+      font-size: 30px;
+      margin-bottom: 18px;
+    }
+
+    .card h3 {
+      color: var(--dark);
+      margin-bottom: 8px;
+      font-size: 21px;
+    }
+
+    .card p {
+      color: #64748b;
+      font-size: 15px;
+    }
+
+    /* PROMO */
+    .promo {
+      background: var(--green-dark);
+      color: white;
+    }
+
+    .promo-grid {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .promo h2 {
+      font-size: clamp(30px,4vw,46px);
+      line-height: 1.1;
+      margin-bottom: 12px;
+    }
+
+    .promo p {
+      color: #dcfce7;
+      max-width: 700px;
+    }
+
+    .btn-orange {
+      background: var(--orange);
+      color: white;
+    }
+
+    /* PORTFOLIO */
+    .portfolio-box {
+      background: linear-gradient(135deg,#f0fdf4,#fff7ed);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 40px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .portfolio-box h2 {
+      color: var(--dark);
+      font-size: 35px;
+      margin-bottom: 12px;
+    }
+
+    .portfolio-box p {
+      color: #64748b;
+    }
+
+    /* CONTACT */
+    .contact {
+      background: #f8fafc;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 20px;
+    }
+
+    .contact-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 25px;
+      text-align: center;
+    }
+
+    .contact-card .icon {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    .contact-card h3 {
+      color: var(--dark);
+      margin-bottom: 5px;
+    }
+
+    .contact-card p {
+      color: #64748b;
+      font-size: 14px;
+    }
+
+    /* CTA */
+    .final-cta {
+      text-align: center;
+      background: linear-gradient(135deg,#14532d,#15803d);
+      color: white;
+      border-radius: 30px;
+      padding: 60px 25px;
+    }
+
+    .final-cta h2 {
+      font-size: clamp(30px,5vw,48px);
+      margin-bottom: 12px;
+    }
+
+    .final-cta p {
+      color: #dcfce7;
+      max-width: 650px;
+      margin: 0 auto 25px;
+    }
+
+    /* FOOTER */
+    footer {
+      background: #111827;
+      color: #cbd5e1;
+      padding: 35px 0;
+      text-align: center;
+    }
+
+    footer strong {
+      color: white;
+    }
+
+    footer p {
+      font-size: 14px;
+      margin-top: 6px;
+    }
+
+    /* WHATSAPP */
+    .wa {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: #25D366;
+      color: white;
+      display: grid;
+      place-items: center;
+      font-size: 28px;
+      z-index: 1000;
+      box-shadow: 0 10px 25px rgba(0,0,0,.2);
+      transition: .25s;
+    }
+
+    .wa:hover {
+      transform: scale(1.08);
+    }
+
+    /* MOBILE */
+    @media (max-width: 900px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero-grid,
+      .portfolio-box,
+      .promo-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .cards,
+      .contact-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .hero {
+        padding-top: 55px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .nav-inner {
+        min-height: 68px;
+      }
+
+      .logo {
+        font-size: 15px;
+      }
+
+      .logo-icon {
+        width: 36px;
+        height: 36px;
+      }
+
+      .language-switch {
+        gap: 2px;
+      }
+
+      .lang-btn {
+        padding: 7px 8px;
+        font-size: 12px;
+      }
+
+      h1 {
+        letter-spacing: -1px;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+
+      .buttons {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .cards,
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .portfolio-box {
+        padding: 28px 22px;
+      }
+
+      .portfolio-box h2 {
+        font-size: 28px;
+      }
+
+      section {
+        padding: 60px 0;
+      }
+
+      .shop-visual {
+        min-height: 250px;
+      }
+
+      .shop-emoji {
+        font-size: 90px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="container nav-inner">
+
+      <a href="#home" class="logo">
+        <div class="logo-icon">🛒</div>
+        <span>Warung Ridwan Saleh</span>
+      </a>
+
+      <div class="nav-right">
+
+        <div class="nav-links">
+          <a href="#home" data-id="navHome">Beranda</a>
+          <a href="#produk" data-id="navProducts">Produk</a>
+          <a href="#portfolio" data-id="navPortfolio">Website</a>
+          <a href="#kontak" data-id="navContact">Kontak</a>
+        </div>
+
+        <!-- LANGUAGE BUTTON -->
+        <div class="language-switch">
+          <button class="lang-btn active" id="idBtn" onclick="setLanguage('id')">
+            🇮🇩 ID
+          </button>
+
+          <button class="lang-btn" id="enBtn" onclick="setLanguage('en')">
+            🇬🇧 EN
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="container hero-grid">
+
+      <div>
+        <div class="badge" data-id="badge">
+          🟢 Warung kebutuhan harian
+        </div>
+
+        <h1 data-id="heroTitle">
+          Belanja Segar,<br>
+          <span>Harga Bersahabat.</span>
+        </h1>
+
+        <p data-id="heroText">
+          Warung Ridwan Saleh menyediakan sayuran segar, ayam,
+          dan berbagai kebutuhan dapur untuk kebutuhan sehari-hari.
+        </p>
+
+        <div class="buttons">
+          <a
+            class="btn btn-primary"
+            href="https://wa.me/6285692828522"
+            target="_blank"
+            data-id="heroWa">
+            💬 Hubungi WhatsApp
+          </a>
+
+          <a
+            class="btn btn-secondary"
+            href="https://maps.app.goo.gl/Hq9BCWftCzoFh8Mj8"
+            target="_blank"
+            data-id="heroMap">
+            📍 Lihat Lokasi
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-card">
+        <div class="shop-visual">
+
+          <div class="floating-card floating-one" data-id="floatOne">
+            🥬 Sayur Segar
+          </div>
+
+          <div class="shop-emoji">
+            🛒🥬🍗
+          </div>
+
+          <div class="floating-card floating-two" data-id="floatTwo">
+            💰 Harga Bersahabat
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section id="produk">
+    <div class="container">
+
+      <div class="section-head">
+        <small data-id="productSmall">Produk Kami</small>
+
+        <h2 data-id="productTitle">
+          Kebutuhan Dapur Sehari-hari
+        </h2>
+
+        <p data-id="productText">
+          Pilihan kebutuhan rumah tangga yang praktis,
+          segar dan mudah didapat.
+        </p>
+      </div>
+
+      <div class="cards">
+
+        <div class="card">
+          <div class="card-icon">🥬</div>
+
+          <h3 data-id="vegetableTitle">
+            Sayuran Segar
+          </h3>
+
+          <p data-id="vegetableText">
+            Berbagai sayuran untuk kebutuhan masakan
+            keluarga sehari-hari.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">🍗</div>
+
+          <h3 data-id="chickenTitle">
+            Ayam
+          </h3>
+
+          <p data-id="chickenText">
+            Pilihan ayam untuk berbagai kebutuhan
+            masakan keluarga.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">🍳</div>
+
+          <h3 data-id="kitchenTitle">
+            Kebutuhan Dapur
+          </h3>
+
+          <p data-id="kitchenText">
+            Berbagai kebutuhan dapur untuk membantu
+            aktivitas memasak sehari-hari.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PROMO -->
+  <section class="promo">
+    <div class="container promo-grid">
+
+      <div>
+        <h2 data-id="promoTitle">
+          Butuh kebutuhan dapur?
+        </h2>
+
+        <p data-id="promoText">
+          Hubungi kami melalui WhatsApp untuk informasi
+          produk dan kebutuhan belanja Anda.
+        </p>
+      </div>
+
+      <a
+        href="https://wa.me/6285692828522"
+        target="_blank"
+        class="btn btn-orange"
+        data-id="promoButton">
+        💬 Chat WhatsApp
+      </a>
+
+    </div>
+  </section>
+
+  <!-- PORTFOLIO -->
+  <section id="portfolio">
+    <div class="container">
+
+      <div class="portfolio-box">
+
+        <div>
+          <div class="badge" data-id="portfolioBadge">
+            💻 Jasa Website
+          </div>
+
+          <h2 data-id="portfolioTitle">
+            Butuh Website Portfolio?
+          </h2>
+
+          <p data-id="portfolioText">
+            Kami juga menyediakan jasa pembuatan website
+            portfolio modern, profesional dan responsive
+            untuk kebutuhan pribadi maupun usaha.
+          </p>
+        </div>
+
+        <a
+          href="https://wa.me/6285692828522"
+          target="_blank"
+          class="btn btn-primary"
+          data-id="portfolioButton">
+          🚀 Konsultasi Website
+        </a>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section>
+    <div class="container">
+
+      <div class="section-head">
+
+        <small data-id="aboutSmall">
+          Tentang Kami
+        </small>
+
+        <h2 data-id="aboutTitle">
+          Sederhana, Dekat dan Terpercaya
+        </h2>
+
+        <p data-id="aboutText">
+          Warung Ridwan Saleh hadir untuk membantu memenuhi
+          kebutuhan sehari-hari dengan pelayanan yang ramah
+          dan mudah dihubungi.
+        </p>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="kontak">
+    <div class="container">
+
+      <div class="section-head">
+        <small data-id="contactSmall">
+          Hubungi Kami
+        </small>
+
+        <h2 data-id="contactTitle">
+          Siap Melayani Anda
+        </h2>
+
+        <p data-id="contactText">
+          Silakan hubungi kami untuk informasi lebih lanjut.
+        </p>
+      </div>
+
+      <div class="contact-grid">
+
+        <div class="contact-card">
+          <div class="icon">📱</div>
+
+          <h3 data-id="phoneTitle">
+            WhatsApp
+          </h3>
+
+          <p>
+            +62 856-9282-8522
+          </p>
+        </div>
+
+        <div class="contact-card">
+          <div class="icon">📍</div>
+
+          <h3 data-id="locationTitle">
+            Lokasi
+          </h3>
+
+          <p data-id="locationText">
+            Lihat lokasi Warung Ridwan Saleh melalui Google Maps.
+          </p>
+
+          <br>
+
+          <a
+            href="https://maps.app.goo.gl/Hq9BCWftCzoFh8Mj8"
+            target="_blank"
+            class="btn btn-secondary"
+            data-id="locationButton">
+            📍 Buka Maps
+          </a>
+        </div>
+
+        <div class="contact-card">
+          <div class="icon">💻</div>
+
+          <h3 data-id="serviceTitle">
+            Jasa Website
+          </h3>
+
+          <p data-id="serviceText">
+            Pembuatan website portfolio modern dan responsive.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section>
+    <div class="container">
+
+      <div class="final-cta">
+
+        <h2 data-id="finalTitle">
+          Ada yang ingin ditanyakan?
+        </h2>
+
+        <p data-id="finalText">
+          Hubungi Warung Ridwan Saleh melalui WhatsApp.
+          Kami siap membantu.
+        </p>
+
+        <a
+          href="https://wa.me/6285692828522"
+          target="_blank"
+          class="btn btn-orange"
+          data-id="finalButton">
+          💬 Hubungi Sekarang
+        </a>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+
+    <div class="container">
+
+      <strong>
+        Warung Ridwan Saleh
+      </strong>
+
+      <p data-id="footerText">
+        Sayuran Segar • Ayam • Kebutuhan Dapur • Jasa Website
+      </p>
+
+      <p>
+        © 2026 Warung Ridwan Saleh
+      </p>
+
+    </div>
+
+  </footer>
+
+  <!-- FLOATING WHATSAPP -->
+  <a
+    href="https://wa.me/6285692828522"
+    target="_blank"
+    class="wa"
+    aria-label="WhatsApp">
+    💬
+  </a>
+
+  <script>
+
+    const translations = {
+
+      id: {
+
+        navHome: "Beranda",
+        navProducts: "Produk",
+        navPortfolio: "Website",
+        navContact: "Kontak",
+
+        badge: "🟢 Warung kebutuhan harian",
+
+        heroTitle: 'Belanja Segar,<br><span>Harga Bersahabat.</span>',
+
+        heroText:
+          "Warung Ridwan Saleh menyediakan sayuran segar, ayam, dan berbagai kebutuhan dapur untuk kebutuhan sehari-hari.",
+
+        heroWa: "💬 Hubungi WhatsApp",
+        heroMap: "📍 Lihat Lokasi",
+
+        floatOne: "🥬 Sayur Segar",
+        floatTwo: "💰 Harga Bersahabat",
+
+        productSmall: "Produk Kami",
+
+        productTitle:
+          "Kebutuhan Dapur Sehari-hari",
+
+        productText:
+          "Pilihan kebutuhan rumah tangga yang praktis, segar dan mudah didapat.",
+
+        vegetableTitle:
+          "Sayuran Segar",
+
+        vegetableText:
+          "Berbagai sayuran untuk kebutuhan masakan keluarga sehari-hari.",
+
+        chickenTitle:
+          "Ayam",
+
+        chickenText:
+          "Pilihan ayam untuk berbagai kebutuhan masakan keluarga.",
+
+        kitchenTitle:
+          "Kebutuhan Dapur",
+
+        kitchenText:
+          "Berbagai kebutuhan dapur untuk membantu aktivitas memasak sehari-hari.",
+
+        promoTitle:
+          "Butuh kebutuhan dapur?",
+
+        promoText:
+          "Hubungi kami melalui WhatsApp untuk informasi produk dan kebutuhan belanja Anda.",
+
+        promoButton:
+          "💬 Chat WhatsApp",
+
+        portfolioBadge:
+          "💻 Jasa Website",
+
+        portfolioTitle:
+          "Butuh Website Portfolio?",
+
+        portfolioText:
+          "Kami juga menyediakan jasa pembuatan website portfolio modern, profesional dan responsive untuk kebutuhan pribadi maupun usaha.",
+
+        portfolioButton:
+          "🚀 Konsultasi Website",
+
+        aboutSmall:
+          "Tentang Kami",
+
+        aboutTitle:
+          "Sederhana, Dekat dan Terpercaya",
+
+        aboutText:
+          "Warung Ridwan Saleh hadir untuk membantu memenuhi kebutuhan sehari-hari dengan pelayanan yang ramah dan mudah dihubungi.",
+
+        contactSmall:
+          "Hubungi Kami",
+
+        contactTitle:
+          "Siap Melayani Anda",
+
+        contactText:
+          "Silakan hubungi kami untuk informasi lebih lanjut.",
+
+        phoneTitle:
+          "WhatsApp",
+
+        locationTitle:
+          "Lokasi",
+
+        locationText:
+          "Lihat lokasi Warung Ridwan Saleh melalui Google Maps.",
+
+        locationButton:
+          "📍 Buka Maps",
+
+        serviceTitle:
+          "Jasa Website",
+
+        serviceText:
+          "Pembuatan website portfolio modern dan responsive.",
+
+        finalTitle:
+          "Ada yang ingin ditanyakan?",
+
+        finalText:
+          "Hubungi Warung Ridwan Saleh melalui WhatsApp. Kami siap membantu.",
+
+        finalButton:
+          "💬 Hubungi Sekarang",
+
+        footerText:
+          "Sayuran Segar • Ayam • Kebutuhan Dapur • Jasa Website"
+      },
+
+      en: {
+
+        navHome: "Home",
+        navProducts: "Products",
+        navPortfolio: "Website",
+        navContact: "Contact",
+
+        badge: "🟢 Daily grocery store",
+
+        heroTitle: 'Fresh Shopping,<br><span>Friendly Prices.</span>',
+
+        heroText:
+          "Warung Ridwan Saleh provides fresh vegetables, chicken and various kitchen essentials for your daily needs.",
+
+        heroWa: "💬 Contact WhatsApp",
+        heroMap: "📍 View Location",
+
+        floatOne: "🥬 Fresh Vegetables",
+        floatTwo: "💰 Friendly Prices",
+
+        productSmall: "Our Products",
+
+        productTitle:
+          "Daily Kitchen Essentials",
+
+        productText:
+          "Practical, fresh and easy-to-find household essentials for your daily needs.",
+
+        vegetableTitle:
+          "Fresh Vegetables",
+
+        vegetableText:
+          "A variety of fresh vegetables for your everyday family meals.",
+
+        chickenTitle:
+          "Chicken",
+
+        chickenText:
+          "Chicken products for various family cooking needs.",
+
+        kitchenTitle:
+          "Kitchen Essentials",
+
+        kitchenText:
+          "Various kitchen essentials to support your everyday cooking activities.",
+
+        promoTitle:
+          "Need kitchen essentials?",
+
+        promoText:
+          "Contact us through WhatsApp for product information and shopping needs.",
+
+        promoButton:
+          "💬 Chat on WhatsApp",
+
+        portfolioBadge:
+          "💻 Website Service",
+
+        portfolioTitle:
+          "Need a Portfolio Website?",
+
+        portfolioText:
+          "We also provide modern, professional and responsive portfolio website development for personal and business needs.",
+
+        portfolioButton:
+          "🚀 Website Consultation",
+
+        aboutSmall:
+          "About Us",
+
+        aboutTitle:
+          "Simple, Friendly and Reliable",
+
+        aboutText:
+          "Warung Ridwan Saleh is here to help fulfill your daily needs with friendly service and easy communication.",
+
+        contactSmall:
+          "Contact Us",
+
+        contactTitle:
+          "Ready to Serve You",
+
+        contactText:
+          "Feel free to contact us for more information.",
+
+        phoneTitle:
+          "WhatsApp",
+
+        locationTitle:
+          "Location",
+
+        locationText:
+          "View the Warung Ridwan Saleh location through Google Maps.",
+
+        locationButton:
+          "📍 Open Maps",
+
+        serviceTitle:
+          "Website Service",
+
+        serviceText:
+          "Modern and responsive portfolio website development.",
+
+        finalTitle:
+          "Have a question?",
+
+        finalText:
+          "Contact Warung Ridwan Saleh through WhatsApp. We are ready to help.",
+
+        finalButton:
+          "💬 Contact Us Now",
+
+        footerText:
+          "Fresh Vegetables • Chicken • Kitchen Essentials • Website Service"
+      }
+
+    };
+
+
+    function setLanguage(lang) {
+
+      const elements = document.querySelectorAll("[data-id]");
+
+      elements.forEach(function(element) {
+
+        const key = element.getAttribute("data-id");
+
+        if (translations[lang][key] !== undefined) {
+
+          element.innerHTML = translations[lang][key];
+
+        }
+
+      });
+
+
+      document.documentElement.lang = lang;
+
+
+      document.getElementById("idBtn")
+        .classList.toggle("active", lang === "id");
+
+      document.getElementById("enBtn")
+        .classList.toggle("active", lang === "en");
+
+
+      localStorage.setItem("warungLanguage", lang);
+
+    }
+
+
+    document.addEventListener("DOMContentLoaded", function() {
+
+      const savedLanguage =
+        localStorage.getItem("warungLanguage") || "id";
+
+      setLanguage(savedLanguage);
+
+    });
+
+  </script>
+
+</body>
+</html>
