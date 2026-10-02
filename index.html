@@ -4,17 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Warung Ridwan Saleh | Sayuran & Ayam Segar</title>
+<title>Warung Ridwan Saleh | Sayuran, Ayam & Jasa Portofolio</title>
 
-<meta name="description" content="Warung Ridwan Saleh menyediakan sayuran segar, ayam, dan kebutuhan dapur. Pesan mudah melalui WhatsApp.">
-<meta name="keywords" content="Warung Ridwan Saleh, sayuran segar, ayam, warung, belanja kebutuhan dapur">
+<meta name="description" content="Warung Ridwan Saleh menyediakan sayuran, ayam, kebutuhan dapur, dan jasa pembuatan portofolio dengan harga terjangkau.">
 <meta name="author" content="Warung Ridwan Saleh">
 
 <!-- FAVICON -->
 <link
-    rel="icon"
-    type="image/svg+xml"
-    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23166534'/%3E%3Ctext x='50' y='67' text-anchor='middle' font-size='58'%3E🛒%3C/text%3E%3C/svg%3E"
+rel="icon"
+type="image/svg+xml"
+href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23166534'/%3E%3Ctext x='50' y='68' text-anchor='middle' font-size='55'%3E🛒%3C/text%3E%3C/svg%3E"
 >
 
 <style>
@@ -30,28 +29,15 @@ html{
 }
 
 body{
-    font-family:
-        Inter,
-        Arial,
-        Helvetica,
-        sans-serif;
+    font-family:Inter,Arial,Helvetica,sans-serif;
     background:#f8fafc;
     color:#1f2937;
     line-height:1.6;
 }
 
-img{
-    max-width:100%;
-    display:block;
-}
-
 a{
     text-decoration:none;
 }
-
-/* =========================
-   VARIABLES
-========================= */
 
 :root{
     --green:#15803d;
@@ -59,6 +45,7 @@ a{
     --green-light:#dcfce7;
     --orange:#f97316;
     --yellow:#facc15;
+    --blue:#2563eb;
     --dark:#111827;
     --text:#374151;
     --muted:#64748b;
@@ -68,15 +55,13 @@ a{
     --shadow:0 15px 45px rgba(15,23,42,.08);
 }
 
-/* =========================
-   NAVBAR
-========================= */
+/* ================= NAVBAR ================= */
 
 header{
     position:sticky;
     top:0;
     z-index:1000;
-    background:rgba(255,255,255,.96);
+    background:rgba(255,255,255,.97);
     backdrop-filter:blur(14px);
     border-bottom:1px solid var(--border);
 }
@@ -84,16 +69,16 @@ header{
 .navbar{
     max-width:1180px;
     margin:auto;
-    padding:15px 20px;
+    padding:14px 20px;
     display:flex;
-    justify-content:space-between;
     align-items:center;
+    justify-content:space-between;
     gap:20px;
 }
 
 .logo{
     color:var(--green-dark);
-    font-size:21px;
+    font-size:20px;
     font-weight:900;
     white-space:nowrap;
 }
@@ -105,14 +90,13 @@ header{
 nav{
     display:flex;
     align-items:center;
-    gap:25px;
+    gap:20px;
 }
 
 nav a{
     color:var(--text);
-    font-size:14px;
-    font-weight:700;
-    transition:.2s;
+    font-size:13px;
+    font-weight:800;
 }
 
 nav a:hover{
@@ -122,36 +106,54 @@ nav a:hover{
 .nav-button{
     background:var(--green);
     color:white!important;
-    padding:10px 16px;
+    padding:10px 15px;
     border-radius:10px;
 }
 
-/* =========================
-   HERO
-========================= */
+.language-switcher{
+    display:flex;
+    gap:5px;
+    padding:4px;
+    background:#f1f5f9;
+    border-radius:10px;
+}
+
+.lang-btn{
+    border:0;
+    background:transparent;
+    padding:7px 9px;
+    border-radius:7px;
+    cursor:pointer;
+    font-size:16px;
+}
+
+.lang-btn.active{
+    background:white;
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+/* ================= HERO ================= */
 
 .hero{
-    position:relative;
-    overflow:hidden;
     background:
-        radial-gradient(
-            circle at 90% 10%,
-            rgba(250,204,21,.22),
-            transparent 30%
-        ),
-        linear-gradient(
-            135deg,
-            #14532d,
-            #166534,
-            #15803d
-        );
+    radial-gradient(
+        circle at 90% 10%,
+        rgba(250,204,21,.22),
+        transparent 30%
+    ),
+    linear-gradient(
+        135deg,
+        #14532d,
+        #166534,
+        #15803d
+    );
     color:white;
 }
 
 .hero-container{
     max-width:1180px;
     margin:auto;
-    min-height:680px;
+    min-height:670px;
     padding:90px 20px;
     display:grid;
     grid-template-columns:1.08fr .92fr;
@@ -159,19 +161,12 @@ nav a:hover{
     align-items:center;
 }
 
-.hero-content{
-    position:relative;
-    z-index:2;
-}
-
 .badge{
     display:inline-flex;
-    align-items:center;
-    gap:7px;
     padding:8px 15px;
+    border-radius:50px;
     background:rgba(255,255,255,.12);
     border:1px solid rgba(255,255,255,.25);
-    border-radius:50px;
     font-size:13px;
     font-weight:800;
     margin-bottom:22px;
@@ -209,9 +204,9 @@ nav a:hover{
     padding:14px 22px;
     border-radius:12px;
     font-weight:800;
-    transition:.2s ease;
     border:0;
     cursor:pointer;
+    transition:.2s ease;
 }
 
 .btn:hover{
@@ -229,7 +224,7 @@ nav a:hover{
 }
 
 .hero-info{
-    margin-top:30px;
+    margin-top:28px;
     display:flex;
     flex-wrap:wrap;
     gap:18px;
@@ -240,22 +235,17 @@ nav a:hover{
     font-size:14px;
 }
 
-/* HERO CARD */
-
 .hero-card{
-    position:relative;
-    z-index:2;
     background:rgba(255,255,255,.11);
     border:1px solid rgba(255,255,255,.22);
     border-radius:30px;
-    padding:38px;
+    padding:40px;
     text-align:center;
-    box-shadow:
-        0 30px 80px rgba(0,0,0,.22);
+    box-shadow:0 30px 80px rgba(0,0,0,.22);
 }
 
 .hero-emoji{
-    font-size:100px;
+    font-size:95px;
     line-height:1;
     margin-bottom:20px;
 }
@@ -267,12 +257,9 @@ nav a:hover{
 
 .hero-card p{
     color:#dcfce7;
-    font-size:15px;
 }
 
-/* =========================
-   SECTION
-========================= */
+/* ================= GENERAL ================= */
 
 section{
     padding:90px 20px;
@@ -285,15 +272,15 @@ section{
 
 .section-title{
     text-align:center;
-    max-width:720px;
+    max-width:760px;
     margin:0 auto 48px;
 }
 
 .section-title small{
     color:var(--green);
-    font-size:12px;
-    letter-spacing:2px;
     text-transform:uppercase;
+    letter-spacing:2px;
+    font-size:12px;
     font-weight:900;
 }
 
@@ -308,55 +295,45 @@ section{
     color:var(--muted);
 }
 
-/* =========================
-   PROMO
-========================= */
+/* ================= PROMO ================= */
 
 .promo{
-    padding-top:35px;
-    padding-bottom:35px;
+    padding:35px 20px;
     background:white;
 }
 
 .promo-box{
     max-width:1180px;
     margin:auto;
-    background:
-        linear-gradient(
-            135deg,
-            #fff7ed,
-            #ffedd5
-        );
-    border:1px solid #fed7aa;
-    border-radius:22px;
     padding:25px 30px;
+    border-radius:22px;
+    background:linear-gradient(135deg,#fff7ed,#ffedd5);
+    border:1px solid #fed7aa;
     display:flex;
-    justify-content:space-between;
     align-items:center;
+    justify-content:space-between;
     gap:25px;
 }
 
-.promo-text{
+.promo-content{
     display:flex;
     align-items:center;
-    gap:16px;
+    gap:15px;
 }
 
 .promo-icon{
     width:58px;
     height:58px;
-    border-radius:16px;
     background:var(--orange);
+    border-radius:16px;
     display:flex;
     align-items:center;
     justify-content:center;
     font-size:28px;
-    flex-shrink:0;
 }
 
 .promo h3{
     color:#9a3412;
-    margin-bottom:3px;
 }
 
 .promo p{
@@ -364,9 +341,7 @@ section{
     font-size:14px;
 }
 
-/* =========================
-   PRODUCTS
-========================= */
+/* ================= PRODUCTS ================= */
 
 .products-section{
     background:#f8fafc;
@@ -374,8 +349,7 @@ section{
 
 .products{
     display:grid;
-    grid-template-columns:
-        repeat(3,1fr);
+    grid-template-columns:repeat(3,1fr);
     gap:24px;
 }
 
@@ -385,26 +359,19 @@ section{
     border-radius:24px;
     overflow:hidden;
     box-shadow:var(--shadow);
-    transition:.25s ease;
+    transition:.25s;
 }
 
 .product:hover{
     transform:translateY(-7px);
-    box-shadow:
-        0 25px 55px rgba(15,23,42,.13);
 }
 
 .product-image{
     height:190px;
-    background:
-        linear-gradient(
-            135deg,
-            #f0fdf4,
-            #dcfce7
-        );
+    background:linear-gradient(135deg,#f0fdf4,#dcfce7);
     display:flex;
-    justify-content:center;
     align-items:center;
+    justify-content:center;
     font-size:90px;
 }
 
@@ -421,21 +388,20 @@ section{
 .product-body p{
     color:var(--muted);
     font-size:14px;
-    min-height:68px;
+    min-height:65px;
 }
 
 .product-bottom{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:10px;
     margin-top:20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
 }
 
 .price{
     color:var(--green);
     font-weight:900;
-    font-size:15px;
 }
 
 .order-small{
@@ -447,18 +413,15 @@ section{
     font-weight:800;
 }
 
-/* =========================
-   WHY US
-========================= */
+/* ================= FEATURES ================= */
 
-.why{
+.features-section{
     background:white;
 }
 
 .features{
     display:grid;
-    grid-template-columns:
-        repeat(4,1fr);
+    grid-template-columns:repeat(4,1fr);
     gap:20px;
 }
 
@@ -467,7 +430,6 @@ section{
     border:1px solid var(--border);
     border-radius:20px;
     text-align:center;
-    background:white;
 }
 
 .feature-icon{
@@ -477,14 +439,13 @@ section{
     border-radius:18px;
     background:var(--green-light);
     display:flex;
-    align-items:center;
     justify-content:center;
+    align-items:center;
     font-size:29px;
 }
 
 .feature h3{
     color:var(--dark);
-    font-size:17px;
     margin-bottom:7px;
 }
 
@@ -493,9 +454,89 @@ section{
     font-size:13px;
 }
 
-/* =========================
-   ABOUT
-========================= */
+/* ================= PORTFOLIO ================= */
+
+.portfolio-section{
+    background:
+        linear-gradient(
+            135deg,
+            #eff6ff,
+            #f8fafc
+        );
+}
+
+.portfolio-box{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:40px;
+    align-items:center;
+    background:white;
+    padding:45px;
+    border-radius:30px;
+    border:1px solid #dbeafe;
+    box-shadow:var(--shadow);
+}
+
+.portfolio-icon{
+    width:85px;
+    height:85px;
+    border-radius:24px;
+    background:#dbeafe;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:43px;
+    margin-bottom:20px;
+}
+
+.portfolio-box h2{
+    color:#172554;
+    font-size:38px;
+    line-height:1.15;
+    margin-bottom:15px;
+}
+
+.portfolio-box p{
+    color:var(--muted);
+    margin-bottom:20px;
+}
+
+.portfolio-list{
+    margin:20px 0;
+}
+
+.portfolio-list div{
+    margin:10px 0;
+    font-weight:700;
+}
+
+.portfolio-list span{
+    color:var(--blue);
+    margin-right:8px;
+}
+
+.portfolio-card{
+    background:linear-gradient(135deg,#1e3a8a,#2563eb);
+    color:white;
+    border-radius:25px;
+    padding:35px;
+}
+
+.portfolio-card h3{
+    font-size:25px;
+    margin-bottom:15px;
+}
+
+.portfolio-card p{
+    color:#dbeafe;
+}
+
+.portfolio-card ul{
+    margin:20px 0 0 20px;
+    color:#eff6ff;
+}
+
+/* ================= ABOUT ================= */
 
 .about{
     background:#f0fdf4;
@@ -535,36 +576,22 @@ section{
 }
 
 .about-card{
-    background:
-        linear-gradient(
-            135deg,
-            #14532d,
-            #15803d
-        );
+    background:linear-gradient(135deg,#14532d,#15803d);
+    color:white;
     border-radius:30px;
     padding:45px;
-    color:white;
     text-align:center;
-    box-shadow:var(--shadow);
 }
 
-.about-card-icon{
+.about-icon{
     font-size:90px;
-    margin-bottom:10px;
 }
 
 .about-card h3{
     font-size:28px;
-    margin-bottom:8px;
 }
 
-.about-card p{
-    color:#dcfce7;
-}
-
-/* =========================
-   ORDER CTA
-========================= */
+/* ================= ORDER ================= */
 
 .order{
     background:white;
@@ -576,12 +603,7 @@ section{
     text-align:center;
     padding:55px 30px;
     border-radius:30px;
-    background:
-        linear-gradient(
-            135deg,
-            #f0fdf4,
-            #dcfce7
-        );
+    background:linear-gradient(135deg,#f0fdf4,#dcfce7);
     border:1px solid #bbf7d0;
 }
 
@@ -597,9 +619,7 @@ section{
     margin:0 auto 25px;
 }
 
-/* =========================
-   CONTACT
-========================= */
+/* ================= CONTACT ================= */
 
 .contact{
     background:#f8fafc;
@@ -607,8 +627,7 @@ section{
 
 .contact-grid{
     display:grid;
-    grid-template-columns:
-        1fr 1fr;
+    grid-template-columns:1fr 1fr;
     gap:25px;
 }
 
@@ -656,7 +675,6 @@ section{
 
 .map-icon{
     font-size:70px;
-    margin-bottom:10px;
 }
 
 .map-card p{
@@ -664,19 +682,14 @@ section{
     margin-bottom:22px;
 }
 
-/* =========================
-   HOURS
-========================= */
-
 .hours{
-    margin-top:22px;
+    margin-top:20px;
     padding-top:20px;
     border-top:1px solid var(--border);
 }
 
 .hours h4{
     color:var(--dark);
-    margin-bottom:8px;
 }
 
 .hours p{
@@ -684,17 +697,10 @@ section{
     font-size:14px;
 }
 
-/* =========================
-   FINAL CTA
-========================= */
+/* ================= CTA ================= */
 
 .final-cta{
-    background:
-        linear-gradient(
-            135deg,
-            #052e16,
-            #14532d
-        );
+    background:linear-gradient(135deg,#052e16,#14532d);
     color:white;
     text-align:center;
 }
@@ -709,27 +715,24 @@ section{
     margin-bottom:25px;
 }
 
-/* =========================
-   FOOTER
-========================= */
+/* ================= FOOTER ================= */
 
 footer{
     background:#020617;
     color:#94a3b8;
-    padding:30px 20px;
     text-align:center;
+    padding:30px 20px;
     font-size:14px;
 }
 
 .footer-brand{
     color:white;
+    font-size:18px;
     font-weight:900;
     margin-bottom:5px;
 }
 
-/* =========================
-   FLOATING WHATSAPP
-========================= */
+/* ================= WHATSAPP ================= */
 
 .whatsapp{
     position:fixed;
@@ -741,11 +744,10 @@ footer{
     background:#25d366;
     color:white;
     display:flex;
-    justify-content:center;
     align-items:center;
+    justify-content:center;
     font-size:29px;
-    box-shadow:
-        0 12px 35px rgba(0,0,0,.25);
+    box-shadow:0 12px 35px rgba(0,0,0,.25);
     z-index:9999;
     transition:.2s;
 }
@@ -754,11 +756,9 @@ footer{
     transform:scale(1.08);
 }
 
-/* =========================
-   MOBILE
-========================= */
+/* ================= MOBILE ================= */
 
-@media(max-width:950px){
+@media(max-width:1000px){
 
     nav{
         display:none;
@@ -766,23 +766,17 @@ footer{
 
     .hero-container,
     .about-grid,
+    .portfolio-box,
     .contact-grid{
         grid-template-columns:1fr;
     }
 
     .products{
-        grid-template-columns:
-            repeat(2,1fr);
+        grid-template-columns:repeat(2,1fr);
     }
 
     .features{
-        grid-template-columns:
-            repeat(2,1fr);
-    }
-
-    .hero-container{
-        min-height:auto;
-        padding:75px 20px;
+        grid-template-columns:repeat(2,1fr);
     }
 
 }
@@ -793,9 +787,9 @@ footer{
         padding:70px 16px;
     }
 
-    .products,
-    .features{
-        grid-template-columns:1fr;
+    .hero-container{
+        min-height:auto;
+        padding:70px 20px;
     }
 
     .hero h1{
@@ -815,12 +809,14 @@ footer{
         width:100%;
     }
 
-    .hero-card{
-        padding:30px 20px;
+    .products,
+    .features{
+        grid-template-columns:1fr;
     }
 
     .section-title h2,
     .about-content h2,
+    .portfolio-box h2,
     .order-box h2,
     .final-cta h2{
         font-size:31px;
@@ -838,6 +834,10 @@ footer{
 
     .order-small{
         text-align:center;
+    }
+
+    .portfolio-box{
+        padding:30px 20px;
     }
 
     .about-card{
@@ -858,714 +858,1204 @@ footer{
 
 <body>
 
-<!-- =========================
-     NAVBAR
-========================= -->
+<!-- ================= NAVBAR ================= -->
 
 <header>
 
 <div class="navbar">
 
-    <a href="#home" class="logo">
-        Warung <span>Ridwan Saleh</span>
-    </a>
+<a href="#home" class="logo">
+    Warung <span>Ridwan Saleh</span>
+</a>
 
-    <nav>
-        <a href="#home">Beranda</a>
-        <a href="#produk">Produk</a>
-        <a href="#keunggulan">Keunggulan</a>
-        <a href="#tentang">Tentang</a>
-        <a href="#kontak">Kontak</a>
+<nav>
 
-        <a
-            href="https://wa.me/6285691604318?text=Halo%20Warung%20Ridwan%20Saleh%2C%20saya%20ingin%20bertanya%20tentang%20produk."
-            target="_blank"
-            class="nav-button"
-        >
-            Pesan
-        </a>
-    </nav>
+<a href="#home" data-id="navHome">Beranda</a>
+<a href="#produk" data-id="navProduct">Produk</a>
+<a href="#layanan" data-id="navService">Layanan</a>
+<a href="#tentang" data-id="navAbout">Tentang</a>
+<a href="#kontak" data-id="navContact">Kontak</a>
+
+<div class="language-switcher">
+
+<button
+    class="lang-btn active"
+    id="idBtn"
+    onclick="setLanguage('id')"
+    aria-label="Bahasa Indonesia"
+>
+    🇮🇩
+</button>
+
+<button
+    class="lang-btn"
+    id="enBtn"
+    onclick="setLanguage('en')"
+    aria-label="English"
+>
+    🇬🇧
+</button>
+
+</div>
+
+<a
+    href="https://wa.me/6285692828522?text=Halo%20Warung%20Ridwan%20Saleh%2C%20saya%20ingin%20bertanya%20tentang%20produk."
+    target="_blank"
+    class="nav-button"
+    data-id="navOrder"
+>
+    Pesan
+</a>
+
+</nav>
 
 </div>
 
 </header>
 
 
-<!-- =========================
-     HERO
-========================= -->
+<!-- ================= HERO ================= -->
 
 <section class="hero" id="home">
 
 <div class="hero-container">
 
-    <div class="hero-content">
+<div>
 
-        <div class="badge">
-            🥬 Segar • 🍗 Pilihan • 🛒 Mudah Dipesan
-        </div>
+<div class="badge" data-id="badge">
+    🥬 Segar • 🍗 Pilihan • 💼 Jasa Digital
+</div>
 
-        <h1>
-            Warung
-            <span>Ridwan Saleh</span>
-        </h1>
+<h1>
+    <span>Warung</span><br>
+    Ridwan Saleh
+</h1>
 
-        <p class="hero-description">
-            Temukan sayuran dan ayam untuk kebutuhan dapur
-            keluarga. Pesan dengan mudah melalui WhatsApp
-            dan tanyakan ketersediaan produk hari ini.
-        </p>
+<p
+    class="hero-description"
+    data-id="heroDescription"
+>
+    Menyediakan sayuran, ayam, kebutuhan dapur,
+    serta jasa pembuatan portofolio profesional
+    dengan harga terjangkau.
+</p>
 
-        <div class="hero-buttons">
+<div class="hero-buttons">
 
-            <a
-                href="https://wa.me/6285691604318?text=Halo%20Warung%20Ridwan%20Saleh%2C%20saya%20ingin%20memesan%20produk."
-                target="_blank"
-                class="btn btn-orange"
-            >
-                💬 Pesan Sekarang
-            </a>
+<a
+    href="https://wa.me/6285692828522?text=Halo%20Warung%20Ridwan%20Saleh%2C%20saya%20ingin%20memesan%20produk."
+    target="_blank"
+    class="btn btn-orange"
+    data-id="heroOrder"
+>
+    💬 Pesan Sekarang
+</a>
 
-            <a
-                href="#produk"
-                class="btn btn-white"
-            >
-                🛒 Lihat Produk
-            </a>
+<a
+    href="#produk"
+    class="btn btn-white"
+    data-id="heroProduct"
+>
+    🛒 Lihat Produk
+</a>
 
-        </div>
+</div>
 
-        <div class="hero-info">
+<div class="hero-info">
 
-            <div>
-                ✓ Produk pilihan
-            </div>
+<div data-id="heroInfo1">
+    ✓ Produk pilihan
+</div>
 
-            <div>
-                ✓ Pelayanan ramah
-            </div>
+<div data-id="heroInfo2">
+    ✓ Pelayanan ramah
+</div>
 
-            <div>
-                ✓ Pesan via WhatsApp
-            </div>
+<div data-id="heroInfo3">
+    ✓ Pesan via WhatsApp
+</div>
 
-        </div>
+</div>
 
-    </div>
+</div>
 
 
-    <div class="hero-card">
+<div class="hero-card">
 
-        <div class="hero-emoji">
-            🥬🍅🍗
-        </div>
+<div class="hero-emoji">
+    🥬🍅🍗
+</div>
 
-        <h2>
-            Sayuran & Ayam
-        </h2>
+<h2 data-id="heroCardTitle">
+    Sayuran & Ayam
+</h2>
 
-        <p>
-            Kebutuhan dapur untuk keluarga,
-            mudah dipesan melalui WhatsApp.
-        </p>
+<p data-id="heroCardText">
+    Kebutuhan dapur keluarga
+    yang mudah dipesan melalui WhatsApp.
+</p>
 
-    </div>
+</div>
 
 </div>
 
 </section>
 
 
-<!-- =========================
-     PROMO
-========================= -->
+<!-- ================= PROMO ================= -->
 
 <section class="promo">
 
 <div class="promo-box">
 
-    <div class="promo-text">
+<div class="promo-content">
 
-        <div class="promo-icon">
-            🔥
-        </div>
+<div class="promo-icon">
+    🔥
+</div>
 
-        <div>
+<div>
 
-            <h3>
-                Mau tahu harga hari ini?
-            </h3>
+<h3 data-id="promoTitle">
+    Mau tahu harga hari ini?
+</h3>
 
-            <p>
-                Harga dan ketersediaan produk dapat berubah.
-                Hubungi kami melalui WhatsApp.
-            </p>
+<p data-id="promoText">
+    Hubungi kami melalui WhatsApp untuk
+    mengetahui harga dan ketersediaan produk.
+</p>
 
-        </div>
+</div>
 
-    </div>
+</div>
 
-    <a
-        href="https://wa.me/6285691604318?text=Halo%20Warung%20Ridwan%20Saleh%2C%20boleh%20tanya%20harga%20produk%20hari%20ini%3F"
-        target="_blank"
-        class="btn btn-orange"
-    >
-        Tanya Harga
-    </a>
+<a
+    href="https://wa.me/6285692828522?text=Halo%20Warung%20Ridwan%20Saleh%2C%20boleh%20tanya%20harga%20produk%20hari%20ini%3F"
+    target="_blank"
+    class="btn btn-orange"
+    data-id="promoButton"
+>
+    Tanya Harga
+</a>
 
 </div>
 
 </section>
 
 
-<!-- =========================
-     PRODUCTS
-========================= -->
+<!-- ================= PRODUCTS ================= -->
 
 <section class="products-section" id="produk">
 
 <div class="container">
 
-    <div class="section-title">
+<div class="section-title">
 
-        <small>Produk</small>
+<small data-id="productSmall">
+    Produk Kami
+</small>
 
-        <h2>
-            Pilihan Kebutuhan Dapur
-        </h2>
+<h2 data-id="productTitle">
+    Kebutuhan Dapur
+</h2>
 
-        <p>
-            Tanyakan ketersediaan produk sebelum melakukan pemesanan.
-        </p>
+<p data-id="productDescription">
+    Tanyakan ketersediaan dan harga produk
+    sebelum melakukan pemesanan.
+</p>
 
-    </div>
-
-
-    <div class="products">
-
-
-        <!-- SAYUR -->
-
-        <article class="product">
-
-            <div class="product-image">
-                🥬
-            </div>
-
-            <div class="product-body">
-
-                <h3>
-                    Sayuran Segar
-                </h3>
-
-                <p>
-                    Berbagai pilihan sayuran untuk kebutuhan
-                    masakan keluarga sehari-hari.
-                </p>
-
-                <div class="product-bottom">
-
-                    <span class="price">
-                        Tanya harga
-                    </span>
-
-                    <a
-                        class="order-small"
-                        href="https://wa.me/6285691604318?text=Halo%20Warung%20Ridwan%20Saleh%2C%20saya%20ingin%20tanya%20sayuran%20yang%20tersedia%20hari%20ini."
-                        target="_blank"
-                    >
-                        Pesan
-                    </a>
-
-                </div>
-
-            </div>
-
-        </article>
+</div>
 
 
-        <!-- AYAM -->
-
-        <article class="product">
-
-            <div class="product-image">
-                🍗
-            </div>
-
-            <div class="product-body">
-
-                <h3>
-                    Ayam
-                </h3>
-
-                <p>
-                    Ayam untuk kebutuhan masakan keluarga.
-                    Hubungi kami untuk ketersediaan dan harga.
-                </p>
-
-                <div class="product-bottom">
-
-                    <span class="price">
-                        Tanya harga
-                    </span>
-
-                    <a
-                        class="order-small"
-                        href="https://wa.me/6285691604318?text=Halo%20Warung%20Ridwan%20Saleh%2C%20saya%20ingin%20tanya%20ayam%20yang%20tersedia%20hari%20ini."
-                        target="_blank"
-                    >
-                        Pesan
-                    </a>
-
-                </div>
-
-            </div>
-
-        </article>
+<div class="products">
 
 
-        <!-- KEBUTUHAN DAPUR -->
+<article class="product">
 
-        <article class="product">
+<div class="product-image">
+    🥬
+</div>
 
-            <div class="product-image">
-                🛒
-            </div>
+<div class="product-body">
 
-            <div class="product-body">
+<h3 data-id="product1Title">
+    Sayuran Segar
+</h3>
 
-                <h3>
-                    Kebutuhan Dapur
-                </h3>
+<p data-id="product1Text">
+    Berbagai pilihan sayuran untuk kebutuhan
+    masakan keluarga sehari-hari.
+</p>
 
-                <p>
-                    Hubungi kami untuk menanyakan produk
-                    kebutuhan dapur yang tersedia.
-                </p>
+<div class="product-bottom">
 
-                <div class="product-bottom">
+<span class="price" data-id="price">
+    Tanya harga
+</span>
 
-                    <span class="price">
-                        Tanya harga
-                    </span>
+<a
+    class="order-small"
+    href="https://wa.me/6285692828522?text=Halo%20Warung%20Ridwan%20Saleh%2C%20saya%20ingin%20tanya%20sayuran%20yang%20tersedia%20hari%20ini."
+    target="_blank"
+    data-id="orderSmall"
+>
+    Pesan
+</a>
 
-                    <a
-                        class="order-small"
-                        href="https://wa.me/6285691604318?text=Halo%20Warung%20Ridwan%20Saleh%2C%20saya%20ingin%20tanya%20produk%20yang%20tersedia."
-                        target="_blank"
-                    >
-                        Pesan
-                    </a>
+</div>
 
-                </div>
+</div>
 
-            </div>
-
-        </article>
+</article>
 
 
-    </div>
+<article class="product">
+
+<div class="product-image">
+    🍗
+</div>
+
+<div class="product-body">
+
+<h3 data-id="product2Title">
+    Ayam
+</h3>
+
+<p data-id="product2Text">
+    Ayam untuk kebutuhan masakan keluarga.
+    Hubungi kami untuk ketersediaan.
+</p>
+
+<div class="product-bottom">
+
+<span class="price" data-id="price2">
+    Tanya harga
+</span>
+
+<a
+    class="order-small"
+    href="https://wa.me/6285692828522?text=Halo%20Warung%20Ridwan%20Saleh%2C%20saya%20ingin%20tanya%20ayam%20yang%20tersedia%20hari%20ini."
+    target="_blank"
+    data-id="orderSmall2"
+>
+    Pesan
+</a>
+
+</div>
+
+</div>
+
+</article>
+
+
+<article class="product">
+
+<div class="product-image">
+    🛒
+</div>
+
+<div class="product-body">
+
+<h3 data-id="product3Title">
+    Kebutuhan Dapur
+</h3>
+
+<p data-id="product3Text">
+    Hubungi kami untuk menanyakan kebutuhan
+    dapur yang tersedia.
+</p>
+
+<div class="product-bottom">
+
+<span class="price">
+    Tanya harga
+</span>
+
+<a
+    class="order-small"
+    href="https://wa.me/6285692828522?text=Halo%20Warung%20Ridwan%20Saleh%2C%20saya%20ingin%20tanya%20produk%20yang%20tersedia."
+    target="_blank"
+    data-id="orderSmall3"
+>
+    Pesan
+</a>
+
+</div>
+
+</div>
+
+</article>
+
+
+</div>
 
 </div>
 
 </section>
 
 
-<!-- =========================
-     KEUNGGULAN
-========================= -->
+<!-- ================= FEATURES ================= -->
 
-<section class="why" id="keunggulan">
+<section class="features-section">
 
 <div class="container">
 
-    <div class="section-title">
+<div class="section-title">
 
-        <small>Kenapa Kami?</small>
+<small data-id="featureSmall">
+    Keunggulan
+</small>
 
-        <h2>
-            Belanja Lebih Mudah
-        </h2>
+<h2 data-id="featureTitle">
+    Kenapa Pilih Kami?
+</h2>
 
-        <p>
-            Kami berusaha memberikan pengalaman belanja
-            yang sederhana dan mudah.
-        </p>
+<p data-id="featureDescription">
+    Pelayanan sederhana, mudah, dan langsung.
+</p>
 
-    </div>
-
-
-    <div class="features">
+</div>
 
 
-        <div class="feature">
-
-            <div class="feature-icon">
-                🥬
-            </div>
-
-            <h3>
-                Produk Segar
-            </h3>
-
-            <p>
-                Sayuran untuk kebutuhan masakan sehari-hari.
-            </p>
-
-        </div>
+<div class="features">
 
 
-        <div class="feature">
+<div class="feature">
 
-            <div class="feature-icon">
-                🍗
-            </div>
+<div class="feature-icon">
+    🥬
+</div>
 
-            <h3>
-                Pilihan Ayam
-            </h3>
+<h3 data-id="feature1Title">
+    Produk Segar
+</h3>
 
-            <p>
-                Tanyakan ketersediaan ayam melalui WhatsApp.
-            </p>
+<p data-id="feature1Text">
+    Pilihan sayuran untuk kebutuhan sehari-hari.
+</p>
 
-        </div>
-
-
-        <div class="feature">
-
-            <div class="feature-icon">
-                💬
-            </div>
-
-            <h3>
-                Mudah Dihubungi
-            </h3>
-
-            <p>
-                Pesan dan tanyakan produk melalui WhatsApp.
-            </p>
-
-        </div>
+</div>
 
 
-        <div class="feature">
+<div class="feature">
 
-            <div class="feature-icon">
-                📍
-            </div>
+<div class="feature-icon">
+    🍗
+</div>
 
-            <h3>
-                Lokasi Jelas
-            </h3>
+<h3 data-id="feature2Title">
+    Ayam
+</h3>
 
-            <p>
-                Lihat lokasi warung melalui Google Maps.
-            </p>
+<p data-id="feature2Text">
+    Tanyakan ketersediaan ayam melalui WhatsApp.
+</p>
 
-        </div>
+</div>
 
 
-    </div>
+<div class="feature">
+
+<div class="feature-icon">
+    💬
+</div>
+
+<h3 data-id="feature3Title">
+    Mudah Dihubungi
+</h3>
+
+<p data-id="feature3Text">
+    Pesan dan bertanya langsung melalui WhatsApp.
+</p>
+
+</div>
+
+
+<div class="feature">
+
+<div class="feature-icon">
+    📍
+</div>
+
+<h3 data-id="feature4Title">
+    Lokasi Jelas
+</h3>
+
+<p data-id="feature4Text">
+    Lokasi warung dapat dilihat melalui Maps.
+</p>
+
+</div>
+
+
+</div>
 
 </div>
 
 </section>
 
 
-<!-- =========================
-     ABOUT
-========================= -->
+<!-- ================= PORTFOLIO SERVICE ================= -->
+
+<section
+    class="portfolio-section"
+    id="layanan"
+>
+
+<div class="container">
+
+<div class="portfolio-box">
+
+<div>
+
+<div class="portfolio-icon">
+    💻
+</div>
+
+<h2 data-id="portfolioTitle">
+    Jasa Pembuatan Portofolio Murah
+</h2>
+
+<p data-id="portfolioText">
+    Butuh website portofolio untuk mencari kerja,
+    usaha, atau memperkenalkan diri secara profesional?
+    Kami membantu membuat website portofolio modern
+    dan responsive.
+</p>
+
+<div class="portfolio-list">
+
+<div>
+    <span>✓</span>
+    Website portofolio modern
+</div>
+
+<div>
+    <span>✓</span>
+    Tampilan HP & laptop
+</div>
+
+<div>
+    <span>✓</span>
+    Desain profesional
+</div>
+
+<div>
+    <span>✓</span>
+    Bisa digunakan untuk lamaran kerja
+</div>
+
+<div>
+    <span>✓</span>
+    Harga terjangkau
+</div>
+
+</div>
+
+<a
+    href="https://wa.me/6285692828522?text=Halo%20Ridwan%20Saleh%2C%20saya%20tertarik%20dengan%20jasa%20pembuatan%20portofolio."
+    target="_blank"
+    class="btn btn-orange"
+    data-id="portfolioButton"
+>
+    💻 Tanya Jasa Portofolio
+</a>
+
+</div>
+
+
+<div class="portfolio-card">
+
+<h3 data-id="portfolioCardTitle">
+    Portofolio Modern 2026
+</h3>
+
+<p data-id="portfolioCardText">
+    Cocok untuk mahasiswa, fresh graduate,
+    freelancer, dan pemilik usaha.
+</p>
+
+<ul>
+
+<li data-id="portfolioList1">
+    Desain responsive
+</li>
+
+<li data-id="portfolioList2">
+    Struktur profesional
+</li>
+
+<li data-id="portfolioList3">
+    Tombol WhatsApp
+</li>
+
+<li data-id="portfolioList4">
+    Bisa dipublikasikan online
+</li>
+
+</ul>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= ABOUT ================= -->
 
 <section class="about" id="tentang">
 
 <div class="container">
 
-    <div class="about-grid">
+<div class="about-grid">
+
+<div class="about-content">
+
+<h2 data-id="aboutTitle">
+    Warung Ridwan Saleh
+</h2>
+
+<p data-id="aboutText1">
+    Menyediakan sayuran, ayam, dan kebutuhan
+    dapur untuk membantu memenuhi kebutuhan
+    keluarga sehari-hari.
+</p>
+
+<p data-id="aboutText2">
+    Selain itu, tersedia jasa pembuatan portofolio
+    modern dengan harga terjangkau.
+</p>
+
+<div class="check-list">
+
+<div>
+    <span>✓</span>
+    <span data-id="check1">Produk pilihan</span>
+</div>
+
+<div>
+    <span>✓</span>
+    <span data-id="check2">Pesan melalui WhatsApp</span>
+</div>
+
+<div>
+    <span>✓</span>
+    <span data-id="check3">Jasa portofolio modern</span>
+</div>
+
+<div>
+    <span>✓</span>
+    <span data-id="check4">Lokasi mudah ditemukan</span>
+</div>
+
+</div>
+
+</div>
 
 
-        <div class="about-content">
+<div class="about-card">
 
-            <h2>
-                Warung Ridwan Saleh
-            </h2>
+<div class="about-icon">
+    🏪
+</div>
 
-            <p>
-                Warung Ridwan Saleh menyediakan kebutuhan
-                sayuran dan ayam untuk membantu memenuhi
-                kebutuhan dapur keluarga.
-            </p>
+<h3>
+    Warung Ridwan Saleh
+</h3>
 
-            <p>
-                Untuk mendapatkan informasi harga dan
-                produk yang tersedia hari ini, pelanggan
-                dapat langsung menghubungi kami.
-            </p>
+<p data-id="aboutCard">
+    Sayuran • Ayam • Kebutuhan Dapur • Jasa Portofolio
+</p>
 
+</div>
 
-            <div class="check-list">
-
-                <div>
-                    <span>✓</span>
-                    Mudah bertanya tentang produk
-                </div>
-
-                <div>
-                    <span>✓</span>
-                    Pemesanan melalui WhatsApp
-                </div>
-
-                <div>
-                    <span>✓</span>
-                    Lokasi dapat dilihat melalui Maps
-                </div>
-
-                <div>
-                    <span>✓</span>
-                    Pelayanan yang ramah
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="about-card">
-
-            <div class="about-card-icon">
-                🏪
-            </div>
-
-            <h3>
-                Warung Ridwan Saleh
-            </h3>
-
-            <p>
-                Sayuran • Ayam • Kebutuhan Dapur
-            </p>
-
-        </div>
-
-
-    </div>
+</div>
 
 </div>
 
 </section>
 
 
-<!-- =========================
-     ORDER
-========================= -->
+<!-- ================= ORDER ================= -->
 
 <section class="order">
 
 <div class="container">
 
-    <div class="order-box">
+<div class="order-box">
 
-        <h2>
-            Mau Belanja Hari Ini? 🛒
-        </h2>
+<h2 data-id="orderTitle">
+    Ada yang ingin ditanyakan?
+</h2>
 
-        <p>
-            Tanyakan produk, harga, dan ketersediaan
-            melalui WhatsApp sebelum datang ke warung.
-        </p>
+<p data-id="orderText">
+    Hubungi kami melalui WhatsApp untuk
+    bertanya tentang produk, harga, atau
+    jasa pembuatan portofolio.
+</p>
 
-        <a
-            href="https://wa.me/6285691604318?text=Halo%20Warung%20Ridwan%20Saleh%2C%20saya%20ingin%20tanya%20produk%20dan%20harga%20hari%20ini."
-            target="_blank"
-            class="btn btn-orange"
-        >
-            💬 Tanya Produk & Harga
-        </a>
+<a
+    href="https://wa.me/6285692828522?text=Halo%20Warung%20Ridwan%20Saleh%2C%20saya%20ingin%20bertanya."
+    target="_blank"
+    class="btn btn-orange"
+    data-id="orderButton"
+>
+    💬 Hubungi WhatsApp
+</a>
 
-    </div>
+</div>
 
 </div>
 
 </section>
 
 
-<!-- =========================
-     CONTACT
-========================= -->
+<!-- ================= CONTACT ================= -->
 
 <section class="contact" id="kontak">
 
 <div class="container">
 
-    <div class="section-title">
+<div class="section-title">
 
-        <small>Kontak</small>
+<small data-id="contactSmall">
+    Kontak
+</small>
 
-        <h2>
-            Hubungi Warung
-        </h2>
+<h2 data-id="contactTitle">
+    Hubungi Kami
+</h2>
 
-        <p>
-            Kami siap menerima pertanyaan dan pemesanan.
-        </p>
+<p data-id="contactDescription">
+    Silakan hubungi kami untuk informasi
+    dan pemesanan.
+</p>
 
-    </div>
-
-
-    <div class="contact-grid">
-
-
-        <div class="contact-card">
-
-            <h3>
-                📞 Informasi Kontak
-            </h3>
+</div>
 
 
-            <div class="contact-item">
-
-                <strong>
-                    WhatsApp Utama
-                </strong>
-
-                <a
-                    href="https://wa.me/6285691604318"
-                    target="_blank"
-                >
-                    0856-9160-4318
-                </a>
-
-            </div>
+<div class="contact-grid">
 
 
-            <div class="contact-item">
+<div class="contact-card">
 
-                <strong>
-                    WhatsApp 2
-                </strong>
-
-                <a
-                    href="https://wa.me/62895340614416"
-                    target="_blank"
-                >
-                    0895-3406-14416
-                </a>
-
-            </div>
+<h3 data-id="contactInfoTitle">
+    📞 Informasi Kontak
+</h3>
 
 
-            <div class="hours">
+<div class="contact-item">
 
-                <h4>
-                    🕐 Jam Operasional
-                </h4>
+<strong data-id="phoneLabel">
+    WhatsApp Utama
+</strong>
 
-                <p>
-                    Silakan hubungi WhatsApp untuk
-                    memastikan jam buka hari ini.
-                </p>
+<a
+    href="https://wa.me/6285692828522"
+    target="_blank"
+>
+    +62 856-9282-8522
+</a>
 
-            </div>
-
-        </div>
-
-
-        <div class="map-card">
-
-            <div class="map-icon">
-                📍
-            </div>
-
-            <h3>
-                Lokasi Warung
-            </h3>
-
-            <p>
-                Lihat lokasi Warung Ridwan Saleh
-                melalui Google Maps.
-            </p>
-
-            <a
-                href="https://maps.app.goo.gl/Hq9BCWftCzoFh8Mj8"
-                target="_blank"
-                class="btn btn-orange"
-            >
-                🗺️ Buka Google Maps
-            </a>
-
-        </div>
+</div>
 
 
-    </div>
+<div class="contact-item">
+
+<strong data-id="serviceContact">
+    Layanan
+</strong>
+
+<span data-id="serviceContactText">
+    Sayuran • Ayam • Kebutuhan Dapur • Portofolio
+</span>
+
+</div>
+
+
+<div class="hours">
+
+<h4 data-id="hoursTitle">
+    🕐 Jam Operasional
+</h4>
+
+<p data-id="hoursText">
+    Hubungi WhatsApp untuk memastikan
+    jam buka hari ini.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="map-card">
+
+<div class="map-icon">
+    📍
+</div>
+
+<h3 data-id="locationTitle">
+    Lokasi Warung
+</h3>
+
+<p data-id="locationText">
+    Lihat lokasi Warung Ridwan Saleh
+    melalui Google Maps.
+</p>
+
+<a
+    href="https://maps.app.goo.gl/Hq9BCWftCzoFh8Mj8"
+    target="_blank"
+    class="btn btn-orange"
+    data-id="mapButton"
+>
+    🗺️ Buka Google Maps
+</a>
+
+</div>
+
+
+</div>
 
 </div>
 
 </section>
 
 
-<!-- =========================
-     FINAL CTA
-========================= -->
+<!-- ================= FINAL CTA ================= -->
 
 <section class="final-cta">
 
 <div class="container">
 
-    <h2>
-        Butuh Sayuran atau Ayam? 🥬🍗
-    </h2>
+<h2 data-id="finalTitle">
+    Siap Pesan? 🛒
+</h2>
 
-    <p>
-        Hubungi Warung Ridwan Saleh sekarang.
-    </p>
+<p data-id="finalText">
+    Hubungi Warung Ridwan Saleh sekarang.
+</p>
 
-    <a
-        href="https://wa.me/6285691604318?text=Halo%20Warung%20Ridwan%20Saleh%2C%20saya%20ingin%20memesan%20produk."
-        target="_blank"
-        class="btn btn-orange"
-    >
-        💬 Pesan Sekarang
-    </a>
+<a
+    href="https://wa.me/6285692828522?text=Halo%20Warung%20Ridwan%20Saleh%2C%20saya%20ingin%20memesan%20produk."
+    target="_blank"
+    class="btn btn-orange"
+    data-id="finalButton"
+>
+    💬 Pesan Sekarang
+</a>
 
 </div>
 
 </section>
 
 
-<!-- =========================
-     FOOTER
-========================= -->
+<!-- ================= FOOTER ================= -->
 
 <footer>
 
-    <div class="footer-brand">
-        Warung Ridwan Saleh
-    </div>
+<div class="footer-brand">
+    Warung Ridwan Saleh
+</div>
 
-    <div>
-        Sayuran • Ayam • Kebutuhan Dapur
-    </div>
+<div data-id="footerServices">
+    Sayuran • Ayam • Kebutuhan Dapur • Jasa Portofolio
+</div>
 
-    <br>
+<br>
 
-    <div>
-        © 2026 Warung Ridwan Saleh. Semua hak dilindungi.
-    </div>
+<div>
+    © 2026 Warung Ridwan Saleh.
+    <span data-id="footerRights">
+        Semua hak dilindungi.
+    </span>
+</div>
 
 </footer>
 
 
-<!-- =========================
-     FLOATING WHATSAPP
-========================= -->
+<!-- ================= WHATSAPP ================= -->
 
 <a
     class="whatsapp"
-    href="https://wa.me/6285691604318?text=Halo%20Warung%20Ridwan%20Saleh%2C%20saya%20ingin%20bertanya%20tentang%20produk."
+    href="https://wa.me/6285692828522?text=Halo%20Warung%20Ridwan%20Saleh%2C%20saya%20ingin%20bertanya%20tentang%20produk."
     target="_blank"
-    aria-label="Hubungi Warung Ridwan Saleh melalui WhatsApp"
+    aria-label="WhatsApp"
 >
     💬
 </a>
+
+
+<script>
+
+/* =========================
+   LANGUAGE SYSTEM
+========================= */
+
+const translations = {
+
+id:{
+
+navHome:"Beranda",
+navProduct:"Produk",
+navService:"Layanan",
+navAbout:"Tentang",
+navContact:"Kontak",
+navOrder:"Pesan",
+
+badge:"🥬 Segar • 🍗 Pilihan • 💼 Jasa Digital",
+
+heroDescription:
+"Menyediakan sayuran, ayam, kebutuhan dapur, serta jasa pembuatan portofolio profesional dengan harga terjangkau.",
+
+heroOrder:"💬 Pesan Sekarang",
+heroProduct:"🛒 Lihat Produk",
+
+heroInfo1:"✓ Produk pilihan",
+heroInfo2:"✓ Pelayanan ramah",
+heroInfo3:"✓ Pesan via WhatsApp",
+
+heroCardTitle:"Sayuran & Ayam",
+
+heroCardText:
+"Kebutuhan dapur keluarga yang mudah dipesan melalui WhatsApp.",
+
+promoTitle:"Mau tahu harga hari ini?",
+
+promoText:
+"Hubungi kami melalui WhatsApp untuk mengetahui harga dan ketersediaan produk.",
+
+promoButton:"Tanya Harga",
+
+productSmall:"Produk Kami",
+
+productTitle:"Kebutuhan Dapur",
+
+productDescription:
+"Tanyakan ketersediaan dan harga produk sebelum melakukan pemesanan.",
+
+product1Title:"Sayuran Segar",
+
+product1Text:
+"Berbagai pilihan sayuran untuk kebutuhan masakan keluarga sehari-hari.",
+
+product2Title:"Ayam",
+
+product2Text:
+"Ayam untuk kebutuhan masakan keluarga. Hubungi kami untuk ketersediaan.",
+
+product3Title:"Kebutuhan Dapur",
+
+product3Text:
+"Hubungi kami untuk menanyakan kebutuhan dapur yang tersedia.",
+
+price:"Tanya harga",
+price2:"Tanya harga",
+
+orderSmall:"Pesan",
+orderSmall2:"Pesan",
+orderSmall3:"Pesan",
+
+featureSmall:"Keunggulan",
+featureTitle:"Kenapa Pilih Kami?",
+
+featureDescription:
+"Pelayanan sederhana, mudah, dan langsung.",
+
+feature1Title:"Produk Segar",
+feature1Text:"Pilihan sayuran untuk kebutuhan sehari-hari.",
+
+feature2Title:"Ayam",
+feature2Text:"Tanyakan ketersediaan ayam melalui WhatsApp.",
+
+feature3Title:"Mudah Dihubungi",
+feature3Text:"Pesan dan bertanya langsung melalui WhatsApp.",
+
+feature4Title:"Lokasi Jelas",
+feature4Text:"Lokasi warung dapat dilihat melalui Maps.",
+
+portfolioTitle:"Jasa Pembuatan Portofolio Murah",
+
+portfolioText:
+"Butuh website portofolio untuk mencari kerja, usaha, atau memperkenalkan diri secara profesional? Kami membantu membuat website portofolio modern dan responsive.",
+
+portfolioButton:"💻 Tanya Jasa Portofolio",
+
+portfolioCardTitle:"Portofolio Modern 2026",
+
+portfolioCardText:
+"Cocok untuk mahasiswa, fresh graduate, freelancer, dan pemilik usaha.",
+
+portfolioList1:"Desain responsive",
+portfolioList2:"Struktur profesional",
+portfolioList3:"Tombol WhatsApp",
+portfolioList4:"Bisa dipublikasikan online",
+
+aboutTitle:"Warung Ridwan Saleh",
+
+aboutText1:
+"Menyediakan sayuran, ayam, dan kebutuhan dapur untuk membantu memenuhi kebutuhan keluarga sehari-hari.",
+
+aboutText2:
+"Selain itu, tersedia jasa pembuatan portofolio modern dengan harga terjangkau.",
+
+check1:"Produk pilihan",
+check2:"Pesan melalui WhatsApp",
+check3:"Jasa portofolio modern",
+check4:"Lokasi mudah ditemukan",
+
+aboutCard:
+"Sayuran • Ayam • Kebutuhan Dapur • Jasa Portofolio",
+
+orderTitle:"Ada yang ingin ditanyakan?",
+
+orderText:
+"Hubungi kami melalui WhatsApp untuk bertanya tentang produk, harga, atau jasa pembuatan portofolio.",
+
+orderButton:"💬 Hubungi WhatsApp",
+
+contactSmall:"Kontak",
+contactTitle:"Hubungi Kami",
+
+contactDescription:
+"Silakan hubungi kami untuk informasi dan pemesanan.",
+
+contactInfoTitle:"📞 Informasi Kontak",
+
+phoneLabel:"WhatsApp Utama",
+
+serviceContact:"Layanan",
+
+serviceContactText:
+"Sayuran • Ayam • Kebutuhan Dapur • Portofolio",
+
+hoursTitle:"🕐 Jam Operasional",
+
+hoursText:
+"Hubungi WhatsApp untuk memastikan jam buka hari ini.",
+
+locationTitle:"Lokasi Warung",
+
+locationText:
+"Lihat lokasi Warung Ridwan Saleh melalui Google Maps.",
+
+mapButton:"🗺️ Buka Google Maps",
+
+finalTitle:"Siap Pesan? 🛒",
+
+finalText:
+"Hubungi Warung Ridwan Saleh sekarang.",
+
+finalButton:"💬 Pesan Sekarang",
+
+footerServices:
+"Sayuran • Ayam • Kebutuhan Dapur • Jasa Portofolio",
+
+footerRights:"Semua hak dilindungi."
+
+},
+
+en:{
+
+navHome:"Home",
+navProduct:"Products",
+navService:"Services",
+navAbout:"About",
+navContact:"Contact",
+navOrder:"Order",
+
+badge:"🥬 Fresh • 🍗 Quality • 💼 Digital Services",
+
+heroDescription:
+"We provide fresh vegetables, chicken, daily kitchen needs, and affordable professional portfolio website services.",
+
+heroOrder:"💬 Order Now",
+heroProduct:"🛒 View Products",
+
+heroInfo1:"✓ Quality products",
+heroInfo2:"✓ Friendly service",
+heroInfo3:"✓ Order via WhatsApp",
+
+heroCardTitle:"Vegetables & Chicken",
+
+heroCardText:
+"Daily kitchen essentials that are easy to order through WhatsApp.",
+
+promoTitle:"Want today's price?",
+
+promoText:
+"Contact us via WhatsApp to check product prices and availability.",
+
+promoButton:"Ask Price",
+
+productSmall:"Our Products",
+
+productTitle:"Kitchen Essentials",
+
+productDescription:
+"Ask about product availability and prices before ordering.",
+
+product1Title:"Fresh Vegetables",
+
+product1Text:
+"Various vegetables for your family's daily cooking needs.",
+
+product2Title:"Chicken",
+
+product2Text:
+"Chicken for your family meals. Contact us for availability.",
+
+product3Title:"Kitchen Needs",
+
+product3Text:
+"Contact us to ask about available kitchen products.",
+
+price:"Ask price",
+price2:"Ask price",
+
+orderSmall:"Order",
+orderSmall2:"Order",
+orderSmall3:"Order",
+
+featureSmall:"Benefits",
+featureTitle:"Why Choose Us?",
+
+featureDescription:
+"Simple, easy, and direct service.",
+
+feature1Title:"Fresh Products",
+feature1Text:"Vegetable choices for your daily needs.",
+
+feature2Title:"Chicken",
+feature2Text:"Ask about chicken availability via WhatsApp.",
+
+feature3Title:"Easy to Contact",
+feature3Text:"Order and ask questions directly via WhatsApp.",
+
+feature4Title:"Clear Location",
+feature4Text:"Find our shop location through Maps.",
+
+portfolioTitle:"Affordable Portfolio Website Service",
+
+portfolioText:
+"Need a portfolio website for job applications, business, or professional presentation? We help create modern and responsive portfolio websites.",
+
+portfolioButton:"💻 Ask About Portfolio",
+
+portfolioCardTitle:"Modern Portfolio 2026",
+
+portfolioCardText:
+"Suitable for students, fresh graduates, freelancers, and business owners.",
+
+portfolioList1:"Responsive design",
+portfolioList2:"Professional structure",
+portfolioList3:"WhatsApp button",
+portfolioList4:"Ready to publish online",
+
+aboutTitle:"Warung Ridwan Saleh",
+
+aboutText1:
+"We provide vegetables, chicken, and kitchen essentials for your family's daily needs.",
+
+aboutText2:
+"We also provide affordable modern portfolio website services.",
+
+check1:"Quality products",
+check2:"Order via WhatsApp",
+check3:"Modern portfolio service",
+check4:"Easy-to-find location",
+
+aboutCard:
+"Vegetables • Chicken • Kitchen Needs • Portfolio Service",
+
+orderTitle:"Have a question?",
+
+orderText:
+"Contact us via WhatsApp to ask about products, prices, or portfolio website services.",
+
+orderButton:"💬 Contact WhatsApp",
+
+contactSmall:"Contact",
+contactTitle:"Contact Us",
+
+contactDescription:
+"Contact us for information and orders.",
+
+contactInfoTitle:"📞 Contact Information",
+
+phoneLabel:"Main WhatsApp",
+
+serviceContact:"Services",
+
+serviceContactText:
+"Vegetables • Chicken • Kitchen Needs • Portfolio",
+
+hoursTitle:"🕐 Opening Hours",
+
+hoursText:
+"Contact WhatsApp to confirm today's opening hours.",
+
+locationTitle:"Shop Location",
+
+locationText:
+"View Warung Ridwan Saleh location on Google Maps.",
+
+mapButton:"🗺️ Open Google Maps",
+
+finalTitle:"Ready to Order? 🛒",
+
+finalText:
+"Contact Warung Ridwan Saleh today.",
+
+finalButton:"💬 Order Now",
+
+footerServices:
+"Vegetables • Chicken • Kitchen Needs • Portfolio Service",
+
+footerRights:"All rights reserved."
+
+}
+
+};
+
+
+function setLanguage(language){
+
+const data = translations[language];
+
+document.documentElement.lang = language;
+
+document.querySelectorAll("[data-id]").forEach(element=>{
+
+const key = element.getAttribute("data-id");
+
+if(data[key]){
+    element.textContent = data[key];
+}
+
+});
+
+document.getElementById("idBtn")
+.classList.toggle("active",language === "id");
+
+document.getElementById("enBtn")
+.classList.toggle("active",language === "en");
+
+localStorage.setItem("warungLanguage",language);
+
+}
+
+
+const savedLanguage =
+localStorage.getItem("warungLanguage") || "id";
+
+setLanguage(savedLanguage);
+
+</script>
 
 </body>
 </html>
