@@ -1,570 +1,2222 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>KAZA Shop — Koleksi Pakaian Minimalis Premium</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <style>
-        /* small custom styles to polish visuals */
-        /* Efek glassmorphism pada elemen transparan */
-        .glass { background: rgba(255,255,255,0.8); backdrop-filter: blur(8px); }
-        .card-shadow { box-shadow: 0 8px 30px rgba(20,20,30,0.08); }
-        /* product image container keep aspect ratio 1:1 */
-        .ratio-1-1{ position: relative; padding-bottom:100%; }
-        .ratio-1-1 > img{ position:absolute; inset:0; width:100%; height:100%; object-fit:contain; }
+  <title>Warung Ridwan Shaleh | Sayuran Segar & Ayam</title>
 
-        /* Custom scrollbar for cart items */
-        #cartItems::-webkit-scrollbar { width: 6px; }
-        #cartItems::-webkit-scrollbar-thumb { background: #fda4af; border-radius: 10px; }
-        #cartItems::-webkit-scrollbar-track { background: #ffe4e6; }
-    </style>
+  <meta name="description" content="Warung Ridwan Shaleh menyediakan sayuran segar, ayam, kebutuhan dapur, dan kebutuhan harian dengan harga bersahabat. Pesan mudah melalui WhatsApp.">
+  <meta name="keywords" content="Warung Ridwan Shaleh, sayuran segar, ayam, warung sayur, kebutuhan dapur, belanja harian">
+  <meta name="author" content="Warung Ridwan Shaleh">
+
+  <meta name="theme-color" content="#0f9d58">
+
+  <style>
+    :root {
+      --green: #0f9d58;
+      --green-dark: #087f46;
+      --green-light: #eaf8ef;
+      --orange: #ff9f1c;
+      --dark: #10231a;
+      --text: #46554d;
+      --muted: #718078;
+      --white: #ffffff;
+      --bg: #f7faf8;
+      --border: #e2ebe5;
+      --shadow: 0 20px 50px rgba(16, 35, 26, 0.10);
+      --radius: 24px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--white);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    .container {
+      width: min(1160px, 92%);
+      margin: auto;
+    }
+
+    /* ================= HEADER ================= */
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      background: rgba(255,255,255,.94);
+      backdrop-filter: blur(15px);
+      border-bottom: 1px solid rgba(226,235,229,.8);
+    }
+
+    .navbar {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      font-weight: 900;
+      color: var(--dark);
+      font-size: 17px;
+      letter-spacing: -.3px;
+    }
+
+    .logo-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--green), #39b86e);
+      color: white;
+      font-size: 23px;
+      box-shadow: 0 8px 20px rgba(15,157,88,.22);
+    }
+
+    .nav-menu {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 25px;
+    }
+
+    .nav-menu a {
+      color: #4c5b53;
+      font-size: 14px;
+      font-weight: 700;
+      transition: .2s;
+    }
+
+    .nav-menu a:hover {
+      color: var(--green);
+    }
+
+    .nav-order {
+      background: var(--green);
+      color: white !important;
+      padding: 11px 17px;
+      border-radius: 999px;
+    }
+
+    .nav-order:hover {
+      background: var(--green-dark);
+    }
+
+    .menu-btn {
+      display: none;
+      border: 0;
+      background: transparent;
+      color: var(--dark);
+      font-size: 28px;
+      cursor: pointer;
+    }
+
+    /* ================= HERO ================= */
+
+    .hero {
+      padding: 145px 0 85px;
+      background:
+        radial-gradient(circle at 10% 10%, rgba(15,157,88,.12), transparent 28%),
+        radial-gradient(circle at 90% 20%, rgba(255,159,28,.12), transparent 25%),
+        linear-gradient(135deg,#f4fcf6,#ffffff 55%,#fffaf0);
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.03fr .97fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--green-light);
+      color: var(--green-dark);
+      border: 1px solid #ccebd7;
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      font-size: clamp(40px, 5.5vw, 68px);
+      line-height: 1.03;
+      letter-spacing: -3px;
+      color: var(--dark);
+      margin-bottom: 22px;
+    }
+
+    .hero h1 span {
+      color: var(--green);
+    }
+
+    .hero-text {
+      color: var(--muted);
+      font-size: 17px;
+      max-width: 620px;
+      margin-bottom: 28px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 21px;
+      border-radius: 13px;
+      border: 0;
+      cursor: pointer;
+      font-weight: 800;
+      transition: .22s;
+    }
+
+    .btn-primary {
+      background: var(--green);
+      color: white;
+      box-shadow: 0 10px 24px rgba(15,157,88,.22);
+    }
+
+    .btn-primary:hover {
+      background: var(--green-dark);
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      background: white;
+      border: 1px solid var(--border);
+      color: var(--dark);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--green);
+      color: var(--green);
+    }
+
+    .hero-visual {
+      position: relative;
+    }
+
+    .hero-visual::before {
+      content: "";
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      right: -40px;
+      top: -40px;
+      border-radius: 50%;
+      background: rgba(255,159,28,.16);
+      z-index: 0;
+    }
+
+    .hero-image {
+      position: relative;
+      z-index: 1;
+      height: 490px;
+      object-fit: cover;
+      border-radius: 32px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-info {
+      position: absolute;
+      z-index: 2;
+      left: -20px;
+      bottom: 25px;
+      background: white;
+      padding: 17px 20px;
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      font-weight: 900;
+      color: var(--dark);
+    }
+
+    .hero-info small {
+      display: block;
+      color: var(--muted);
+      font-weight: 500;
+      margin-top: 3px;
+    }
+
+    /* ================= GENERAL ================= */
+
+    section {
+      padding: 90px 0;
+    }
+
+    .section-heading {
+      max-width: 720px;
+      margin: 0 auto 48px;
+      text-align: center;
+    }
+
+    .section-label {
+      color: var(--green);
+      text-transform: uppercase;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 1.5px;
+      margin-bottom: 8px;
+    }
+
+    .section-heading h2 {
+      color: var(--dark);
+      font-size: clamp(30px,4vw,44px);
+      line-height: 1.12;
+      margin-bottom: 12px;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+    }
+
+    /* ================= QUICK INFO ================= */
+
+    .quick-info {
+      margin-top: -30px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .quick-box {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 22px;
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 15px;
+      box-shadow: var(--shadow);
+    }
+
+    .quick-item {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      padding: 10px;
+    }
+
+    .quick-icon {
+      width: 48px;
+      height: 48px;
+      flex: 0 0 48px;
+      display: grid;
+      place-items: center;
+      background: var(--green-light);
+      border-radius: 14px;
+      font-size: 22px;
+    }
+
+    .quick-item strong {
+      display: block;
+      color: var(--dark);
+      font-size: 14px;
+    }
+
+    .quick-item span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* ================= ABOUT ================= */
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: .9fr 1.1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .about-image {
+      position: relative;
+    }
+
+    .about-image img {
+      height: 430px;
+      object-fit: cover;
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .about-badge {
+      position: absolute;
+      right: -18px;
+      bottom: 25px;
+      background: var(--orange);
+      color: white;
+      padding: 13px 17px;
+      border-radius: 15px;
+      font-weight: 900;
+      box-shadow: var(--shadow);
+    }
+
+    .about-content .section-label {
+      margin-bottom: 8px;
+    }
+
+    .about-content h2 {
+      color: var(--dark);
+      font-size: clamp(30px,4vw,45px);
+      line-height: 1.12;
+      margin-bottom: 18px;
+    }
+
+    .about-content p {
+      color: var(--muted);
+      margin-bottom: 15px;
+    }
+
+    .check-list {
+      list-style: none;
+      display: grid;
+      gap: 12px;
+      margin-top: 23px;
+    }
+
+    .check-list li {
+      display: flex;
+      gap: 10px;
+      font-weight: 700;
+      color: var(--dark);
+    }
+
+    .check {
+      color: var(--green);
+      font-weight: 900;
+    }
+
+    /* ================= PRODUCTS ================= */
+
+    .products {
+      background: var(--bg);
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 22px;
+    }
+
+    .product-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 23px;
+      overflow: hidden;
+      transition: .25s;
+    }
+
+    .product-card:hover {
+      transform: translateY(-7px);
+      box-shadow: var(--shadow);
+    }
+
+    .product-image {
+      height: 225px;
+      object-fit: cover;
+    }
+
+    .product-content {
+      padding: 21px;
+    }
+
+    .product-tag {
+      display: inline-block;
+      background: var(--green-light);
+      color: var(--green-dark);
+      padding: 5px 9px;
+      border-radius: 7px;
+      font-size: 11px;
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+
+    .product-content h3 {
+      color: var(--dark);
+      font-size: 20px;
+      margin-bottom: 7px;
+    }
+
+    .product-content p {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 15px;
+    }
+
+    .product-price {
+      display: inline-flex;
+      background: #fff6e6;
+      color: #b86a00;
+      padding: 7px 11px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    /* ================= PROMO ================= */
+
+    .promo-box {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg,#087f46,#16a05b);
+      border-radius: 30px;
+      color: white;
+      padding: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 30px;
+    }
+
+    .promo-box::after {
+      content: "🥬";
+      position: absolute;
+      right: 250px;
+      top: -40px;
+      font-size: 130px;
+      opacity: .12;
+    }
+
+    .promo-box h2 {
+      font-size: clamp(28px,4vw,44px);
+      line-height: 1.12;
+      margin-bottom: 10px;
+    }
+
+    .promo-box p {
+      max-width: 650px;
+      opacity: .9;
+    }
+
+    .promo-box .btn {
+      background: white;
+      color: var(--green-dark);
+      white-space: nowrap;
+    }
+
+    /* ================= BENEFITS ================= */
+
+    .benefit-grid {
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      gap: 18px;
+    }
+
+    .benefit-card {
+      padding: 27px 20px;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      text-align: center;
+      background: white;
+    }
+
+    .benefit-icon {
+      width: 58px;
+      height: 58px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 15px;
+      border-radius: 17px;
+      background: var(--green-light);
+      font-size: 26px;
+    }
+
+    .benefit-card h3 {
+      color: var(--dark);
+      margin-bottom: 7px;
+      font-size: 17px;
+    }
+
+    .benefit-card p {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* ================= GALLERY ================= */
+
+    .gallery {
+      background: var(--bg);
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr;
+      grid-auto-rows: 210px;
+      gap: 15px;
+    }
+
+    .gallery-item {
+      overflow: hidden;
+      border-radius: 20px;
+    }
+
+    .gallery-item:first-child {
+      grid-row: span 2;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: .3s;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.05);
+    }
+
+    /* ================= ORDER ================= */
+
+    .order-section {
+      background:
+        radial-gradient(circle at 10% 20%,rgba(15,157,88,.08),transparent 30%),
+        white;
+    }
+
+    .order-box {
+      max-width: 880px;
+      margin: auto;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 38px;
+      box-shadow: var(--shadow);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 19px;
+    }
+
+    .form-group.full {
+      grid-column: 1/-1;
+    }
+
+    label {
+      display: block;
+      color: var(--dark);
+      font-size: 14px;
+      font-weight: 800;
+      margin-bottom: 7px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      outline: none;
+      background: white;
+      color: var(--dark);
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 4px rgba(15,157,88,.08);
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .submit-btn {
+      width: 100%;
+      margin-top: 18px;
+    }
+
+    /* ================= LOCATION ================= */
+
+    .location {
+      background: var(--bg);
+    }
+
+    .location-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 25px;
+    }
+
+    .location-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 25px;
+      padding: 32px;
+    }
+
+    .location-card h3 {
+      color: var(--dark);
+      font-size: 25px;
+      margin-bottom: 22px;
+    }
+
+    .info {
+      display: flex;
+      gap: 13px;
+      margin-bottom: 20px;
+    }
+
+    .info-icon {
+      width: 44px;
+      height: 44px;
+      flex: 0 0 44px;
+      display: grid;
+      place-items: center;
+      background: var(--green-light);
+      border-radius: 12px;
+      font-size: 20px;
+    }
+
+    .info strong {
+      display: block;
+      color: var(--dark);
+      font-size: 14px;
+    }
+
+    .info span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .map-box {
+      min-height: 360px;
+      border-radius: 25px;
+      overflow: hidden;
+      background:
+        linear-gradient(rgba(16,35,26,.18),rgba(16,35,26,.18)),
+        url("https://images.unsplash.com/photo-1524666041070-9e0e5e5c6c5a?auto=format&fit=crop&w=1200&q=85")
+        center/cover;
+      display: grid;
+      place-items: center;
+    }
+
+    .map-content {
+      width: min(340px,85%);
+      padding: 25px;
+      text-align: center;
+      background: rgba(255,255,255,.96);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .map-content h3 {
+      color: var(--dark);
+      margin-bottom: 7px;
+    }
+
+    .map-content p {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 17px;
+    }
+
+    /* ================= FOOTER ================= */
+
+    footer {
+      background: #10231a;
+      color: white;
+      padding: 50px 0 25px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr 1fr;
+      gap: 40px;
+      padding-bottom: 32px;
+    }
+
+    footer h3 {
+      margin-bottom: 13px;
+    }
+
+    footer p,
+    footer li {
+      color: #a8b8af;
+      font-size: 14px;
+    }
+
+    footer ul {
+      list-style: none;
+      display: grid;
+      gap: 8px;
+    }
+
+    footer a:hover {
+      color: white;
+    }
+
+    .copyright {
+      border-top: 1px solid #294137;
+      padding-top: 20px;
+      text-align: center;
+      color: #8fa198;
+      font-size: 13px;
+    }
+
+    /* ================= WHATSAPP ================= */
+
+    .whatsapp {
+      position: fixed;
+      right: 21px;
+      bottom: 21px;
+      width: 61px;
+      height: 61px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #25d366;
+      color: white;
+      font-size: 29px;
+      z-index: 999;
+      box-shadow: 0 12px 30px rgba(0,0,0,.22);
+      transition: .2s;
+    }
+
+    .whatsapp:hover {
+      transform: scale(1.08);
+    }
+
+    /* ================= RESPONSIVE ================= */
+
+    @media (max-width: 950px) {
+
+      .nav-menu {
+        position: absolute;
+        top: 76px;
+        left: 0;
+        right: 0;
+        background: white;
+        padding: 20px 5%;
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .nav-menu.active {
+        display: flex;
+      }
+
+      .nav-menu a {
+        display: block;
+        padding: 8px 0;
+      }
+
+      .menu-btn {
+        display: block;
+      }
+
+      .hero-grid,
+      .about-grid,
+      .location-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        order: -1;
+      }
+
+      .product-grid {
+        grid-template-columns: repeat(2,1fr);
+      }
+
+      .benefit-grid {
+        grid-template-columns: repeat(2,1fr);
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 650px) {
+
+      section {
+        padding: 65px 0;
+      }
+
+      .hero {
+        padding-top: 120px;
+      }
+
+      .hero h1 {
+        letter-spacing: -2px;
+      }
+
+      .hero-image {
+        height: 340px;
+      }
+
+      .hero-info {
+        left: 15px;
+        bottom: 15px;
+      }
+
+      .quick-box {
+        grid-template-columns: 1fr;
+      }
+
+      .product-grid,
+      .benefit-grid,
+      .form-grid,
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-group.full {
+        grid-column: auto;
+      }
+
+      .gallery-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-auto-rows: 150px;
+      }
+
+      .gallery-item:first-child {
+        grid-row: span 2;
+      }
+
+      .promo-box {
+        padding: 32px 25px;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .promo-box::after {
+        display: none;
+      }
+
+      .order-box {
+        padding: 23px;
+      }
+
+      .about-image img {
+        height: 340px;
+      }
+    }
+  </style>
 </head>
-<body class="bg-rose-50 text-slate-800 font-sans">
 
-    <header class="sticky top-0 z-40 bg-white/80 backdrop-blur glass border-b">
-        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
-            
-            <div class="flex items-center gap-3 flex-shrink-0">
-                <img src="https://placehold.co/120x30/f0f0f0/333?text=KAZA+Shop" alt="KAZA" class="w-24 sm:w-28 h-auto object-contain rounded"/>
-                <div class="hidden sm:block">
-                    <h1 class="text-xl font-bold tracking-tight">KAZA Shop</h1>
-                    <p class="text-xs text-slate-500">Minimalis • Premium • Ramah Kantong</p>
-                </div>
-            </div>
+<body>
 
-            <div class="flex-1 max-w-sm sm:max-w-xl">
-                <input id="search" type="search" placeholder="Cari produk, mis: kaos, teddy..." class="w-full rounded-full px-4 py-2 text-sm border focus:ring-2 focus:ring-rose-300 outline-none transition"/>
-            </div>
+  <!-- ================= HEADER ================= -->
 
-            <div class="flex items-center gap-2 sm:gap-3 flex-shrink-0">
-                <a href="https://wa.me/085168980966?text=Halo%20KAZA%20Shop%2C%20saya%20tertarik%20dengan%20produk%20Anda." target="_blank" class="hidden md:inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-green-500 text-white font-semibold text-sm hover:bg-green-600 transition shadow-lg shadow-green-200">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.001 0C6.115 0 1.341 4.774 1.341 10.658c0 1.76.438 3.42 1.22 4.887L1.05 23.33l7.98-2.112c1.42.77 3.03 1.18 4.07 1.18 5.885 0 10.659-4.774 10.659-10.658C22.66 4.774 17.886 0 12.001 0zm4.5 13.905c-.244 0-.488-.122-.732-.244l-1.954-1.096c-.122-.061-.305-.122-.488-.061l-.061.061c-.549.366-1.159.854-1.768 1.159-.61.305-1.28.488-1.953.488-.61 0-1.159-.122-1.768-.427-.61-.305-1.159-.732-1.768-1.28-1.159-1.159-1.953-2.5-1.953-4.145 0-1.159.549-2.013 1.28-2.562.732-.549 1.464-.854 2.196-.854.122 0 .244.061.427.183l1.954 1.096c.122.061.305.122.488.061l.061-.061c.549-.366 1.159-.854 1.768-1.159.61-.305 1.28-.488 1.953-.488 1.159 0 2.256.488 3.294 1.464 1.038.976 1.587 2.196 1.587 3.66c0 1.645-.794 3.05-1.953 4.209-.854.854-1.83 1.28-2.927 1.28zm1.096-7.442c-.244-.244-.549-.305-.854-.305-.305 0-.61.061-.854.305l-1.28 1.28c-.183.183-.305.427-.305.732s.122.549.305.732l.732.732c.122.122.305.183.488.183s.366-.061.488-.183l.732-.732c-.122-.122-.305-.183-.488-.183s.366.061.488.183l1.28 1.28c.244.244.549.305.854.305.305 0 .61-.061.854-.305l1.28-1.28c.183-.183.305-.427.305-.732s-.122-.549-.305-.732l-1.28-1.28c-.244-.244-.549-.305-.854-.305z"/></svg>
-                    Hubungi
-                </a>
+  <header>
+    <div class="container navbar">
 
-                <button id="cartBtn" class="relative inline-flex items-center gap-1 sm:gap-2 px-3 py-2 rounded-xl bg-rose-600 text-white hover:opacity-95 transition shadow-lg shadow-rose-200">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 9m13-9l2 9m-6-9v9"/></svg>
-                    <span id="cartCount" class="absolute -top-1 -right-1 text-xs bg-white text-rose-600 rounded-full w-4 h-4 sm:w-5 sm:h-5 flex items-center justify-center font-semibold border-2 border-rose-500">0</span>
-                    <span class="hidden sm:inline">Keranjang</span>
-                </button>
-            </div>
-        </div>
-    </header>
+      <a href="#beranda" class="logo">
+        <span class="logo-icon">🛒</span>
+        <span>WARUNG RIDWAN SHALEH</span>
+      </a>
 
-    <main class="max-w-6xl mx-auto px-4 py-8">
-        
-        <div class="md:hidden mb-4">
-            <button id="toggleFilterBtn" class="w-full text-center py-2 rounded-xl bg-slate-200 hover:bg-slate-300 transition text-sm font-semibold flex items-center justify-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707v3.586L10 20v-3.586a1 1 0 00-.293-.707l-6.414-6.414A1 1 0 013 6.586V4z"/></svg>
-                Tampilkan/Sembunyikan Filter
-            </button>
-        </div>
+      <button
+        class="menu-btn"
+        id="menuBtn"
+        aria-label="Buka menu"
+        aria-expanded="false"
+      >
+        ☰
+      </button>
 
-        <section class="grid grid-cols-1 md:grid-cols-4 gap-6">
+      <nav>
+        <ul class="nav-menu" id="navMenu">
+          <li><a href="#beranda">Beranda</a></li>
+          <li><a href="#tentang">Tentang</a></li>
+          <li><a href="#produk">Produk</a></li>
+          <li><a href="#promo">Promo</a></li>
+          <li><a href="#galeri">Galeri</a></li>
+          <li><a href="#lokasi">Lokasi</a></li>
+          <li><a href="#pesan" class="nav-order">Pesan Sekarang</a></li>
+        </ul>
+      </nav>
 
-            <aside class="md:col-span-1" id="filterSidebar">
-                <div class="p-4 glass card-shadow rounded-2xl border border-rose-100 sticky top-[80px]">
-                    <h3 class="font-semibold mb-3 text-lg text-slate-700">Filter Belanja</h3>
-                    <div class="space-y-4 text-sm text-slate-700">
-                        
-                        <div>
-                            <label class="block text-xs text-slate-500 mb-1">Kategori</label>
-                            <select id="filterCategory" class="w-full rounded-lg border px-3 py-2 focus:ring-rose-300 outline-none">
-                                <option value="all">Semua Produk</option>
-                                <option value="teddy">Teddy Bear</option>
-                                <option value="kaos">Kaos</option>
-                                <option value="jaket">Jaket/Hoodie</option>
-                                <option value="aksesoris">Aksesoris</option>
-                                <option value="set">Set/Paket</option>
-                                <option value="celana">Celana</option>
-                            </select>
-                        </div>
+    </div>
+  </header>
 
-                        <div>
-                            <label class="block text-xs text-slate-500 mb-1">Urutkan Berdasarkan</label>
-                            <select id="sortBy" class="w-full rounded-lg border px-3 py-2 focus:ring-rose-300 outline-none">
-                                <option value="newest">Terbaru</option>
-                                <option value="price_asc">Harga: Rendah ke Tinggi</option>
-                                <option value="price_desc">Harga: Tinggi ke Rendah</option>
-                            </select>
-                        </div>
 
-                        <div>
-                            <label class="block text-xs text-slate-500 mb-1">Maksimal Harga</label>
-                            <input id="maxPrice" type="range" min="50000" max="500000" step="10000" value="500000" class="w-full h-2 bg-rose-200 rounded-lg appearance-none cursor-pointer range-lg" />
-                            <div class="text-xs text-slate-600 mt-2 font-medium">Maks: <span id="maxPriceVal" class="text-rose-600">Rp500.000</span></div>
-                        </div>
+  <!-- ================= HERO ================= -->
 
-                        <button id="clearFilters" class="w-full mt-3 text-sm py-2 rounded-xl bg-slate-100 hover:bg-slate-200 transition">Reset Filter</button>
-                    </div>
-                </div>
-            </aside>
+  <main>
 
-            <div class="md:col-span-3">
-                <div class="flex items-center justify-between mb-6 border-b pb-2">
-                    <h2 class="text-2xl font-bold">Koleksi Produk Terbaru</h2>
-                    <div class="text-sm text-slate-500">Menampilkan <span id="resultsCount">0</span> produk</div>
-                </div>
+    <section class="hero" id="beranda">
 
-                <div id="productGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-                </div>
-            </div>
-        </section>
-        
-        <section class="max-w-6xl mx-auto py-12">
-            <div class="bg-white rounded-3xl card-shadow p-6 sm:p-8 glass flex flex-col md:flex-row items-center gap-8 border border-rose-100">
-                <img src="https://placehold.co/150x150/f9f9f9/888?text=KAZA" alt="Profil KAZA" class="w-32 h-32 sm:w-40 sm:h-40 object-cover rounded-full border-4 border-rose-100 shadow-xl flex-shrink-0"/>
-                <div>
-                    <h2 class="text-2xl sm:text-3xl font-bold mb-3 text-rose-600">Filosofi KAZA</h2>
-                    <p class="text-slate-600 leading-relaxed text-sm sm:text-base">KAZA adalah brand fashion minimalis premium yang berfokus pada kualitas terbaik, desain yang abadi (timeless), namun tetap **ramah kantong**. Kami menyediakan pakaian dan aksesoris dengan desain modern, simple, dan cocok untuk segala aktivitas harian Anda. Kenakan KAZA, rasakan kualitas premium setiap hari.</p>
-                </div>
-            </div>
-        </section>
+      <div class="container hero-grid">
 
-        <section id="katalog" class="py-12 sm:py-20 px-4 bg-white/50 border-t border-b border-rose-100">
-            <div class="max-w-7xl mx-auto">
-                <h2 class="text-3xl sm:text-4xl font-bold text-center mb-8 sm:mb-10 text-black">Katalog Produk Unggulan</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-                    <div class="bg-white p-4 sm:p-6 rounded-2xl shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-[1.02]">
-                        <img src="https://placehold.co/500x400/f0f0f0/333?text=Kemeja+Minimalis" class="rounded-xl mb-4" alt="Kemeja Minimalis" />
-                        <h3 class="text-xl font-semibold">Kemeja Minimalis</h3>
-                        <p class="text-gray-600 text-sm">Material premium, jahitan halus, sangat nyaman untuk bekerja atau santai.</p>
-                    </div>
-                    <div class="bg-white p-4 sm:p-6 rounded-2xl shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-[1.02]">
-                        <img src="https://placehold.co/500x400/f0f0f0/333?text=Kaos+Oversize" class="rounded-xl mb-4" alt="Kaos Oversize" />
-                        <h3 class="text-xl font-semibold">Kaos Oversize</h3>
-                        <p class="text-gray-600 text-sm">Nyaman dipakai, gaya modern, bahan adem tidak panas.</p>
-                    </div>
-                    <div class="bg-white p-4 sm:p-6 rounded-2xl shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-[1.02]">
-                        <img src="https://placehold.co/500x400/f0f0f0/333?text=Hoodie+Premium" class="rounded-xl mb-4" alt="Hoodie Premium" />
-                        <h3 class="text-xl font-semibold">Hoodie Premium</h3>
-                        <p class="text-gray-600 text-sm">Hangat, minimalis, elegan. Wajib punya untuk musim dingin.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <div>
 
-        <section id="contact" class="py-12 sm:py-20 px-4 bg-white text-black rounded-xl card-shadow mt-8">
-            <div class="max-w-6xl mx-auto text-center">
-                <h2 class="text-3xl sm:text-4xl font-bold mb-8 text-rose-600">Kontak Kami</h2>
-                <p class="text-md sm:text-lg text-slate-700">Hubungi kami segera untuk pemesanan atau pertanyaan terkait produk.</p>
+          <div class="hero-badge">
+            🥬 Sayuran Segar • 🍗 Ayam • 🛒 Kebutuhan Harian
+          </div>
 
-                <div class="mt-8 space-y-4 p-6 bg-rose-50 rounded-2xl shadow-inner inline-block border border-gray-200">
-                    <p class="text-xl font-semibold text-slate-800">Layanan Pelanggan KAZA:</p>
-                    <p class="text-lg">Email: <span class="font-bold text-blue-600">support@kaza.co</span></p>
-                    <p class="text-lg">Instagram: <span class="font-bold text-rose-600">@kaza.style</span></p>
-                    
-                    <p class="text-2xl mt-4 font-extrabold">WhatsApp/Telp:</p>
-                    <a href="https://wa.me/085168980966" class="text-3xl font-extrabold text-green-600 hover:text-green-700 hover:underline transition">0851-6898-0966</a>
-                </div>
-            </div>
-        </section>
+          <h1>
+            Belanja Segar,
+            <span>Praktis</span>
+            & Bersahabat
+          </h1>
 
-    </main>
+          <p class="hero-text">
+            Selamat datang di Warung Ridwan Shaleh.
+            Temukan berbagai kebutuhan dapur, sayuran segar,
+            ayam, dan kebutuhan harian untuk keluarga Anda.
+          </p>
 
-    <footer class="mt-12 border-t py-6 bg-white/80 glass">
-        <div class="max-w-6xl mx-auto px-4 text-xs sm:text-sm text-slate-600 flex justify-between">
-            <div>&copy; <span id="year"></span> KAZA Shop — Semua hak dilindungi</div>
-            <div class="hidden sm:block">Dibuat dengan semangat minimalis</div>
-        </div>
-    </footer>
+          <div class="hero-buttons">
 
-    <div id="modals" class="fixed inset-0 z-50 pointer-events-none">
-    
-        <div id="productModal" class="fixed inset-0 flex items-center justify-center p-4 hidden pointer-events-auto bg-black/30">
-            <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg sm:max-w-2xl overflow-hidden animate-in fade-in zoom-in duration-300">
-                <div class="flex flex-col sm:flex-row gap-4 p-6">
-                    <div class="w-full sm:w-44 ratio-1-1 bg-slate-100 rounded-xl overflow-hidden p-3 flex-shrink-0">
-                        <img id="modalImg" src="" alt="product" class="w-full h-full object-contain" />
-                    </div>
-                    <div class="flex-1">
-                        <h3 id="modalTitle" class="text-2xl font-bold text-slate-800"></h3>
-                        <div id="modalPrice" class="text-rose-600 font-extrabold mt-2 text-xl"></div>
-                        <p id="modalDesc" class="mt-3 text-slate-600 text-sm leading-relaxed"></p>
+            <a href="#produk" class="btn btn-primary">
+              🛒 Lihat Produk
+            </a>
 
-                        <div class="mt-6 flex flex-wrap items-center gap-3">
-                            <label class="text-sm font-semibold">Jumlah</label>
-                            <input id="modalQty" type="number" min="1" value="1" class="w-20 px-3 py-2 border rounded-lg focus:ring-rose-300 focus:border-rose-300 transition" />
-                            <button id="addToCartBtn" class="ml-auto bg-rose-600 text-white px-5 py-2 rounded-xl hover:bg-rose-700 transition font-semibold">Tambah ke Keranjang</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="p-4 text-right border-t bg-gray-50">
-                    <button id="closeProductModal" class="px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-200 transition">Tutup Detail</button>
-                </div>
-            </div>
+            <a
+              href="https://wa.me/6285692828522?text=Halo%20Warung%20Ridwan%20Shaleh%2C%20saya%20ingin%20bertanya%20tentang%20produk."
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-outline"
+            >
+              💬 WhatsApp
+            </a>
+
+          </div>
+
         </div>
 
-        <div id="cartModal" class="fixed inset-0 flex items-center justify-center p-4 hidden pointer-events-auto bg-black/30">
-            <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md sm:max-w-3xl overflow-hidden animate-in fade-in zoom-in duration-300">
-                <div class="p-6">
-                    <h3 class="text-2xl font-bold border-b pb-3 text-slate-800">Keranjang Belanja Anda</h3>
-                    
-                    <div id="cartItems" class="mt-4 space-y-4 max-h-80 overflow-y-auto pr-2">
-                    </div>
+        <div class="hero-visual">
 
-                    <div class="mt-6 flex items-center justify-between border-t pt-4">
-                        <div class="text-lg font-medium text-slate-700">Subtotal</div>
-                        <div id="cartTotal" class="text-2xl font-extrabold text-rose-600">Rp0</div>
-                    </div>
+          <!-- FOTO SEMENTARA -->
+          <img
+            class="hero-image"
+            src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1200&q=90"
+            alt="Sayuran segar Warung Ridwan Shaleh"
+          >
 
-                    <div class="mt-6 flex gap-3">
-                        <button id="closeCart" class="px-4 py-2 rounded-xl border hover:bg-slate-100 transition flex-1 text-sm sm:text-base">Lanjut Belanja</button>
-                        <button id="checkoutBtn" class="px-4 py-2 rounded-xl bg-green-600 text-white hover:bg-green-700 transition font-semibold flex-1 flex items-center justify-center gap-2 shadow-lg shadow-green-200 text-sm sm:text-base">
-                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.001 0C6.115 0 1.341 4.774 1.341 10.658c0 1.76.438 3.42 1.22 4.887L1.05 23.33l7.98-2.112c1.42.77 3.03 1.18 4.07 1.18 5.885 0 10.659-4.774 10.659-10.658C22.66 4.774 17.886 0 12.001 0zm4.5 13.905c-.244 0-.488-.122-.732-.244l-1.954-1.096c-.122-.061-.305-.122-.488-.061l-.061.061c-.549.366-1.159.854-1.768 1.159-.61.305-1.28.488-1.953.488-.61 0-1.159-.122-1.768-.427-.61-.305-1.159-.732-1.768-1.28-1.159-1.159-1.953-2.5-1.953-4.145 0-1.159.549-2.013 1.28-2.562.732-.549 1.464-.854 2.196-.854.122 0 .244.061.427.183l1.954 1.096c.122.061.305.122.488.061l.061-.061c.549-.366 1.159-.854 1.768-1.159.61-.305 1.28-.488 1.953-.488 1.159 0 2.256.488 3.294 1.464 1.038.976 1.587 2.196 1.587 3.66c0 1.645-.794 3.05-1.953 4.209-.854.854-1.83 1.28-2.927 1.28zm1.096-7.442c-.244-.244-.549-.305-.854-.305-.305 0-.61.061-.854.305l-1.28 1.28c-.183.183-.305.427-.305.732s.122.549.305.732l.732.732c.122.122.305.183.488.183s.366-.061.488-.183l.732-.732c-.122-.122-.305-.183-.488-.183s.366.061.488.183l1.28 1.28c.244.244.549.305.854.305.305 0 .61-.061.854-.305l1.28-1.28c.183-.183.305-.427.305-.732s-.122-.549-.305-.732l-1.28-1.28c-.244-.244-.549-.305-.854-.305z"/></svg>
-                            Checkout via WhatsApp
-                        </button>
-                    </div>
-                </div>
-            </div>
+          <div class="hero-info">
+            🥬 Segar & Berkualitas
+            <small>Untuk kebutuhan keluarga</small>
+          </div>
+
         </div>
 
-        <div id="toast" class="fixed bottom-6 right-6 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-xl opacity-0 transition duration-300"></div>
+      </div>
+
+    </section>
+
+
+    <!-- ================= QUICK INFO ================= -->
+
+    <div class="quick-info">
+
+      <div class="container">
+
+        <div class="quick-box">
+
+          <div class="quick-item">
+            <div class="quick-icon">🥬</div>
+            <div>
+              <strong>Sayuran Segar</strong>
+              <span>Untuk kebutuhan dapur</span>
+            </div>
+          </div>
+
+          <div class="quick-item">
+            <div class="quick-icon">🍗</div>
+            <div>
+              <strong>Ayam</strong>
+              <span>Untuk kebutuhan masakan</span>
+            </div>
+          </div>
+
+          <div class="quick-item">
+            <div class="quick-icon">📱</div>
+            <div>
+              <strong>Pesan via WhatsApp</strong>
+              <span>Praktis dan mudah</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
     </div>
 
-    <template id="productTemplate">
-        <div class="bg-white rounded-xl card-shadow overflow-hidden cursor-pointer transition duration-200 hover:shadow-xl hover:scale-[1.03] flex flex-col">
-            <div class="ratio-1-1 p-3 bg-slate-50 flex-shrink-0">
-                <img class="product-image w-full h-full" src="" alt="produk" onerror="this.onerror=null;this.src='https://placehold.co/400x400/fff/ccc?text=Produk';" />
-            </div>
-            <div class="p-3 flex-grow flex flex-col justify-between">
-                <div class="flex flex-col gap-1 mb-2">
-                    <h4 class="product-name font-semibold text-sm truncate"></h4>
-                    <div class="text-xs text-slate-500 product-category capitalize"></div>
-                </div>
-                <div class="flex justify-between items-center mt-auto">
-                    <div class="product-price font-bold text-rose-600 text-lg"></div>
-                    <button class="add-btn text-xs px-3 py-1 rounded-full bg-rose-600 text-white hover:bg-rose-700 transition font-semibold">Beli</button>
-                </div>
-            </div>
+
+    <!-- ================= TENTANG ================= -->
+
+    <section id="tentang">
+
+      <div class="container about-grid">
+
+        <div class="about-image">
+
+          <!-- FOTO SEMENTARA -->
+          <img
+            src="https://images.unsplash.com/photo-1604719312566-8912e9227c6a?auto=format&fit=crop&w=1000&q=90"
+            alt="Warung dan kebutuhan harian"
+            loading="lazy"
+          >
+
+          <div class="about-badge">
+            ❤️ Melayani dengan Ramah
+          </div>
+
         </div>
-    </template>
 
-    <script>
-        // ---------------------------
-        // Dummy product data
-        // ---------------------------
+        <div class="about-content">
 
-        const products = [
-            // Menggunakan placeholder image untuk memastikan kode berjalan tanpa error
-            { id: 'p4', name: 'Hoodie KAZA Streetwear', category: 'jaket', price: 159000, img: 'images/hoodie.png', desc: 'Hoodie premium desain minimalis, cocok untuk daily wear dengan bahan tebal.' },
-            { id: 'p5', name: 'Tote Bag KAZA Edition', category: 'aksesoris', price: 59000, img: 'images/totebag.png', desc: 'Tas tote KAZA dengan bahan tebal, kuat, dan stylish.' },
-            { id: 'p1', name: 'Teddy KAZA Premium', category: 'teddy', price: 199000, img: 'images/bd504d90-0d23-4b04-91d4-5db8edff5f38.png', desc: 'Boneka teddy berkualitas premium, pakaian denim, cocok hadiah atau pajangan.' },
-            { id: 'p2', name: 'Kaos KAZA Minimal', category: 'kaos', price: 99000, img: 'images/kaos.png', desc: 'Kaos minimalis berlogo KAZA, bahan katun halus, nyaman dipakai sehari-hari.' },
-            { id: 'p3', name: 'Set Teddy + Kaos', category: 'set', price: 279000, img: 'images/outfit.png', desc: 'Paket hemat teddy + kaos KAZA.' },
-            { id: 'p6', name: 'Celana Cargo Minimal', category: 'celana', price: 179000, img: 'images/cargo.png', desc: 'Celana cargo modern dengan potongan slimfit dan banyak kantong.' },
-            { id: 'p7', name: 'Kemeja Formal Slimfit', category: 'kaos', price: 189000, img: 'images/kemeja.png', desc: 'Kemeja formal dengan potongan slimfit yang nyaman.' },
-            { id: 'p8', name: 'Masker Kain KAZA', category: 'aksesoris', price: 25000, img: 'images/masker.png', desc: 'Masker kain premium 3 lapis, nyaman dan bisa dicuci.' },
-        ];
+          <div class="section-label">
+            Tentang Warung
+          </div>
 
-        // State Management
-        const state = {
-            cart: {}, // { productId: { product, qty } }
-            query: '',
-            filters: { category: 'all', maxPrice: 500000 },
-            sortBy: 'newest'
-        };
+          <h2>
+            Kebutuhan Dapur
+            dalam Satu Tempat
+          </h2>
 
-        // Helpers
-        function formatRupiah(n){ return 'Rp' + n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.'); }
-        function showToast(msg, timeout=3000){ 
-            const t=document.getElementById('toast'); 
-            t.textContent = msg; 
-            t.style.opacity=1; 
-            setTimeout(()=>t.style.opacity=0, timeout); 
-        }
-        
-        // Fungsi untuk membuat placeholder image berdasarkan nama produk
-        function getPlaceholderImage(name) {
-            const firstWord = name.split(' ')[0];
-            return `https://placehold.co/400x400/fff/333?text=${encodeURIComponent(firstWord)}`;
-        }
+          <p>
+            Warung Ridwan Shaleh hadir untuk membantu masyarakat
+            mendapatkan kebutuhan sehari-hari dengan lebih mudah.
+          </p>
 
-        // Render functions
-        function renderProducts(){
-            const grid = document.getElementById('productGrid'); 
-            grid.innerHTML='';
-            let list = products.slice();
+          <p>
+            Kami menyediakan sayuran, ayam, dan berbagai kebutuhan
+            dapur serta kebutuhan harian lainnya.
+          </p>
 
-            // 1. Filter & Search
-            if(state.query) list = list.filter(p=> (p.name + ' ' + p.desc).toLowerCase().includes(state.query.toLowerCase()));
-            if(state.filters.category !== 'all') list = list.filter(p=>p.category===state.filters.category);
-            list = list.filter(p=> p.price <= state.filters.maxPrice);
-            
-            // 2. Sort
-            if(state.sortBy==='price_asc') list.sort((a,b)=>a.price-b.price);
-            else if(state.sortBy==='price_desc') list.sort((a,b)=>b.price-a.price);
-            // 'newest' uses default array order
+          <ul class="check-list">
 
-            document.getElementById('resultsCount').textContent = list.length;
-            
-            if (list.length === 0) {
-                 grid.innerHTML = '<div class="md:col-span-4 text-center text-lg text-slate-500 py-10">Produk tidak ditemukan. Coba ganti filter Anda.</div>';
-                 return;
-            }
+            <li>
+              <span class="check">✓</span>
+              Sayuran untuk kebutuhan dapur
+            </li>
 
-            // 3. Render
-            const tpl = document.getElementById('productTemplate');
-            list.forEach(p=>{
-                const node = tpl.content.cloneNode(true);
-                const card = node.querySelector('.bg-white');
-                
-                // Set product data - menggunakan placeholder yang lebih baik
-                node.querySelector('.product-image').src = getPlaceholderImage(p.name);
-                node.querySelector('.product-name').textContent = p.name;
-                node.querySelector('.product-category').textContent = p.category.charAt(0).toUpperCase() + p.category.slice(1); // Capitalize first letter
-                node.querySelector('.product-price').textContent = formatRupiah(p.price);
-                
-                // Add to Cart button handler
-                const addBtn = node.querySelector('.add-btn');
-                addBtn.addEventListener('click', (e)=> {
-                    e.stopPropagation(); // Stop click from opening modal
-                    addToCart(p.id,1);
-                });
-                
-                // Open Product Detail Modal on card click
-                card.addEventListener('click', ()=> openProductModal(p));
-                
-                grid.appendChild(node);
-            });
-        }
+            <li>
+              <span class="check">✓</span>
+              Menyediakan ayam
+            </li>
 
-        // Cart functions
-        function updateCartCount(){ 
-            const count = Object.values(state.cart).reduce((s,it)=>s+it.qty,0); 
-            document.getElementById('cartCount').textContent = count; 
-        }
+            <li>
+              <span class="check">✓</span>
+              Harga bersahabat
+            </li>
 
-        function addToCart(productId, qty=1){ 
-            const prod = products.find(p=>p.id===productId); 
-            if(!prod){ showToast('Produk tidak ditemukan'); return; }
+            <li>
+              <span class="check">✓</span>
+              Pesanan dapat dikonfirmasi melalui WhatsApp
+            </li>
 
-            if(state.cart[productId]) state.cart[productId].qty += qty; 
-            else state.cart[productId] = { product: prod, qty };
-            
-            saveCart(); 
-            updateCartCount(); 
-            showToast(`"${prod.name}" ditambahkan ke keranjang!`);
-        }
+          </ul>
 
-        function saveCart(){ localStorage.setItem('kaza_cart', JSON.stringify(state.cart)); }
-        function loadCart(){ 
-            const raw = localStorage.getItem('kaza_cart'); 
-            if(raw){ 
-                try{ state.cart = JSON.parse(raw); }
-                catch(e){ state.cart = {}; } 
-            } 
-            updateCartCount(); 
-        }
+        </div>
 
-        function openCartModal(){ 
-            const m = document.getElementById('cartModal'); 
-            renderCartItems(); 
-            m.classList.remove('hidden'); 
-        }
-        function closeCartModal(){ document.getElementById('cartModal').classList.add('hidden'); }
+      </div>
 
-        function renderCartItems(){ 
-            const container = document.getElementById('cartItems'); 
-            container.innerHTML='';
-            let total = 0;
-            const keys = Object.keys(state.cart);
-            
-            if(keys.length===0){ 
-                container.innerHTML = '<div class="text-center text-sm text-slate-500 py-6">Keranjang kosong. Yuk, segera isi keranjang Anda!</div>'; 
-                document.getElementById('cartTotal').textContent = formatRupiah(0); 
-                document.getElementById('checkoutBtn').disabled = true;
-                return; 
-            }
-            document.getElementById('checkoutBtn').disabled = false;
+    </section>
 
-            keys.forEach(k=>{
-                const it = state.cart[k]; 
-                const p = it.product; 
-                const subtotal = p.price * it.qty; 
-                total += subtotal;
-                
-                const row = document.createElement('div'); 
-                row.className = 'flex items-center gap-3 sm:gap-4 border border-rose-100 rounded-xl p-3 bg-white';
-                row.innerHTML = `
-                    <img src="${getPlaceholderImage(p.name)}" alt="${p.name}" class="w-12 h-12 sm:w-16 sm:h-16 object-contain bg-slate-50 rounded-lg flex-shrink-0" />
-                    <div class="flex-1 min-w-0">
-                        <div class="font-semibold text-sm sm:text-base truncate">${p.name}</div>
-                        <div class="text-xs text-slate-500">${p.category}</div>
-                        <div class="text-sm text-rose-600 font-semibold">${formatRupiah(p.price)}</div>
-                    </div>
-                    <div class="flex flex-col sm:flex-row items-center gap-2 flex-shrink-0">
-                        <div class="flex border rounded-lg">
-                            <button class="px-2 py-1 text-md sm:text-lg decrease hover:bg-slate-100 rounded-l-lg transition" data-id="${k}">-</button>
-                            <div class="w-6 sm:w-8 text-center py-1 border-x text-sm">${it.qty}</div>
-                            <button class="px-2 py-1 text-md sm:text-lg increase hover:bg-slate-100 rounded-r-lg transition" data-id="${k}">+</button>
-                        </div>
-                        <div class="font-bold text-slate-800 text-sm sm:text-base w-20 text-right">${formatRupiah(subtotal)}</div>
-                        <button class="ml-2 text-xs text-red-500 remove hover:text-red-700 transition" data-id="${k}">Hapus</button>
-                    </div>
-                `;
-                
-                // attach handlers using data-id
-                const updateCartItem = (productId, change) => {
-                    if (state.cart[productId]) {
-                        state.cart[productId].qty += change;
-                        if (state.cart[productId].qty < 1) {
-                            delete state.cart[productId];
-                        }
-                    }
-                    saveCart();
-                    renderCartItems();
-                    updateCartCount();
-                };
 
-                row.querySelector('.increase').addEventListener('click', (e)=> updateCartItem(e.target.dataset.id, 1));
-                row.querySelector('.decrease').addEventListener('click', (e)=> updateCartItem(e.target.dataset.id, -1));
-                row.querySelector('.remove').addEventListener('click', (e)=> { delete state.cart[e.target.dataset.id]; saveCart(); renderCartItems(); updateCartCount(); });
+    <!-- ================= PRODUK ================= -->
 
-                container.appendChild(row);
-            });
-            document.getElementById('cartTotal').textContent = formatRupiah(total);
-        }
+    <section class="products" id="produk">
 
-        // Product modal
-        function openProductModal(p){ 
-            document.getElementById('modalImg').src = getPlaceholderImage(p.name);
-            document.getElementById('modalTitle').textContent = p.name; 
-            document.getElementById('modalPrice').textContent = formatRupiah(p.price); 
-            document.getElementById('modalDesc').textContent = p.desc; 
-            document.getElementById('modalQty').value = 1; 
-            document.getElementById('productModal').classList.remove('hidden');
+      <div class="container">
 
-            // wire add button
-            document.getElementById('addToCartBtn').onclick = ()=>{ 
-                const q = Math.max(1,parseInt(document.getElementById('modalQty').value||1)); 
-                addToCart(p.id,q); 
-                closeProductModal(); 
-            };
-        }
-        function closeProductModal(){ document.getElementById('productModal').classList.add('hidden'); }
-        
-        // Mobile Filter Toggle
-        let isFilterOpen = window.innerWidth >= 768; // Start open on desktop
+        <div class="section-heading">
 
-        function toggleFilterSidebar() {
-            const sidebar = document.getElementById('filterSidebar');
-            if (window.innerWidth < 768) {
-                isFilterOpen = !isFilterOpen;
-                sidebar.style.display = isFilterOpen ? 'block' : 'none';
-            } else {
-                sidebar.style.display = 'block'; // Always visible on desktop
-            }
-        }
-        
-        // Initial state for mobile filter
-        if (window.innerWidth < 768) {
-             document.getElementById('filterSidebar').style.display = 'none';
-             isFilterOpen = false;
-        }
+          <div class="section-label">
+            Produk Kami
+          </div>
 
-        // Checkout flow (MENGGUNAKAN WHATSAPP)
-        function checkout(){ 
-            const keys = Object.keys(state.cart); 
-            if(keys.length===0){ showToast('Keranjang kosong. Tidak ada yang bisa dibayar.'); return; }
+          <h2>
+            Pilihan untuk Kebutuhan Dapur
+          </h2>
 
-            let total = 0;
-            let message = "*Pemesanan KAZA Shop (Checkout Otomatis)*\n\nHalo KAZA Shop, saya ingin melakukan pemesanan produk berikut:\n\n";
+          <p>
+            Pilih kategori yang Anda butuhkan dan hubungi kami
+            untuk mengetahui ketersediaan serta harga terbaru.
+          </p>
 
-            keys.forEach(k=>{
-                const it = state.cart[k];
-                const p = it.product;
-                const subtotal = p.price * it.qty;
-                total += subtotal;
-                message += `* ${it.qty}x ${p.name} (${formatRupiah(subtotal)})\n`;
-            });
+        </div>
 
-            message += "\n----------------------------------------\n";
-            message += `*TOTAL Pembayaran: ${formatRupiah(total)}*\n`;
-            message += "----------------------------------------\n";
-            message += "Mohon infokan rincian total, stok, dan rekening transfer untuk proses pembayaran. Terima kasih!";
 
-            // Nomor WA yang diminta user
-            const waNumber = '6285168980966'; // Menggunakan format internasional (62)
-            const waLink = `https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`;
+        <div class="product-grid">
 
-            // Clear cart and redirect
-            state.cart = {}; 
-            saveCart(); 
-            updateCartCount(); 
-            closeCartModal(); 
-            
-            showToast('Mengarahkan ke WhatsApp untuk Checkout...');
-            // Redirect to WhatsApp
-            window.open(waLink, '_blank');
-        }
+          <article class="product-card">
 
-        // Event bindings and UI initialization
-        document.addEventListener('DOMContentLoaded', ()=>{
-            document.getElementById('year').textContent = new Date().getFullYear();
-            
-            // bind search
-            const search = document.getElementById('search'); 
-            search.addEventListener('input', (e)=>{ state.query = e.target.value; renderProducts(); });
-            
-            // filters
-            document.getElementById('filterCategory').addEventListener('change', (e)=>{ state.filters.category = e.target.value; renderProducts(); });
-            document.getElementById('sortBy').addEventListener('change', (e)=>{ state.sortBy = e.target.value; renderProducts(); });
-            
-            const maxPrice = document.getElementById('maxPrice'); 
-            const maxPriceVal = document.getElementById('maxPriceVal'); 
-            maxPrice.addEventListener('input', (e)=>{ 
-                state.filters.maxPrice = parseInt(e.target.value,10); 
-                maxPriceVal.textContent = formatRupiah(e.target.value); 
-                renderProducts(); 
-            });
-            
-            document.getElementById('clearFilters').addEventListener('click', ()=>{ 
-                state.filters = { category: 'all', maxPrice: 500000 }; 
-                document.getElementById('filterCategory').value='all'; 
-                document.getElementById('maxPrice').value=500000; 
-                document.getElementById('maxPriceVal').textContent='Rp500.000'; 
-                document.getElementById('sortBy').value='newest'; 
-                search.value = '';
-                state.query = '';
-                renderProducts(); 
-            });
+            <img
+              class="product-image"
+              src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=900&q=85"
+              alt="Sayuran segar"
+              loading="lazy"
+            >
 
-            // Mobile filter button
-            document.getElementById('toggleFilterBtn').addEventListener('click', toggleFilterSidebar);
+            <div class="product-content">
 
-            // cart open/close
-            document.getElementById('cartBtn').addEventListener('click', ()=>openCartModal());
-            document.getElementById('closeCart').addEventListener('click', ()=>closeCartModal());
-            document.getElementById('checkoutBtn').addEventListener('click', ()=>checkout());
-            document.getElementById('closeProductModal').addEventListener('click', ()=>closeProductModal());
+              <span class="product-tag">
+                PRODUK SEGAR
+              </span>
 
-            // load cart
-            loadCart();
-            // initial render
-            renderProducts();
+              <h3>
+                🥬 Sayuran Segar
+              </h3>
 
-            // small accessibility: close modals with ESC key
-            document.addEventListener('keydown', (e)=>{
-                if(e.key === 'Escape'){
-                    closeCartModal();
-                    closeProductModal();
-                }
-            });
+              <p>
+                Berbagai sayuran untuk kebutuhan masakan
+                sehari-hari keluarga.
+              </p>
 
-            // If the user clicks outside the modal, close it
-            document.getElementById('productModal').addEventListener('click', (e)=>{
-                if(e.target.id === 'productModal') closeProductModal();
-            });
-            document.getElementById('cartModal').addEventListener('click', (e)=>{
-                if(e.target.id === 'cartModal') closeCartModal();
-            });
+              <span class="product-price">
+                💰 Harga Bersahabat
+              </span>
 
-        });
-    </script>
+            </div>
+
+          </article>
+
+
+          <article class="product-card">
+
+            <img
+              class="product-image"
+              src="https://images.unsplash.com/photo-1604503468506-a8da13d82791?auto=format&fit=crop&w=900&q=85"
+              alt="Ayam"
+              loading="lazy"
+            >
+
+            <div class="product-content">
+
+              <span class="product-tag">
+                PRODUK UTAMA
+              </span>
+
+              <h3>
+                🍗 Ayam
+              </h3>
+
+              <p>
+                Pilihan ayam untuk kebutuhan memasak
+                dan hidangan keluarga.
+              </p>
+
+              <span class="product-price">
+                💰 Hubungi untuk harga
+              </span>
+
+            </div>
+
+          </article>
+
+
+          <article class="product-card">
+
+            <img
+              class="product-image"
+              src="https://images.unsplash.com/photo-1601598851547-4302969d6b0b?auto=format&fit=crop&w=900&q=85"
+              alt="Sembako"
+              loading="lazy"
+            >
+
+            <div class="product-content">
+
+              <span class="product-tag">
+                KEBUTUHAN DAPUR
+              </span>
+
+              <h3>
+                🛍️ Sembako
+              </h3>
+
+              <p>
+                Kebutuhan pokok untuk membantu melengkapi
+                persediaan dapur.
+              </p>
+
+              <span class="product-price">
+                💰 Harga Bersahabat
+              </span>
+
+            </div>
+
+          </article>
+
+
+          <article class="product-card">
+
+            <img
+              class="product-image"
+              src="https://images.unsplash.com/photo-1583947215259-38e31be8751f?auto=format&fit=crop&w=900&q=85"
+              alt="Minuman"
+              loading="lazy"
+            >
+
+            <div class="product-content">
+
+              <span class="product-tag">
+                KEBUTUHAN HARIAN
+              </span>
+
+              <h3>
+                🥤 Minuman
+              </h3>
+
+              <p>
+                Berbagai minuman untuk menemani aktivitas
+                sehari-hari.
+              </p>
+
+              <span class="product-price">
+                💰 Harga Bersahabat
+              </span>
+
+            </div>
+
+          </article>
+
+
+          <article class="product-card">
+
+            <img
+              class="product-image"
+              src="https://images.unsplash.com/photo-1621939514649-280e2aa0e2a5?auto=format&fit=crop&w=900&q=85"
+              alt="Makanan ringan"
+              loading="lazy"
+            >
+
+            <div class="product-content">
+
+              <span class="product-tag">
+                CEMILAN
+              </span>
+
+              <h3>
+                🍪 Makanan Ringan
+              </h3>
+
+              <p>
+                Pilihan makanan ringan untuk keluarga
+                dan waktu santai.
+              </p>
+
+              <span class="product-price">
+                💰 Harga Bersahabat
+              </span>
+
+            </div>
+
+          </article>
+
+
+          <article class="product-card">
+
+            <img
+              class="product-image"
+              src="https://images.unsplash.com/photo-1583258292688-d0213dc5a3a8?auto=format&fit=crop&w=900&q=85"
+              alt="Kebutuhan rumah"
+              loading="lazy"
+            >
+
+            <div class="product-content">
+
+              <span class="product-tag">
+                LAINNYA
+              </span>
+
+              <h3>
+                🏠 Kebutuhan Rumah
+              </h3>
+
+              <p>
+                Berbagai kebutuhan harian rumah tangga
+                sesuai ketersediaan.
+              </p>
+
+              <span class="product-price">
+                💰 Hubungi Kami
+              </span>
+
+            </div>
+
+          </article>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ================= PROMO ================= -->
+
+    <section id="promo">
+
+      <div class="container">
+
+        <div class="promo-box">
+
+          <div>
+
+            <h2>
+              Butuh Sayuran atau Ayam?
+            </h2>
+
+            <p>
+              Hubungi Warung Ridwan Shaleh melalui WhatsApp
+              untuk menanyakan produk, harga, dan ketersediaan.
+            </p>
+
+          </div>
+
+          <a
+            href="https://wa.me/6285692828522?text=Halo%20Warung%20Ridwan%20Shaleh%2C%20saya%20ingin%20menanyakan%20produk%20dan%20harga."
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn"
+          >
+            💬 Hubungi WhatsApp
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ================= KEUNGGULAN ================= -->
+
+    <section>
+
+      <div class="container">
+
+        <div class="section-heading">
+
+          <div class="section-label">
+            Keunggulan
+          </div>
+
+          <h2>
+            Kenapa Belanja di Warung Kami?
+          </h2>
+
+          <p>
+            Kami mengutamakan kemudahan dan kenyamanan pelanggan.
+          </p>
+
+        </div>
+
+
+        <div class="benefit-grid">
+
+          <div class="benefit-card">
+
+            <div class="benefit-icon">
+              🥬
+            </div>
+
+            <h3>
+              Produk Segar
+            </h3>
+
+            <p>
+              Sayuran untuk kebutuhan masakan sehari-hari.
+            </p>
+
+          </div>
+
+
+          <div class="benefit-card">
+
+            <div class="benefit-icon">
+              🍗
+            </div>
+
+            <h3>
+              Ayam
+            </h3>
+
+            <p>
+              Menyediakan ayam untuk kebutuhan keluarga.
+            </p>
+
+          </div>
+
+
+          <div class="benefit-card">
+
+            <div class="benefit-icon">
+              💰
+            </div>
+
+            <h3>
+              Harga Bersahabat
+            </h3>
+
+            <p>
+              Cocok untuk memenuhi kebutuhan belanja harian.
+            </p>
+
+          </div>
+
+
+          <div class="benefit-card">
+
+            <div class="benefit-icon">
+              📱
+            </div>
+
+            <h3>
+              Mudah Dihubungi
+            </h3>
+
+            <p>
+              Pesan dan tanyakan produk melalui WhatsApp.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ================= GALERI ================= -->
+
+    <section class="gallery" id="galeri">
+
+      <div class="container">
+
+        <div class="section-heading">
+
+          <div class="section-label">
+            Galeri
+          </div>
+
+          <h2>
+            Produk & Suasana Warung
+          </h2>
+
+          <p>
+            Foto sementara akan dapat diganti dengan foto asli
+            Warung Ridwan Shaleh.
+          </p>
+
+        </div>
+
+
+        <div class="gallery-grid">
+
+          <div class="gallery-item">
+
+            <img
+              src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1100&q=85"
+              alt="Sayuran"
+              loading="lazy"
+            >
+
+          </div>
+
+
+          <div class="gallery-item">
+
+            <img
+              src="https://images.unsplash.com/photo-1604503468506-a8da13d82791?auto=format&fit=crop&w=900&q=85"
+              alt="Ayam"
+              loading="lazy"
+            >
+
+          </div>
+
+
+          <div class="gallery-item">
+
+            <img
+              src="https://images.unsplash.com/photo-1601598851547-4302969d6b0b?auto=format&fit=crop&w=900&q=85"
+              alt="Sembako"
+              loading="lazy"
+            >
+
+          </div>
+
+
+          <div class="gallery-item">
+
+            <img
+              src="https://images.unsplash.com/photo-1583258292688-d0213dc5a3a8?auto=format&fit=crop&w=900&q=85"
+              alt="Kebutuhan harian"
+              loading="lazy"
+            >
+
+          </div>
+
+
+          <div class="gallery-item">
+
+            <img
+              src="https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=900&q=85"
+              alt="Makanan"
+              loading="lazy"
+            >
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ================= CARA PESAN ================= -->
+
+    <section>
+
+      <div class="container">
+
+        <div class="section-heading">
+
+          <div class="section-label">
+            Cara Pesan
+          </div>
+
+          <h2>
+            Pesan dengan Mudah
+          </h2>
+
+          <p>
+            Tidak perlu bingung. Ikuti tiga langkah sederhana.
+          </p>
+
+        </div>
+
+
+        <div class="benefit-grid">
+
+          <div class="benefit-card">
+
+            <div class="benefit-icon">
+              1️⃣
+            </div>
+
+            <h3>
+              Pilih Produk
+            </h3>
+
+            <p>
+              Tentukan sayuran, ayam, atau kebutuhan lainnya.
+            </p>
+
+          </div>
+
+
+          <div class="benefit-card">
+
+            <div class="benefit-icon">
+              2️⃣
+            </div>
+
+            <h3>
+              Hubungi Kami
+            </h3>
+
+            <p>
+              Kirim pertanyaan atau pesanan melalui WhatsApp.
+            </p>
+
+          </div>
+
+
+          <div class="benefit-card">
+
+            <div class="benefit-icon">
+              3️⃣
+            </div>
+
+            <h3>
+              Konfirmasi
+            </h3>
+
+            <p>
+              Konfirmasi produk, jumlah, harga, dan pesanan Anda.
+            </p>
+
+          </div>
+
+
+          <div class="benefit-card">
+
+            <div class="benefit-icon">
+              🛒
+            </div>
+
+            <h3>
+              Selesai
+            </h3>
+
+            <p>
+              Pesanan diproses sesuai kesepakatan dengan pelanggan.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ================= PESAN ================= -->
+
+    <section class="order-section" id="pesan">
+
+      <div class="container">
+
+        <div class="section-heading">
+
+          <div class="section-label">
+            Pesan Sekarang
+          </div>
+
+          <h2>
+            Form Pemesanan
+          </h2>
+
+          <p>
+            Isi form di bawah. Setelah dikirim, WhatsApp akan terbuka
+            dengan detail pesanan Anda.
+          </p>
+
+        </div>
+
+
+        <div class="order-box">
+
+          <form id="orderForm">
+
+            <div class="form-grid">
+
+              <div>
+                <label for="nama">
+                  Nama
+                </label>
+
+                <input
+                  type="text"
+                  id="nama"
+                  placeholder="Masukkan nama Anda"
+                  required
+                >
+              </div>
+
+
+              <div>
+                <label for="nomor">
+                  Nomor WhatsApp
+                </label>
+
+                <input
+                  type="tel"
+                  id="nomor"
+                  placeholder="Contoh: 08123456789"
+                  required
+                >
+              </div>
+
+
+              <div>
+                <label for="produk">
+                  Produk
+                </label>
+
+                <select id="produk" required>
+
+                  <option value="">
+                    -- Pilih Produk --
+                  </option>
+
+                  <option>
+                    Sayuran Segar
+                  </option>
+
+                  <option>
+                    Ayam
+                  </option>
+
+                  <option>
+                    Sembako
+                  </option>
+
+                  <option>
+                    Minuman
+                  </option>
+
+                  <option>
+                    Makanan Ringan
+                  </option>
+
+                  <option>
+                    Kebutuhan Rumah
+                  </option>
+
+                  <option>
+                    Produk Lainnya
+                  </option>
+
+                </select>
+
+              </div>
+
+
+              <div>
+                <label for="jumlah">
+                  Jumlah
+                </label>
+
+                <input
+                  type="number"
+                  id="jumlah"
+                  min="1"
+                  value="1"
+                  required
+                >
+              </div>
+
+
+              <div class="form-group full">
+
+                <label for="catatan">
+                  Catatan Pesanan
+                </label>
+
+                <textarea
+                  id="catatan"
+                  placeholder="Contoh: Saya ingin pesan sayuran dan ayam."
+                ></textarea>
+
+              </div>
+
+            </div>
+
+
+            <button
+              type="submit"
+              class="btn btn-primary submit-btn"
+            >
+              💬 Kirim Pesanan ke WhatsApp
+            </button>
+
+          </form>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ================= LOKASI ================= -->
+
+    <section class="location" id="lokasi">
+
+      <div class="container">
+
+        <div class="section-heading">
+
+          <div class="section-label">
+            Lokasi
+          </div>
+
+          <h2>
+            Kunjungi Warung Ridwan Shaleh
+          </h2>
+
+          <p>
+            Temukan lokasi warung melalui Google Maps.
+          </p>
+
+        </div>
+
+
+        <div class="location-grid">
+
+          <div class="location-card">
+
+            <h3>
+              📍 Informasi Warung
+            </h3>
+
+
+            <div class="info">
+
+              <div class="info-icon">
+                📍
+              </div>
+
+              <div>
+
+                <strong>
+                  Lokasi
+                </strong>
+
+                <span>
+                  Warung Ridwan Shaleh
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <div class="info">
+
+              <div class="info-icon">
+                📱
+              </div>
+
+              <div>
+
+                <strong>
+                  WhatsApp
+                </strong>
+
+                <span>
+                  +62 856-9282-8522
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <div class="info">
+
+              <div class="info-icon">
+                🥬
+              </div>
+
+              <div>
+
+                <strong>
+                  Produk Utama
+                </strong>
+
+                <span>
+                  Sayuran & Ayam
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <a
+              href="https://maps.app.goo.gl/1crFGWncz4DJKMjAA"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-primary"
+            >
+              📍 Buka Google Maps
+            </a>
+
+          </div>
+
+
+          <div class="map-box">
+
+            <div class="map-content">
+
+              <h3>
+                📍 Lokasi Warung
+              </h3>
+
+              <p>
+                Klik tombol di bawah untuk melihat
+                lokasi Warung Ridwan Shaleh.
+              </p>
+
+              <a
+                href="https://maps.app.goo.gl/1crFGWncz4DJKMjAA"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn btn-primary"
+              >
+                Buka Lokasi
+              </a>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- ================= FOOTER ================= -->
+
+  <footer>
+
+    <div class="container">
+
+      <div class="footer-grid">
+
+        <div>
+
+          <h3>
+            🛒 Warung Ridwan Shaleh
+          </h3>
+
+          <p>
+            Sayuran, ayam, dan berbagai kebutuhan harian
+            untuk membantu memenuhi kebutuhan keluarga.
+          </p>
+
+        </div>
+
+
+        <div>
+
+          <h3>
+            Navigasi
+          </h3>
+
+          <ul>
+
+            <li>
+              <a href="#beranda">
+                Beranda
+              </a>
+            </li>
+
+            <li>
+              <a href="#tentang">
+                Tentang
+              </a>
+            </li>
+
+            <li>
+              <a href="#produk">
+                Produk
+              </a>
+            </li>
+
+            <li>
+              <a href="#lokasi">
+                Lokasi
+              </a>
+            </li>
+
+          </ul>
+
+        </div>
+
+
+        <div>
+
+          <h3>
+            Hubungi Kami
+          </h3>
+
+          <ul>
+
+            <li>
+              📱 +62 856-9282-8522
+            </li>
+
+            <li>
+              🥬 Sayuran
+            </li>
+
+            <li>
+              🍗 Ayam
+            </li>
+
+          </ul>
+
+        </div>
+
+      </div>
+
+
+      <div class="copyright">
+
+        © <span id="year"></span>
+        Warung Ridwan Shaleh.
+        Semua hak dilindungi.
+
+      </div>
+
+    </div>
+
+  </footer>
+
+
+  <!-- ================= WHATSAPP FLOAT ================= -->
+
+  <a
+    class="whatsapp"
+    href="https://wa.me/6285692828522?text=Halo%20Warung%20Ridwan%20Shaleh%2C%20saya%20ingin%20bertanya%20tentang%20produk."
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Chat WhatsApp"
+  >
+    💬
+  </a>
+
+
+  <!-- ================= JAVASCRIPT ================= -->
+
+  <script>
+
+    const NOMOR_WA = "6285692828522";
+
+    // Tahun otomatis
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
+
+
+    // Menu mobile
+    const menuBtn = document.getElementById("menuBtn");
+    const navMenu = document.getElementById("navMenu");
+
+    menuBtn.addEventListener("click", function () {
+
+      navMenu.classList.toggle("active");
+
+      const isOpen =
+        navMenu.classList.contains("active");
+
+      menuBtn.setAttribute(
+        "aria-expanded",
+        isOpen ? "true" : "false"
+      );
+
+      menuBtn.textContent =
+        isOpen ? "✕" : "☰";
+
+    });
+
+
+    // Tutup menu setelah klik
+    document.querySelectorAll(".nav-menu a").forEach(function(link) {
+
+      link.addEventListener("click", function() {
+
+        navMenu.classList.remove("active");
+
+        menuBtn.setAttribute(
+          "aria-expanded",
+          "false"
+        );
+
+        menuBtn.textContent = "☰";
+
+      });
+
+    });
+
+
+    // Form pemesanan
+    document.getElementById("orderForm")
+      .addEventListener("submit", function(event) {
+
+        event.preventDefault();
+
+        const nama =
+          document.getElementById("nama").value.trim();
+
+        const nomor =
+          document.getElementById("nomor").value.trim();
+
+        const produk =
+          document.getElementById("produk").value;
+
+        const jumlah =
+          document.getElementById("jumlah").value;
+
+        const catatan =
+          document.getElementById("catatan").value.trim();
+
+
+        const pesan =
+`Halo Warung Ridwan Shaleh 👋
+
+Saya ingin melakukan pemesanan.
+
+Nama: ${nama}
+Nomor WhatsApp: ${nomor}
+Produk: ${produk}
+Jumlah: ${jumlah}
+Catatan: ${catatan || "-"}
+
+Mohon informasi mengenai ketersediaan dan harga produk.
+
+Terima kasih.`;
+
+
+        const url =
+          "https://wa.me/" +
+          NOMOR_WA +
+          "?text=" +
+          encodeURIComponent(pesan);
+
+
+        window.open(url, "_blank");
+
+      });
+
+  </script>
+
 </body>
 </html>
-
