@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "destination": "https://warung-nusa-indah.vercel.app/$1",
+      "permanent": true
+    }
+  ]
+}
