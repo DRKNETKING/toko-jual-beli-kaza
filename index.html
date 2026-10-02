@@ -1,2061 +1,1231 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Warung Ridwan Saleh | Sayuran, Ayam & Jasa Portofolio</title>
+  <title>Warung Ridwan Saleh | Sayur, Ayam & Kebutuhan Dapur</title>
 
-<meta name="description" content="Warung Ridwan Saleh menyediakan sayuran, ayam, kebutuhan dapur, dan jasa pembuatan portofolio dengan harga terjangkau.">
-<meta name="author" content="Warung Ridwan Saleh">
+  <meta name="description" content="Warung Ridwan Saleh menyediakan sayuran segar, ayam, kebutuhan dapur dan jasa pembuatan website portfolio modern.">
 
-<!-- FAVICON -->
-<link
-rel="icon"
-type="image/svg+xml"
-href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23166534'/%3E%3Ctext x='50' y='68' text-anchor='middle' font-size='55'%3E🛒%3C/text%3E%3C/svg%3E"
->
+  <!-- FAVICON -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🛒%3C/text%3E%3C/svg%3E">
 
-<style>
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-html{
-    scroll-behavior:smooth;
-}
-
-body{
-    font-family:Inter,Arial,Helvetica,sans-serif;
-    background:#f8fafc;
-    color:#1f2937;
-    line-height:1.6;
-}
-
-a{
-    text-decoration:none;
-}
-
-:root{
-    --green:#15803d;
-    --green-dark:#14532d;
-    --green-light:#dcfce7;
-    --orange:#f97316;
-    --yellow:#facc15;
-    --blue:#2563eb;
-    --dark:#111827;
-    --text:#374151;
-    --muted:#64748b;
-    --white:#ffffff;
-    --light:#f8fafc;
-    --border:#e5e7eb;
-    --shadow:0 15px 45px rgba(15,23,42,.08);
-}
-
-/* ================= NAVBAR ================= */
-
-header{
-    position:sticky;
-    top:0;
-    z-index:1000;
-    background:rgba(255,255,255,.97);
-    backdrop-filter:blur(14px);
-    border-bottom:1px solid var(--border);
-}
-
-.navbar{
-    max-width:1180px;
-    margin:auto;
-    padding:14px 20px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:20px;
-}
-
-.logo{
-    color:var(--green-dark);
-    font-size:20px;
-    font-weight:900;
-    white-space:nowrap;
-}
-
-.logo span{
-    color:var(--orange);
-}
-
-nav{
-    display:flex;
-    align-items:center;
-    gap:20px;
-}
-
-nav a{
-    color:var(--text);
-    font-size:13px;
-    font-weight:800;
-}
-
-nav a:hover{
-    color:var(--green);
-}
-
-.nav-button{
-    background:var(--green);
-    color:white!important;
-    padding:10px 15px;
-    border-radius:10px;
-}
-
-.language-switcher{
-    display:flex;
-    gap:5px;
-    padding:4px;
-    background:#f1f5f9;
-    border-radius:10px;
-}
-
-.lang-btn{
-    border:0;
-    background:transparent;
-    padding:7px 9px;
-    border-radius:7px;
-    cursor:pointer;
-    font-size:16px;
-}
-
-.lang-btn.active{
-    background:white;
-    box-shadow:0 2px 8px rgba(0,0,0,.08);
-}
-
-/* ================= HERO ================= */
-
-.hero{
-    background:
-    radial-gradient(
-        circle at 90% 10%,
-        rgba(250,204,21,.22),
-        transparent 30%
-    ),
-    linear-gradient(
-        135deg,
-        #14532d,
-        #166534,
-        #15803d
-    );
-    color:white;
-}
-
-.hero-container{
-    max-width:1180px;
-    margin:auto;
-    min-height:670px;
-    padding:90px 20px;
-    display:grid;
-    grid-template-columns:1.08fr .92fr;
-    gap:55px;
-    align-items:center;
-}
-
-.badge{
-    display:inline-flex;
-    padding:8px 15px;
-    border-radius:50px;
-    background:rgba(255,255,255,.12);
-    border:1px solid rgba(255,255,255,.25);
-    font-size:13px;
-    font-weight:800;
-    margin-bottom:22px;
-}
-
-.hero h1{
-    font-size:clamp(42px,6vw,72px);
-    line-height:1.02;
-    letter-spacing:-2px;
-    margin-bottom:22px;
-}
-
-.hero h1 span{
-    color:var(--yellow);
-}
-
-.hero-description{
-    max-width:650px;
-    color:#dcfce7;
-    font-size:18px;
-    margin-bottom:30px;
-}
-
-.hero-buttons{
-    display:flex;
-    flex-wrap:wrap;
-    gap:12px;
-}
-
-.btn{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    gap:8px;
-    padding:14px 22px;
-    border-radius:12px;
-    font-weight:800;
-    border:0;
-    cursor:pointer;
-    transition:.2s ease;
-}
-
-.btn:hover{
-    transform:translateY(-3px);
-}
-
-.btn-orange{
-    background:var(--orange);
-    color:white;
-}
-
-.btn-white{
-    background:white;
-    color:var(--green-dark);
-}
-
-.hero-info{
-    margin-top:28px;
-    display:flex;
-    flex-wrap:wrap;
-    gap:18px;
-}
-
-.hero-info div{
-    color:#dcfce7;
-    font-size:14px;
-}
-
-.hero-card{
-    background:rgba(255,255,255,.11);
-    border:1px solid rgba(255,255,255,.22);
-    border-radius:30px;
-    padding:40px;
-    text-align:center;
-    box-shadow:0 30px 80px rgba(0,0,0,.22);
-}
-
-.hero-emoji{
-    font-size:95px;
-    line-height:1;
-    margin-bottom:20px;
-}
-
-.hero-card h2{
-    font-size:29px;
-    margin-bottom:10px;
-}
-
-.hero-card p{
-    color:#dcfce7;
-}
-
-/* ================= GENERAL ================= */
-
-section{
-    padding:90px 20px;
-}
-
-.container{
-    max-width:1180px;
-    margin:auto;
-}
-
-.section-title{
-    text-align:center;
-    max-width:760px;
-    margin:0 auto 48px;
-}
-
-.section-title small{
-    color:var(--green);
-    text-transform:uppercase;
-    letter-spacing:2px;
-    font-size:12px;
-    font-weight:900;
-}
-
-.section-title h2{
-    color:var(--dark);
-    font-size:40px;
-    line-height:1.15;
-    margin:8px 0 12px;
-}
-
-.section-title p{
-    color:var(--muted);
-}
-
-/* ================= PROMO ================= */
-
-.promo{
-    padding:35px 20px;
-    background:white;
-}
-
-.promo-box{
-    max-width:1180px;
-    margin:auto;
-    padding:25px 30px;
-    border-radius:22px;
-    background:linear-gradient(135deg,#fff7ed,#ffedd5);
-    border:1px solid #fed7aa;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:25px;
-}
-
-.promo-content{
-    display:flex;
-    align-items:center;
-    gap:15px;
-}
-
-.promo-icon{
-    width:58px;
-    height:58px;
-    background:var(--orange);
-    border-radius:16px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:28px;
-}
-
-.promo h3{
-    color:#9a3412;
-}
-
-.promo p{
-    color:#7c2d12;
-    font-size:14px;
-}
-
-/* ================= PRODUCTS ================= */
-
-.products-section{
-    background:#f8fafc;
-}
-
-.products{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:24px;
-}
-
-.product{
-    background:white;
-    border:1px solid var(--border);
-    border-radius:24px;
-    overflow:hidden;
-    box-shadow:var(--shadow);
-    transition:.25s;
-}
-
-.product:hover{
-    transform:translateY(-7px);
-}
-
-.product-image{
-    height:190px;
-    background:linear-gradient(135deg,#f0fdf4,#dcfce7);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:90px;
-}
-
-.product-body{
-    padding:25px;
-}
-
-.product-body h3{
-    color:var(--dark);
-    font-size:22px;
-    margin-bottom:8px;
-}
-
-.product-body p{
-    color:var(--muted);
-    font-size:14px;
-    min-height:65px;
-}
-
-.product-bottom{
-    margin-top:20px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:10px;
-}
-
-.price{
-    color:var(--green);
-    font-weight:900;
-}
-
-.order-small{
-    background:var(--green);
-    color:white;
-    padding:10px 14px;
-    border-radius:10px;
-    font-size:13px;
-    font-weight:800;
-}
-
-/* ================= FEATURES ================= */
-
-.features-section{
-    background:white;
-}
-
-.features{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:20px;
-}
-
-.feature{
-    padding:28px 22px;
-    border:1px solid var(--border);
-    border-radius:20px;
-    text-align:center;
-}
-
-.feature-icon{
-    width:60px;
-    height:60px;
-    margin:0 auto 15px;
-    border-radius:18px;
-    background:var(--green-light);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:29px;
-}
-
-.feature h3{
-    color:var(--dark);
-    margin-bottom:7px;
-}
-
-.feature p{
-    color:var(--muted);
-    font-size:13px;
-}
-
-/* ================= PORTFOLIO ================= */
-
-.portfolio-section{
-    background:
-        linear-gradient(
-            135deg,
-            #eff6ff,
-            #f8fafc
-        );
-}
-
-.portfolio-box{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:40px;
-    align-items:center;
-    background:white;
-    padding:45px;
-    border-radius:30px;
-    border:1px solid #dbeafe;
-    box-shadow:var(--shadow);
-}
-
-.portfolio-icon{
-    width:85px;
-    height:85px;
-    border-radius:24px;
-    background:#dbeafe;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:43px;
-    margin-bottom:20px;
-}
-
-.portfolio-box h2{
-    color:#172554;
-    font-size:38px;
-    line-height:1.15;
-    margin-bottom:15px;
-}
-
-.portfolio-box p{
-    color:var(--muted);
-    margin-bottom:20px;
-}
-
-.portfolio-list{
-    margin:20px 0;
-}
-
-.portfolio-list div{
-    margin:10px 0;
-    font-weight:700;
-}
-
-.portfolio-list span{
-    color:var(--blue);
-    margin-right:8px;
-}
-
-.portfolio-card{
-    background:linear-gradient(135deg,#1e3a8a,#2563eb);
-    color:white;
-    border-radius:25px;
-    padding:35px;
-}
-
-.portfolio-card h3{
-    font-size:25px;
-    margin-bottom:15px;
-}
-
-.portfolio-card p{
-    color:#dbeafe;
-}
-
-.portfolio-card ul{
-    margin:20px 0 0 20px;
-    color:#eff6ff;
-}
-
-/* ================= ABOUT ================= */
-
-.about{
-    background:#f0fdf4;
-}
-
-.about-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:55px;
-    align-items:center;
-}
-
-.about-content h2{
-    color:var(--dark);
-    font-size:40px;
-    line-height:1.15;
-    margin-bottom:18px;
-}
-
-.about-content p{
-    color:var(--muted);
-    margin-bottom:15px;
-}
-
-.check-list{
-    margin-top:22px;
-}
-
-.check-list div{
-    margin:12px 0;
-    font-weight:700;
-}
-
-.check-list span{
-    color:var(--green);
-    margin-right:8px;
-}
-
-.about-card{
-    background:linear-gradient(135deg,#14532d,#15803d);
-    color:white;
-    border-radius:30px;
-    padding:45px;
-    text-align:center;
-}
-
-.about-icon{
-    font-size:90px;
-}
-
-.about-card h3{
-    font-size:28px;
-}
-
-/* ================= ORDER ================= */
-
-.order{
-    background:white;
-}
-
-.order-box{
-    max-width:900px;
-    margin:auto;
-    text-align:center;
-    padding:55px 30px;
-    border-radius:30px;
-    background:linear-gradient(135deg,#f0fdf4,#dcfce7);
-    border:1px solid #bbf7d0;
-}
-
-.order-box h2{
-    color:var(--green-dark);
-    font-size:40px;
-    margin-bottom:10px;
-}
-
-.order-box p{
-    color:var(--muted);
-    max-width:650px;
-    margin:0 auto 25px;
-}
-
-/* ================= CONTACT ================= */
-
-.contact{
-    background:#f8fafc;
-}
-
-.contact-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:25px;
-}
-
-.contact-card,
-.map-card{
-    background:white;
-    border:1px solid var(--border);
-    border-radius:24px;
-    padding:32px;
-    box-shadow:var(--shadow);
-}
-
-.contact-card h3,
-.map-card h3{
-    color:var(--dark);
-    font-size:23px;
-    margin-bottom:18px;
-}
-
-.contact-item{
-    padding:15px 0;
-    border-bottom:1px solid var(--border);
-}
-
-.contact-item:last-child{
-    border-bottom:0;
-}
-
-.contact-item strong{
-    display:block;
-    color:var(--dark);
-    margin-bottom:3px;
-}
-
-.contact-item a{
-    color:var(--green);
-    font-weight:800;
-}
-
-.map-card{
-    text-align:center;
-    background:#ecfdf5;
-    border-color:#bbf7d0;
-}
-
-.map-icon{
-    font-size:70px;
-}
-
-.map-card p{
-    color:var(--muted);
-    margin-bottom:22px;
-}
-
-.hours{
-    margin-top:20px;
-    padding-top:20px;
-    border-top:1px solid var(--border);
-}
-
-.hours h4{
-    color:var(--dark);
-}
-
-.hours p{
-    color:var(--muted);
-    font-size:14px;
-}
-
-/* ================= CTA ================= */
-
-.final-cta{
-    background:linear-gradient(135deg,#052e16,#14532d);
-    color:white;
-    text-align:center;
-}
-
-.final-cta h2{
-    font-size:42px;
-    margin-bottom:10px;
-}
-
-.final-cta p{
-    color:#dcfce7;
-    margin-bottom:25px;
-}
-
-/* ================= FOOTER ================= */
-
-footer{
-    background:#020617;
-    color:#94a3b8;
-    text-align:center;
-    padding:30px 20px;
-    font-size:14px;
-}
-
-.footer-brand{
-    color:white;
-    font-size:18px;
-    font-weight:900;
-    margin-bottom:5px;
-}
-
-/* ================= WHATSAPP ================= */
-
-.whatsapp{
-    position:fixed;
-    right:22px;
-    bottom:22px;
-    width:62px;
-    height:62px;
-    border-radius:50%;
-    background:#25d366;
-    color:white;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:29px;
-    box-shadow:0 12px 35px rgba(0,0,0,.25);
-    z-index:9999;
-    transition:.2s;
-}
-
-.whatsapp:hover{
-    transform:scale(1.08);
-}
-
-/* ================= MOBILE ================= */
-
-@media(max-width:1000px){
-
-    nav{
-        display:none;
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
     }
 
-    .hero-container,
-    .about-grid,
-    .portfolio-box,
-    .contact-grid{
-        grid-template-columns:1fr;
+    :root {
+      --green: #15803d;
+      --green-dark: #14532d;
+      --green-light: #dcfce7;
+      --orange: #f97316;
+      --yellow: #facc15;
+      --dark: #111827;
+      --text: #374151;
+      --white: #ffffff;
+      --gray: #f8fafc;
+      --border: #e5e7eb;
+      --shadow: 0 15px 40px rgba(0,0,0,.08);
     }
 
-    .products{
-        grid-template-columns:repeat(2,1fr);
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #ffffff;
+      color: var(--text);
+      line-height: 1.6;
     }
 
-    .features{
-        grid-template-columns:repeat(2,1fr);
+    a {
+      text-decoration: none;
+      color: inherit;
     }
 
-}
-
-@media(max-width:650px){
-
-    section{
-        padding:70px 16px;
+    .container {
+      width: min(1150px, 92%);
+      margin: auto;
     }
 
-    .hero-container{
-        min-height:auto;
-        padding:70px 20px;
+    /* NAVBAR */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      background: rgba(255,255,255,.95);
+      backdrop-filter: blur(15px);
+      border-bottom: 1px solid var(--border);
     }
 
-    .hero h1{
-        font-size:43px;
-        letter-spacing:-1px;
+    .nav-inner {
+      min-height: 74px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
     }
 
-    .hero-description{
-        font-size:16px;
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      color: var(--green-dark);
+      font-size: 19px;
     }
 
-    .hero-buttons{
-        flex-direction:column;
+    .logo-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: var(--green-light);
+      font-size: 23px;
     }
 
-    .hero-buttons .btn{
-        width:100%;
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 18px;
     }
 
-    .products,
-    .features{
-        grid-template-columns:1fr;
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      align-items: center;
     }
 
-    .section-title h2,
-    .about-content h2,
-    .portfolio-box h2,
-    .order-box h2,
-    .final-cta h2{
-        font-size:31px;
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 700;
+      color: #374151;
     }
 
-    .promo-box{
-        flex-direction:column;
-        align-items:flex-start;
+    .nav-links a:hover {
+      color: var(--green);
     }
 
-    .product-bottom{
-        flex-direction:column;
-        align-items:stretch;
+    /* LANGUAGE */
+    .language-switch {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: #f1f5f9;
+      padding: 5px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
     }
 
-    .order-small{
-        text-align:center;
+    .lang-btn {
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+      padding: 8px 10px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 800;
+      color: #475569;
+      transition: .2s;
+      white-space: nowrap;
     }
 
-    .portfolio-box{
-        padding:30px 20px;
+    .lang-btn:hover {
+      background: #ffffff;
     }
 
-    .about-card{
-        padding:35px 20px;
+    .lang-btn.active {
+      background: var(--green);
+      color: white;
+      box-shadow: 0 4px 12px rgba(21,128,61,.25);
     }
 
-    .whatsapp{
-        width:57px;
-        height:57px;
-        right:17px;
-        bottom:17px;
+    /* HERO */
+    .hero {
+      padding: 85px 0 70px;
+      background:
+        radial-gradient(circle at 10% 20%, #dcfce7 0, transparent 28%),
+        radial-gradient(circle at 90% 10%, #ffedd5 0, transparent 28%),
+        linear-gradient(180deg,#ffffff,#f8fafc);
     }
 
-}
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 55px;
+      align-items: center;
+    }
 
-</style>
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--green-light);
+      color: var(--green-dark);
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      color: var(--dark);
+      font-size: clamp(38px,6vw,68px);
+      line-height: 1.05;
+      letter-spacing: -2px;
+      margin-bottom: 20px;
+    }
+
+    h1 span {
+      color: var(--green);
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: #64748b;
+      max-width: 650px;
+      margin-bottom: 30px;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .btn {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 20px;
+      border-radius: 14px;
+      font-weight: 800;
+      border: 1px solid transparent;
+      transition: .25s;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: var(--green);
+      color: white;
+      box-shadow: 0 10px 25px rgba(21,128,61,.2);
+    }
+
+    .btn-secondary {
+      background: white;
+      border-color: var(--border);
+      color: var(--dark);
+    }
+
+    /* HERO CARD */
+    .hero-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 25px;
+      box-shadow: var(--shadow);
+    }
+
+    .shop-visual {
+      min-height: 330px;
+      border-radius: 22px;
+      background:
+        linear-gradient(135deg,#dcfce7,#fef3c7);
+      display: grid;
+      place-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .shop-emoji {
+      font-size: 120px;
+      filter: drop-shadow(0 15px 15px rgba(0,0,0,.12));
+    }
+
+    .floating-card {
+      position: absolute;
+      background: white;
+      padding: 12px 15px;
+      border-radius: 14px;
+      box-shadow: 0 10px 25px rgba(0,0,0,.1);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .floating-one {
+      top: 20px;
+      left: 18px;
+    }
+
+    .floating-two {
+      right: 18px;
+      bottom: 20px;
+    }
+
+    /* SECTION */
+    section {
+      padding: 80px 0;
+    }
+
+    .section-head {
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto 45px;
+    }
+
+    .section-head small {
+      color: var(--green);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .section-head h2 {
+      font-size: clamp(30px,4vw,44px);
+      color: var(--dark);
+      margin: 8px 0 12px;
+    }
+
+    .section-head p {
+      color: #64748b;
+    }
+
+    /* CARDS */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 28px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.05);
+      transition: .25s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow);
+    }
+
+    .card-icon {
+      width: 58px;
+      height: 58px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      background: var(--green-light);
+      font-size: 30px;
+      margin-bottom: 18px;
+    }
+
+    .card h3 {
+      color: var(--dark);
+      margin-bottom: 8px;
+      font-size: 21px;
+    }
+
+    .card p {
+      color: #64748b;
+      font-size: 15px;
+    }
+
+    /* PROMO */
+    .promo {
+      background: var(--green-dark);
+      color: white;
+    }
+
+    .promo-grid {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .promo h2 {
+      font-size: clamp(30px,4vw,46px);
+      line-height: 1.1;
+      margin-bottom: 12px;
+    }
+
+    .promo p {
+      color: #dcfce7;
+      max-width: 700px;
+    }
+
+    .btn-orange {
+      background: var(--orange);
+      color: white;
+    }
+
+    /* PORTFOLIO */
+    .portfolio-box {
+      background: linear-gradient(135deg,#f0fdf4,#fff7ed);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 40px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .portfolio-box h2 {
+      color: var(--dark);
+      font-size: 35px;
+      margin-bottom: 12px;
+    }
+
+    .portfolio-box p {
+      color: #64748b;
+    }
+
+    /* CONTACT */
+    .contact {
+      background: #f8fafc;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 20px;
+    }
+
+    .contact-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 25px;
+      text-align: center;
+    }
+
+    .contact-card .icon {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    .contact-card h3 {
+      color: var(--dark);
+      margin-bottom: 5px;
+    }
+
+    .contact-card p {
+      color: #64748b;
+      font-size: 14px;
+    }
+
+    /* CTA */
+    .final-cta {
+      text-align: center;
+      background: linear-gradient(135deg,#14532d,#15803d);
+      color: white;
+      border-radius: 30px;
+      padding: 60px 25px;
+    }
+
+    .final-cta h2 {
+      font-size: clamp(30px,5vw,48px);
+      margin-bottom: 12px;
+    }
+
+    .final-cta p {
+      color: #dcfce7;
+      max-width: 650px;
+      margin: 0 auto 25px;
+    }
+
+    /* FOOTER */
+    footer {
+      background: #111827;
+      color: #cbd5e1;
+      padding: 35px 0;
+      text-align: center;
+    }
+
+    footer strong {
+      color: white;
+    }
+
+    footer p {
+      font-size: 14px;
+      margin-top: 6px;
+    }
+
+    /* WHATSAPP */
+    .wa {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: #25D366;
+      color: white;
+      display: grid;
+      place-items: center;
+      font-size: 28px;
+      z-index: 1000;
+      box-shadow: 0 10px 25px rgba(0,0,0,.2);
+      transition: .25s;
+    }
+
+    .wa:hover {
+      transform: scale(1.08);
+    }
+
+    /* MOBILE */
+    @media (max-width: 900px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero-grid,
+      .portfolio-box,
+      .promo-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .cards,
+      .contact-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .hero {
+        padding-top: 55px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .nav-inner {
+        min-height: 68px;
+      }
+
+      .logo {
+        font-size: 15px;
+      }
+
+      .logo-icon {
+        width: 36px;
+        height: 36px;
+      }
+
+      .language-switch {
+        gap: 2px;
+      }
+
+      .lang-btn {
+        padding: 7px 8px;
+        font-size: 12px;
+      }
+
+      h1 {
+        letter-spacing: -1px;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+
+      .buttons {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .cards,
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .portfolio-box {
+        padding: 28px 22px;
+      }
+
+      .portfolio-box h2 {
+        font-size: 28px;
+      }
+
+      section {
+        padding: 60px 0;
+      }
+
+      .shop-visual {
+        min-height: 250px;
+      }
+
+      .shop-emoji {
+        font-size: 90px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<!-- ================= NAVBAR ================= -->
-
-<header>
-
-<div class="navbar">
-
-<a href="#home" class="logo">
-    Warung <span>Ridwan Saleh</span>
-</a>
-
-<nav>
-
-<a href="#home" data-id="navHome">Beranda</a>
-<a href="#produk" data-id="navProduct">Produk</a>
-<a href="#layanan" data-id="navService">Layanan</a>
-<a href="#tentang" data-id="navAbout">Tentang</a>
-<a href="#kontak" data-id="navContact">Kontak</a>
-
-<div class="language-switcher">
-
-<button
-    class="lang-btn active"
-    id="idBtn"
-    onclick="setLanguage('id')"
-    aria-label="Bahasa Indonesia"
->
-    🇮🇩
-</button>
-
-<button
-    class="lang-btn"
-    id="enBtn"
-    onclick="setLanguage('en')"
-    aria-label="English"
->
-    🇬🇧
-</button>
-
-</div>
-
-<a
-    href="https://wa.me/6285692828522?text=Halo%20Warung%20Ridwan%20Saleh%2C%20saya%20ingin%20bertanya%20tentang%20produk."
-    target="_blank"
-    class="nav-button"
-    data-id="navOrder"
->
-    Pesan
-</a>
-
-</nav>
-
-</div>
-
-</header>
-
-
-<!-- ================= HERO ================= -->
-
-<section class="hero" id="home">
-
-<div class="hero-container">
-
-<div>
-
-<div class="badge" data-id="badge">
-    🥬 Segar • 🍗 Pilihan • 💼 Jasa Digital
-</div>
-
-<h1>
-    <span>Warung</span><br>
-    Ridwan Saleh
-</h1>
-
-<p
-    class="hero-description"
-    data-id="heroDescription"
->
-    Menyediakan sayuran, ayam, kebutuhan dapur,
-    serta jasa pembuatan portofolio profesional
-    dengan harga terjangkau.
-</p>
-
-<div class="hero-buttons">
-
-<a
-    href="https://wa.me/6285692828522?text=Halo%20Warung%20Ridwan%20Saleh%2C%20saya%20ingin%20memesan%20produk."
-    target="_blank"
-    class="btn btn-orange"
-    data-id="heroOrder"
->
-    💬 Pesan Sekarang
-</a>
-
-<a
-    href="#produk"
-    class="btn btn-white"
-    data-id="heroProduct"
->
-    🛒 Lihat Produk
-</a>
-
-</div>
-
-<div class="hero-info">
-
-<div data-id="heroInfo1">
-    ✓ Produk pilihan
-</div>
-
-<div data-id="heroInfo2">
-    ✓ Pelayanan ramah
-</div>
-
-<div data-id="heroInfo3">
-    ✓ Pesan via WhatsApp
-</div>
-
-</div>
-
-</div>
-
-
-<div class="hero-card">
-
-<div class="hero-emoji">
-    🥬🍅🍗
-</div>
-
-<h2 data-id="heroCardTitle">
-    Sayuran & Ayam
-</h2>
-
-<p data-id="heroCardText">
-    Kebutuhan dapur keluarga
-    yang mudah dipesan melalui WhatsApp.
-</p>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- ================= PROMO ================= -->
-
-<section class="promo">
-
-<div class="promo-box">
-
-<div class="promo-content">
-
-<div class="promo-icon">
-    🔥
-</div>
-
-<div>
-
-<h3 data-id="promoTitle">
-    Mau tahu harga hari ini?
-</h3>
-
-<p data-id="promoText">
-    Hubungi kami melalui WhatsApp untuk
-    mengetahui harga dan ketersediaan produk.
-</p>
-
-</div>
-
-</div>
-
-<a
-    href="https://wa.me/6285692828522?text=Halo%20Warung%20Ridwan%20Saleh%2C%20boleh%20tanya%20harga%20produk%20hari%20ini%3F"
-    target="_blank"
-    class="btn btn-orange"
-    data-id="promoButton"
->
-    Tanya Harga
-</a>
-
-</div>
-
-</section>
-
-
-<!-- ================= PRODUCTS ================= -->
-
-<section class="products-section" id="produk">
-
-<div class="container">
-
-<div class="section-title">
-
-<small data-id="productSmall">
-    Produk Kami
-</small>
-
-<h2 data-id="productTitle">
-    Kebutuhan Dapur
-</h2>
-
-<p data-id="productDescription">
-    Tanyakan ketersediaan dan harga produk
-    sebelum melakukan pemesanan.
-</p>
-
-</div>
-
-
-<div class="products">
-
-
-<article class="product">
-
-<div class="product-image">
-    🥬
-</div>
-
-<div class="product-body">
-
-<h3 data-id="product1Title">
-    Sayuran Segar
-</h3>
-
-<p data-id="product1Text">
-    Berbagai pilihan sayuran untuk kebutuhan
-    masakan keluarga sehari-hari.
-</p>
-
-<div class="product-bottom">
-
-<span class="price" data-id="price">
-    Tanya harga
-</span>
-
-<a
-    class="order-small"
-    href="https://wa.me/6285692828522?text=Halo%20Warung%20Ridwan%20Saleh%2C%20saya%20ingin%20tanya%20sayuran%20yang%20tersedia%20hari%20ini."
-    target="_blank"
-    data-id="orderSmall"
->
-    Pesan
-</a>
-
-</div>
-
-</div>
-
-</article>
-
-
-<article class="product">
-
-<div class="product-image">
-    🍗
-</div>
-
-<div class="product-body">
-
-<h3 data-id="product2Title">
-    Ayam
-</h3>
-
-<p data-id="product2Text">
-    Ayam untuk kebutuhan masakan keluarga.
-    Hubungi kami untuk ketersediaan.
-</p>
-
-<div class="product-bottom">
-
-<span class="price" data-id="price2">
-    Tanya harga
-</span>
-
-<a
-    class="order-small"
-    href="https://wa.me/6285692828522?text=Halo%20Warung%20Ridwan%20Saleh%2C%20saya%20ingin%20tanya%20ayam%20yang%20tersedia%20hari%20ini."
-    target="_blank"
-    data-id="orderSmall2"
->
-    Pesan
-</a>
-
-</div>
-
-</div>
-
-</article>
-
-
-<article class="product">
-
-<div class="product-image">
-    🛒
-</div>
-
-<div class="product-body">
-
-<h3 data-id="product3Title">
-    Kebutuhan Dapur
-</h3>
-
-<p data-id="product3Text">
-    Hubungi kami untuk menanyakan kebutuhan
-    dapur yang tersedia.
-</p>
-
-<div class="product-bottom">
-
-<span class="price">
-    Tanya harga
-</span>
-
-<a
-    class="order-small"
-    href="https://wa.me/6285692828522?text=Halo%20Warung%20Ridwan%20Saleh%2C%20saya%20ingin%20tanya%20produk%20yang%20tersedia."
-    target="_blank"
-    data-id="orderSmall3"
->
-    Pesan
-</a>
-
-</div>
-
-</div>
-
-</article>
-
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- ================= FEATURES ================= -->
-
-<section class="features-section">
-
-<div class="container">
-
-<div class="section-title">
-
-<small data-id="featureSmall">
-    Keunggulan
-</small>
-
-<h2 data-id="featureTitle">
-    Kenapa Pilih Kami?
-</h2>
-
-<p data-id="featureDescription">
-    Pelayanan sederhana, mudah, dan langsung.
-</p>
-
-</div>
-
-
-<div class="features">
-
-
-<div class="feature">
-
-<div class="feature-icon">
-    🥬
-</div>
-
-<h3 data-id="feature1Title">
-    Produk Segar
-</h3>
-
-<p data-id="feature1Text">
-    Pilihan sayuran untuk kebutuhan sehari-hari.
-</p>
-
-</div>
-
-
-<div class="feature">
-
-<div class="feature-icon">
-    🍗
-</div>
-
-<h3 data-id="feature2Title">
-    Ayam
-</h3>
-
-<p data-id="feature2Text">
-    Tanyakan ketersediaan ayam melalui WhatsApp.
-</p>
-
-</div>
-
-
-<div class="feature">
-
-<div class="feature-icon">
-    💬
-</div>
-
-<h3 data-id="feature3Title">
-    Mudah Dihubungi
-</h3>
-
-<p data-id="feature3Text">
-    Pesan dan bertanya langsung melalui WhatsApp.
-</p>
-
-</div>
-
-
-<div class="feature">
-
-<div class="feature-icon">
-    📍
-</div>
-
-<h3 data-id="feature4Title">
-    Lokasi Jelas
-</h3>
-
-<p data-id="feature4Text">
-    Lokasi warung dapat dilihat melalui Maps.
-</p>
-
-</div>
-
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- ================= PORTFOLIO SERVICE ================= -->
-
-<section
-    class="portfolio-section"
-    id="layanan"
->
-
-<div class="container">
-
-<div class="portfolio-box">
-
-<div>
-
-<div class="portfolio-icon">
-    💻
-</div>
-
-<h2 data-id="portfolioTitle">
-    Jasa Pembuatan Portofolio Murah
-</h2>
-
-<p data-id="portfolioText">
-    Butuh website portofolio untuk mencari kerja,
-    usaha, atau memperkenalkan diri secara profesional?
-    Kami membantu membuat website portofolio modern
-    dan responsive.
-</p>
-
-<div class="portfolio-list">
-
-<div>
-    <span>✓</span>
-    Website portofolio modern
-</div>
-
-<div>
-    <span>✓</span>
-    Tampilan HP & laptop
-</div>
-
-<div>
-    <span>✓</span>
-    Desain profesional
-</div>
-
-<div>
-    <span>✓</span>
-    Bisa digunakan untuk lamaran kerja
-</div>
-
-<div>
-    <span>✓</span>
-    Harga terjangkau
-</div>
-
-</div>
-
-<a
-    href="https://wa.me/6285692828522?text=Halo%20Ridwan%20Saleh%2C%20saya%20tertarik%20dengan%20jasa%20pembuatan%20portofolio."
-    target="_blank"
-    class="btn btn-orange"
-    data-id="portfolioButton"
->
-    💻 Tanya Jasa Portofolio
-</a>
-
-</div>
-
-
-<div class="portfolio-card">
-
-<h3 data-id="portfolioCardTitle">
-    Portofolio Modern 2026
-</h3>
-
-<p data-id="portfolioCardText">
-    Cocok untuk mahasiswa, fresh graduate,
-    freelancer, dan pemilik usaha.
-</p>
-
-<ul>
-
-<li data-id="portfolioList1">
-    Desain responsive
-</li>
-
-<li data-id="portfolioList2">
-    Struktur profesional
-</li>
-
-<li data-id="portfolioList3">
-    Tombol WhatsApp
-</li>
-
-<li data-id="portfolioList4">
-    Bisa dipublikasikan online
-</li>
-
-</ul>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- ================= ABOUT ================= -->
-
-<section class="about" id="tentang">
-
-<div class="container">
-
-<div class="about-grid">
-
-<div class="about-content">
-
-<h2 data-id="aboutTitle">
-    Warung Ridwan Saleh
-</h2>
-
-<p data-id="aboutText1">
-    Menyediakan sayuran, ayam, dan kebutuhan
-    dapur untuk membantu memenuhi kebutuhan
-    keluarga sehari-hari.
-</p>
-
-<p data-id="aboutText2">
-    Selain itu, tersedia jasa pembuatan portofolio
-    modern dengan harga terjangkau.
-</p>
-
-<div class="check-list">
-
-<div>
-    <span>✓</span>
-    <span data-id="check1">Produk pilihan</span>
-</div>
-
-<div>
-    <span>✓</span>
-    <span data-id="check2">Pesan melalui WhatsApp</span>
-</div>
-
-<div>
-    <span>✓</span>
-    <span data-id="check3">Jasa portofolio modern</span>
-</div>
-
-<div>
-    <span>✓</span>
-    <span data-id="check4">Lokasi mudah ditemukan</span>
-</div>
-
-</div>
-
-</div>
-
-
-<div class="about-card">
-
-<div class="about-icon">
-    🏪
-</div>
-
-<h3>
-    Warung Ridwan Saleh
-</h3>
-
-<p data-id="aboutCard">
-    Sayuran • Ayam • Kebutuhan Dapur • Jasa Portofolio
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- ================= ORDER ================= -->
-
-<section class="order">
-
-<div class="container">
-
-<div class="order-box">
-
-<h2 data-id="orderTitle">
-    Ada yang ingin ditanyakan?
-</h2>
-
-<p data-id="orderText">
-    Hubungi kami melalui WhatsApp untuk
-    bertanya tentang produk, harga, atau
-    jasa pembuatan portofolio.
-</p>
-
-<a
-    href="https://wa.me/6285692828522?text=Halo%20Warung%20Ridwan%20Saleh%2C%20saya%20ingin%20bertanya."
-    target="_blank"
-    class="btn btn-orange"
-    data-id="orderButton"
->
-    💬 Hubungi WhatsApp
-</a>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- ================= CONTACT ================= -->
-
-<section class="contact" id="kontak">
-
-<div class="container">
-
-<div class="section-title">
-
-<small data-id="contactSmall">
-    Kontak
-</small>
-
-<h2 data-id="contactTitle">
-    Hubungi Kami
-</h2>
-
-<p data-id="contactDescription">
-    Silakan hubungi kami untuk informasi
-    dan pemesanan.
-</p>
-
-</div>
-
-
-<div class="contact-grid">
-
-
-<div class="contact-card">
-
-<h3 data-id="contactInfoTitle">
-    📞 Informasi Kontak
-</h3>
-
-
-<div class="contact-item">
-
-<strong data-id="phoneLabel">
-    WhatsApp Utama
-</strong>
-
-<a
+  <!-- NAVBAR -->
+  <nav>
+    <div class="container nav-inner">
+
+      <a href="#home" class="logo">
+        <div class="logo-icon">🛒</div>
+        <span>Warung Ridwan Saleh</span>
+      </a>
+
+      <div class="nav-right">
+
+        <div class="nav-links">
+          <a href="#home" data-id="navHome">Beranda</a>
+          <a href="#produk" data-id="navProducts">Produk</a>
+          <a href="#portfolio" data-id="navPortfolio">Website</a>
+          <a href="#kontak" data-id="navContact">Kontak</a>
+        </div>
+
+        <!-- LANGUAGE BUTTON -->
+        <div class="language-switch">
+          <button class="lang-btn active" id="idBtn" onclick="setLanguage('id')">
+            🇮🇩 ID
+          </button>
+
+          <button class="lang-btn" id="enBtn" onclick="setLanguage('en')">
+            🇬🇧 EN
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="container hero-grid">
+
+      <div>
+        <div class="badge" data-id="badge">
+          🟢 Warung kebutuhan harian
+        </div>
+
+        <h1 data-id="heroTitle">
+          Belanja Segar,<br>
+          <span>Harga Bersahabat.</span>
+        </h1>
+
+        <p data-id="heroText">
+          Warung Ridwan Saleh menyediakan sayuran segar, ayam,
+          dan berbagai kebutuhan dapur untuk kebutuhan sehari-hari.
+        </p>
+
+        <div class="buttons">
+          <a
+            class="btn btn-primary"
+            href="https://wa.me/6285692828522"
+            target="_blank"
+            data-id="heroWa">
+            💬 Hubungi WhatsApp
+          </a>
+
+          <a
+            class="btn btn-secondary"
+            href="https://maps.app.goo.gl/Hq9BCWftCzoFh8Mj8"
+            target="_blank"
+            data-id="heroMap">
+            📍 Lihat Lokasi
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-card">
+        <div class="shop-visual">
+
+          <div class="floating-card floating-one" data-id="floatOne">
+            🥬 Sayur Segar
+          </div>
+
+          <div class="shop-emoji">
+            🛒🥬🍗
+          </div>
+
+          <div class="floating-card floating-two" data-id="floatTwo">
+            💰 Harga Bersahabat
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section id="produk">
+    <div class="container">
+
+      <div class="section-head">
+        <small data-id="productSmall">Produk Kami</small>
+
+        <h2 data-id="productTitle">
+          Kebutuhan Dapur Sehari-hari
+        </h2>
+
+        <p data-id="productText">
+          Pilihan kebutuhan rumah tangga yang praktis,
+          segar dan mudah didapat.
+        </p>
+      </div>
+
+      <div class="cards">
+
+        <div class="card">
+          <div class="card-icon">🥬</div>
+
+          <h3 data-id="vegetableTitle">
+            Sayuran Segar
+          </h3>
+
+          <p data-id="vegetableText">
+            Berbagai sayuran untuk kebutuhan masakan
+            keluarga sehari-hari.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">🍗</div>
+
+          <h3 data-id="chickenTitle">
+            Ayam
+          </h3>
+
+          <p data-id="chickenText">
+            Pilihan ayam untuk berbagai kebutuhan
+            masakan keluarga.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">🍳</div>
+
+          <h3 data-id="kitchenTitle">
+            Kebutuhan Dapur
+          </h3>
+
+          <p data-id="kitchenText">
+            Berbagai kebutuhan dapur untuk membantu
+            aktivitas memasak sehari-hari.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PROMO -->
+  <section class="promo">
+    <div class="container promo-grid">
+
+      <div>
+        <h2 data-id="promoTitle">
+          Butuh kebutuhan dapur?
+        </h2>
+
+        <p data-id="promoText">
+          Hubungi kami melalui WhatsApp untuk informasi
+          produk dan kebutuhan belanja Anda.
+        </p>
+      </div>
+
+      <a
+        href="https://wa.me/6285692828522"
+        target="_blank"
+        class="btn btn-orange"
+        data-id="promoButton">
+        💬 Chat WhatsApp
+      </a>
+
+    </div>
+  </section>
+
+  <!-- PORTFOLIO -->
+  <section id="portfolio">
+    <div class="container">
+
+      <div class="portfolio-box">
+
+        <div>
+          <div class="badge" data-id="portfolioBadge">
+            💻 Jasa Website
+          </div>
+
+          <h2 data-id="portfolioTitle">
+            Butuh Website Portfolio?
+          </h2>
+
+          <p data-id="portfolioText">
+            Kami juga menyediakan jasa pembuatan website
+            portfolio modern, profesional dan responsive
+            untuk kebutuhan pribadi maupun usaha.
+          </p>
+        </div>
+
+        <a
+          href="https://wa.me/6285692828522"
+          target="_blank"
+          class="btn btn-primary"
+          data-id="portfolioButton">
+          🚀 Konsultasi Website
+        </a>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section>
+    <div class="container">
+
+      <div class="section-head">
+
+        <small data-id="aboutSmall">
+          Tentang Kami
+        </small>
+
+        <h2 data-id="aboutTitle">
+          Sederhana, Dekat dan Terpercaya
+        </h2>
+
+        <p data-id="aboutText">
+          Warung Ridwan Saleh hadir untuk membantu memenuhi
+          kebutuhan sehari-hari dengan pelayanan yang ramah
+          dan mudah dihubungi.
+        </p>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="kontak">
+    <div class="container">
+
+      <div class="section-head">
+        <small data-id="contactSmall">
+          Hubungi Kami
+        </small>
+
+        <h2 data-id="contactTitle">
+          Siap Melayani Anda
+        </h2>
+
+        <p data-id="contactText">
+          Silakan hubungi kami untuk informasi lebih lanjut.
+        </p>
+      </div>
+
+      <div class="contact-grid">
+
+        <div class="contact-card">
+          <div class="icon">📱</div>
+
+          <h3 data-id="phoneTitle">
+            WhatsApp
+          </h3>
+
+          <p>
+            +62 856-9282-8522
+          </p>
+        </div>
+
+        <div class="contact-card">
+          <div class="icon">📍</div>
+
+          <h3 data-id="locationTitle">
+            Lokasi
+          </h3>
+
+          <p data-id="locationText">
+            Lihat lokasi Warung Ridwan Saleh melalui Google Maps.
+          </p>
+
+          <br>
+
+          <a
+            href="https://maps.app.goo.gl/Hq9BCWftCzoFh8Mj8"
+            target="_blank"
+            class="btn btn-secondary"
+            data-id="locationButton">
+            📍 Buka Maps
+          </a>
+        </div>
+
+        <div class="contact-card">
+          <div class="icon">💻</div>
+
+          <h3 data-id="serviceTitle">
+            Jasa Website
+          </h3>
+
+          <p data-id="serviceText">
+            Pembuatan website portfolio modern dan responsive.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section>
+    <div class="container">
+
+      <div class="final-cta">
+
+        <h2 data-id="finalTitle">
+          Ada yang ingin ditanyakan?
+        </h2>
+
+        <p data-id="finalText">
+          Hubungi Warung Ridwan Saleh melalui WhatsApp.
+          Kami siap membantu.
+        </p>
+
+        <a
+          href="https://wa.me/6285692828522"
+          target="_blank"
+          class="btn btn-orange"
+          data-id="finalButton">
+          💬 Hubungi Sekarang
+        </a>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+
+    <div class="container">
+
+      <strong>
+        Warung Ridwan Saleh
+      </strong>
+
+      <p data-id="footerText">
+        Sayuran Segar • Ayam • Kebutuhan Dapur • Jasa Website
+      </p>
+
+      <p>
+        © 2026 Warung Ridwan Saleh
+      </p>
+
+    </div>
+
+  </footer>
+
+  <!-- FLOATING WHATSAPP -->
+  <a
     href="https://wa.me/6285692828522"
     target="_blank"
->
-    +62 856-9282-8522
-</a>
-
-</div>
-
-
-<div class="contact-item">
-
-<strong data-id="serviceContact">
-    Layanan
-</strong>
-
-<span data-id="serviceContactText">
-    Sayuran • Ayam • Kebutuhan Dapur • Portofolio
-</span>
-
-</div>
-
-
-<div class="hours">
-
-<h4 data-id="hoursTitle">
-    🕐 Jam Operasional
-</h4>
-
-<p data-id="hoursText">
-    Hubungi WhatsApp untuk memastikan
-    jam buka hari ini.
-</p>
-
-</div>
-
-</div>
-
-
-<div class="map-card">
-
-<div class="map-icon">
-    📍
-</div>
-
-<h3 data-id="locationTitle">
-    Lokasi Warung
-</h3>
-
-<p data-id="locationText">
-    Lihat lokasi Warung Ridwan Saleh
-    melalui Google Maps.
-</p>
-
-<a
-    href="https://maps.app.goo.gl/Hq9BCWftCzoFh8Mj8"
-    target="_blank"
-    class="btn btn-orange"
-    data-id="mapButton"
->
-    🗺️ Buka Google Maps
-</a>
-
-</div>
-
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- ================= FINAL CTA ================= -->
-
-<section class="final-cta">
-
-<div class="container">
-
-<h2 data-id="finalTitle">
-    Siap Pesan? 🛒
-</h2>
-
-<p data-id="finalText">
-    Hubungi Warung Ridwan Saleh sekarang.
-</p>
-
-<a
-    href="https://wa.me/6285692828522?text=Halo%20Warung%20Ridwan%20Saleh%2C%20saya%20ingin%20memesan%20produk."
-    target="_blank"
-    class="btn btn-orange"
-    data-id="finalButton"
->
-    💬 Pesan Sekarang
-</a>
-
-</div>
-
-</section>
-
-
-<!-- ================= FOOTER ================= -->
-
-<footer>
-
-<div class="footer-brand">
-    Warung Ridwan Saleh
-</div>
-
-<div data-id="footerServices">
-    Sayuran • Ayam • Kebutuhan Dapur • Jasa Portofolio
-</div>
-
-<br>
-
-<div>
-    © 2026 Warung Ridwan Saleh.
-    <span data-id="footerRights">
-        Semua hak dilindungi.
-    </span>
-</div>
-
-</footer>
-
-
-<!-- ================= WHATSAPP ================= -->
-
-<a
-    class="whatsapp"
-    href="https://wa.me/6285692828522?text=Halo%20Warung%20Ridwan%20Saleh%2C%20saya%20ingin%20bertanya%20tentang%20produk."
-    target="_blank"
-    aria-label="WhatsApp"
->
+    class="wa"
+    aria-label="WhatsApp">
     💬
-</a>
+  </a>
 
+  <script>
 
-<script>
+    const translations = {
 
-/* =========================
-   LANGUAGE SYSTEM
-========================= */
+      id: {
 
-const translations = {
+        navHome: "Beranda",
+        navProducts: "Produk",
+        navPortfolio: "Website",
+        navContact: "Kontak",
 
-id:{
+        badge: "🟢 Warung kebutuhan harian",
 
-navHome:"Beranda",
-navProduct:"Produk",
-navService:"Layanan",
-navAbout:"Tentang",
-navContact:"Kontak",
-navOrder:"Pesan",
+        heroTitle: 'Belanja Segar,<br><span>Harga Bersahabat.</span>',
 
-badge:"🥬 Segar • 🍗 Pilihan • 💼 Jasa Digital",
+        heroText:
+          "Warung Ridwan Saleh menyediakan sayuran segar, ayam, dan berbagai kebutuhan dapur untuk kebutuhan sehari-hari.",
 
-heroDescription:
-"Menyediakan sayuran, ayam, kebutuhan dapur, serta jasa pembuatan portofolio profesional dengan harga terjangkau.",
+        heroWa: "💬 Hubungi WhatsApp",
+        heroMap: "📍 Lihat Lokasi",
 
-heroOrder:"💬 Pesan Sekarang",
-heroProduct:"🛒 Lihat Produk",
+        floatOne: "🥬 Sayur Segar",
+        floatTwo: "💰 Harga Bersahabat",
 
-heroInfo1:"✓ Produk pilihan",
-heroInfo2:"✓ Pelayanan ramah",
-heroInfo3:"✓ Pesan via WhatsApp",
+        productSmall: "Produk Kami",
 
-heroCardTitle:"Sayuran & Ayam",
+        productTitle:
+          "Kebutuhan Dapur Sehari-hari",
 
-heroCardText:
-"Kebutuhan dapur keluarga yang mudah dipesan melalui WhatsApp.",
+        productText:
+          "Pilihan kebutuhan rumah tangga yang praktis, segar dan mudah didapat.",
 
-promoTitle:"Mau tahu harga hari ini?",
+        vegetableTitle:
+          "Sayuran Segar",
 
-promoText:
-"Hubungi kami melalui WhatsApp untuk mengetahui harga dan ketersediaan produk.",
+        vegetableText:
+          "Berbagai sayuran untuk kebutuhan masakan keluarga sehari-hari.",
 
-promoButton:"Tanya Harga",
+        chickenTitle:
+          "Ayam",
 
-productSmall:"Produk Kami",
+        chickenText:
+          "Pilihan ayam untuk berbagai kebutuhan masakan keluarga.",
 
-productTitle:"Kebutuhan Dapur",
+        kitchenTitle:
+          "Kebutuhan Dapur",
 
-productDescription:
-"Tanyakan ketersediaan dan harga produk sebelum melakukan pemesanan.",
+        kitchenText:
+          "Berbagai kebutuhan dapur untuk membantu aktivitas memasak sehari-hari.",
 
-product1Title:"Sayuran Segar",
+        promoTitle:
+          "Butuh kebutuhan dapur?",
 
-product1Text:
-"Berbagai pilihan sayuran untuk kebutuhan masakan keluarga sehari-hari.",
+        promoText:
+          "Hubungi kami melalui WhatsApp untuk informasi produk dan kebutuhan belanja Anda.",
 
-product2Title:"Ayam",
+        promoButton:
+          "💬 Chat WhatsApp",
 
-product2Text:
-"Ayam untuk kebutuhan masakan keluarga. Hubungi kami untuk ketersediaan.",
+        portfolioBadge:
+          "💻 Jasa Website",
 
-product3Title:"Kebutuhan Dapur",
+        portfolioTitle:
+          "Butuh Website Portfolio?",
 
-product3Text:
-"Hubungi kami untuk menanyakan kebutuhan dapur yang tersedia.",
+        portfolioText:
+          "Kami juga menyediakan jasa pembuatan website portfolio modern, profesional dan responsive untuk kebutuhan pribadi maupun usaha.",
 
-price:"Tanya harga",
-price2:"Tanya harga",
+        portfolioButton:
+          "🚀 Konsultasi Website",
 
-orderSmall:"Pesan",
-orderSmall2:"Pesan",
-orderSmall3:"Pesan",
+        aboutSmall:
+          "Tentang Kami",
 
-featureSmall:"Keunggulan",
-featureTitle:"Kenapa Pilih Kami?",
+        aboutTitle:
+          "Sederhana, Dekat dan Terpercaya",
 
-featureDescription:
-"Pelayanan sederhana, mudah, dan langsung.",
+        aboutText:
+          "Warung Ridwan Saleh hadir untuk membantu memenuhi kebutuhan sehari-hari dengan pelayanan yang ramah dan mudah dihubungi.",
 
-feature1Title:"Produk Segar",
-feature1Text:"Pilihan sayuran untuk kebutuhan sehari-hari.",
+        contactSmall:
+          "Hubungi Kami",
 
-feature2Title:"Ayam",
-feature2Text:"Tanyakan ketersediaan ayam melalui WhatsApp.",
+        contactTitle:
+          "Siap Melayani Anda",
 
-feature3Title:"Mudah Dihubungi",
-feature3Text:"Pesan dan bertanya langsung melalui WhatsApp.",
+        contactText:
+          "Silakan hubungi kami untuk informasi lebih lanjut.",
 
-feature4Title:"Lokasi Jelas",
-feature4Text:"Lokasi warung dapat dilihat melalui Maps.",
+        phoneTitle:
+          "WhatsApp",
 
-portfolioTitle:"Jasa Pembuatan Portofolio Murah",
+        locationTitle:
+          "Lokasi",
 
-portfolioText:
-"Butuh website portofolio untuk mencari kerja, usaha, atau memperkenalkan diri secara profesional? Kami membantu membuat website portofolio modern dan responsive.",
+        locationText:
+          "Lihat lokasi Warung Ridwan Saleh melalui Google Maps.",
 
-portfolioButton:"💻 Tanya Jasa Portofolio",
+        locationButton:
+          "📍 Buka Maps",
 
-portfolioCardTitle:"Portofolio Modern 2026",
+        serviceTitle:
+          "Jasa Website",
 
-portfolioCardText:
-"Cocok untuk mahasiswa, fresh graduate, freelancer, dan pemilik usaha.",
+        serviceText:
+          "Pembuatan website portfolio modern dan responsive.",
 
-portfolioList1:"Desain responsive",
-portfolioList2:"Struktur profesional",
-portfolioList3:"Tombol WhatsApp",
-portfolioList4:"Bisa dipublikasikan online",
+        finalTitle:
+          "Ada yang ingin ditanyakan?",
 
-aboutTitle:"Warung Ridwan Saleh",
+        finalText:
+          "Hubungi Warung Ridwan Saleh melalui WhatsApp. Kami siap membantu.",
 
-aboutText1:
-"Menyediakan sayuran, ayam, dan kebutuhan dapur untuk membantu memenuhi kebutuhan keluarga sehari-hari.",
+        finalButton:
+          "💬 Hubungi Sekarang",
 
-aboutText2:
-"Selain itu, tersedia jasa pembuatan portofolio modern dengan harga terjangkau.",
+        footerText:
+          "Sayuran Segar • Ayam • Kebutuhan Dapur • Jasa Website"
+      },
 
-check1:"Produk pilihan",
-check2:"Pesan melalui WhatsApp",
-check3:"Jasa portofolio modern",
-check4:"Lokasi mudah ditemukan",
+      en: {
 
-aboutCard:
-"Sayuran • Ayam • Kebutuhan Dapur • Jasa Portofolio",
+        navHome: "Home",
+        navProducts: "Products",
+        navPortfolio: "Website",
+        navContact: "Contact",
 
-orderTitle:"Ada yang ingin ditanyakan?",
+        badge: "🟢 Daily grocery store",
 
-orderText:
-"Hubungi kami melalui WhatsApp untuk bertanya tentang produk, harga, atau jasa pembuatan portofolio.",
+        heroTitle: 'Fresh Shopping,<br><span>Friendly Prices.</span>',
 
-orderButton:"💬 Hubungi WhatsApp",
+        heroText:
+          "Warung Ridwan Saleh provides fresh vegetables, chicken and various kitchen essentials for your daily needs.",
 
-contactSmall:"Kontak",
-contactTitle:"Hubungi Kami",
+        heroWa: "💬 Contact WhatsApp",
+        heroMap: "📍 View Location",
 
-contactDescription:
-"Silakan hubungi kami untuk informasi dan pemesanan.",
+        floatOne: "🥬 Fresh Vegetables",
+        floatTwo: "💰 Friendly Prices",
 
-contactInfoTitle:"📞 Informasi Kontak",
+        productSmall: "Our Products",
 
-phoneLabel:"WhatsApp Utama",
+        productTitle:
+          "Daily Kitchen Essentials",
 
-serviceContact:"Layanan",
+        productText:
+          "Practical, fresh and easy-to-find household essentials for your daily needs.",
 
-serviceContactText:
-"Sayuran • Ayam • Kebutuhan Dapur • Portofolio",
+        vegetableTitle:
+          "Fresh Vegetables",
 
-hoursTitle:"🕐 Jam Operasional",
+        vegetableText:
+          "A variety of fresh vegetables for your everyday family meals.",
 
-hoursText:
-"Hubungi WhatsApp untuk memastikan jam buka hari ini.",
+        chickenTitle:
+          "Chicken",
 
-locationTitle:"Lokasi Warung",
+        chickenText:
+          "Chicken products for various family cooking needs.",
 
-locationText:
-"Lihat lokasi Warung Ridwan Saleh melalui Google Maps.",
+        kitchenTitle:
+          "Kitchen Essentials",
 
-mapButton:"🗺️ Buka Google Maps",
+        kitchenText:
+          "Various kitchen essentials to support your everyday cooking activities.",
 
-finalTitle:"Siap Pesan? 🛒",
+        promoTitle:
+          "Need kitchen essentials?",
 
-finalText:
-"Hubungi Warung Ridwan Saleh sekarang.",
+        promoText:
+          "Contact us through WhatsApp for product information and shopping needs.",
 
-finalButton:"💬 Pesan Sekarang",
+        promoButton:
+          "💬 Chat on WhatsApp",
 
-footerServices:
-"Sayuran • Ayam • Kebutuhan Dapur • Jasa Portofolio",
+        portfolioBadge:
+          "💻 Website Service",
 
-footerRights:"Semua hak dilindungi."
+        portfolioTitle:
+          "Need a Portfolio Website?",
 
-},
+        portfolioText:
+          "We also provide modern, professional and responsive portfolio website development for personal and business needs.",
 
-en:{
+        portfolioButton:
+          "🚀 Website Consultation",
 
-navHome:"Home",
-navProduct:"Products",
-navService:"Services",
-navAbout:"About",
-navContact:"Contact",
-navOrder:"Order",
+        aboutSmall:
+          "About Us",
 
-badge:"🥬 Fresh • 🍗 Quality • 💼 Digital Services",
+        aboutTitle:
+          "Simple, Friendly and Reliable",
 
-heroDescription:
-"We provide fresh vegetables, chicken, daily kitchen needs, and affordable professional portfolio website services.",
+        aboutText:
+          "Warung Ridwan Saleh is here to help fulfill your daily needs with friendly service and easy communication.",
 
-heroOrder:"💬 Order Now",
-heroProduct:"🛒 View Products",
+        contactSmall:
+          "Contact Us",
 
-heroInfo1:"✓ Quality products",
-heroInfo2:"✓ Friendly service",
-heroInfo3:"✓ Order via WhatsApp",
+        contactTitle:
+          "Ready to Serve You",
 
-heroCardTitle:"Vegetables & Chicken",
+        contactText:
+          "Feel free to contact us for more information.",
 
-heroCardText:
-"Daily kitchen essentials that are easy to order through WhatsApp.",
+        phoneTitle:
+          "WhatsApp",
 
-promoTitle:"Want today's price?",
+        locationTitle:
+          "Location",
 
-promoText:
-"Contact us via WhatsApp to check product prices and availability.",
+        locationText:
+          "View the Warung Ridwan Saleh location through Google Maps.",
 
-promoButton:"Ask Price",
+        locationButton:
+          "📍 Open Maps",
 
-productSmall:"Our Products",
+        serviceTitle:
+          "Website Service",
 
-productTitle:"Kitchen Essentials",
+        serviceText:
+          "Modern and responsive portfolio website development.",
 
-productDescription:
-"Ask about product availability and prices before ordering.",
+        finalTitle:
+          "Have a question?",
 
-product1Title:"Fresh Vegetables",
+        finalText:
+          "Contact Warung Ridwan Saleh through WhatsApp. We are ready to help.",
 
-product1Text:
-"Various vegetables for your family's daily cooking needs.",
+        finalButton:
+          "💬 Contact Us Now",
 
-product2Title:"Chicken",
+        footerText:
+          "Fresh Vegetables • Chicken • Kitchen Essentials • Website Service"
+      }
 
-product2Text:
-"Chicken for your family meals. Contact us for availability.",
+    };
 
-product3Title:"Kitchen Needs",
 
-product3Text:
-"Contact us to ask about available kitchen products.",
+    function setLanguage(lang) {
 
-price:"Ask price",
-price2:"Ask price",
+      const elements = document.querySelectorAll("[data-id]");
 
-orderSmall:"Order",
-orderSmall2:"Order",
-orderSmall3:"Order",
+      elements.forEach(function(element) {
 
-featureSmall:"Benefits",
-featureTitle:"Why Choose Us?",
+        const key = element.getAttribute("data-id");
 
-featureDescription:
-"Simple, easy, and direct service.",
+        if (translations[lang][key] !== undefined) {
 
-feature1Title:"Fresh Products",
-feature1Text:"Vegetable choices for your daily needs.",
+          element.innerHTML = translations[lang][key];
 
-feature2Title:"Chicken",
-feature2Text:"Ask about chicken availability via WhatsApp.",
+        }
 
-feature3Title:"Easy to Contact",
-feature3Text:"Order and ask questions directly via WhatsApp.",
+      });
 
-feature4Title:"Clear Location",
-feature4Text:"Find our shop location through Maps.",
 
-portfolioTitle:"Affordable Portfolio Website Service",
+      document.documentElement.lang = lang;
 
-portfolioText:
-"Need a portfolio website for job applications, business, or professional presentation? We help create modern and responsive portfolio websites.",
 
-portfolioButton:"💻 Ask About Portfolio",
+      document.getElementById("idBtn")
+        .classList.toggle("active", lang === "id");
 
-portfolioCardTitle:"Modern Portfolio 2026",
+      document.getElementById("enBtn")
+        .classList.toggle("active", lang === "en");
 
-portfolioCardText:
-"Suitable for students, fresh graduates, freelancers, and business owners.",
 
-portfolioList1:"Responsive design",
-portfolioList2:"Professional structure",
-portfolioList3:"WhatsApp button",
-portfolioList4:"Ready to publish online",
+      localStorage.setItem("warungLanguage", lang);
 
-aboutTitle:"Warung Ridwan Saleh",
+    }
 
-aboutText1:
-"We provide vegetables, chicken, and kitchen essentials for your family's daily needs.",
 
-aboutText2:
-"We also provide affordable modern portfolio website services.",
+    document.addEventListener("DOMContentLoaded", function() {
 
-check1:"Quality products",
-check2:"Order via WhatsApp",
-check3:"Modern portfolio service",
-check4:"Easy-to-find location",
+      const savedLanguage =
+        localStorage.getItem("warungLanguage") || "id";
 
-aboutCard:
-"Vegetables • Chicken • Kitchen Needs • Portfolio Service",
+      setLanguage(savedLanguage);
 
-orderTitle:"Have a question?",
+    });
 
-orderText:
-"Contact us via WhatsApp to ask about products, prices, or portfolio website services.",
-
-orderButton:"💬 Contact WhatsApp",
-
-contactSmall:"Contact",
-contactTitle:"Contact Us",
-
-contactDescription:
-"Contact us for information and orders.",
-
-contactInfoTitle:"📞 Contact Information",
-
-phoneLabel:"Main WhatsApp",
-
-serviceContact:"Services",
-
-serviceContactText:
-"Vegetables • Chicken • Kitchen Needs • Portfolio",
-
-hoursTitle:"🕐 Opening Hours",
-
-hoursText:
-"Contact WhatsApp to confirm today's opening hours.",
-
-locationTitle:"Shop Location",
-
-locationText:
-"View Warung Ridwan Saleh location on Google Maps.",
-
-mapButton:"🗺️ Open Google Maps",
-
-finalTitle:"Ready to Order? 🛒",
-
-finalText:
-"Contact Warung Ridwan Saleh today.",
-
-finalButton:"💬 Order Now",
-
-footerServices:
-"Vegetables • Chicken • Kitchen Needs • Portfolio Service",
-
-footerRights:"All rights reserved."
-
-}
-
-};
-
-
-function setLanguage(language){
-
-const data = translations[language];
-
-document.documentElement.lang = language;
-
-document.querySelectorAll("[data-id]").forEach(element=>{
-
-const key = element.getAttribute("data-id");
-
-if(data[key]){
-    element.textContent = data[key];
-}
-
-});
-
-document.getElementById("idBtn")
-.classList.toggle("active",language === "id");
-
-document.getElementById("enBtn")
-.classList.toggle("active",language === "en");
-
-localStorage.setItem("warungLanguage",language);
-
-}
-
-
-const savedLanguage =
-localStorage.getItem("warungLanguage") || "id";
-
-setLanguage(savedLanguage);
-
-</script>
+  </script>
 
 </body>
 </html>
